@@ -8,14 +8,14 @@ class AnimalTypes(enum.Enum):
     Define Animal Types
     """
 
-    DOG = ("dog",)
-    CAT = ("cat",)
-    FISH = ("fish",)
-    TURTLE = ("turtle",)
-    RABBIT = ("rabbit",)
-    MOUSE = ("mouse",)
-    HAMSTER = ("hamster",)
-    PARROT = ("parrot",)
+    DOG = "dog"
+    CAT = "cat"
+    FISH = "fish"
+    TURTLE = "turtle"
+    RABBIT = "rabbit"
+    MOUSE = "mouse"
+    HAMSTER = "hamster"
+    PARROT = "parrot"
 
 
 class Pets(Base):
