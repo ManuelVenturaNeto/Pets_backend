@@ -36,3 +36,15 @@ class Pets(Base):
         return (
             f"Pet [name={self.name}, specie = {self.species}, user_id = {self.user_id}]"
         )
+
+    def __eq__(self, other):
+        if (
+            self.id == other.id
+            and self.name == other.name
+            and self.species == other.species
+            and self.id_pet == other.id_pet
+            and self.age == other.age
+            and self.user_id == other.user_id
+        ):
+            return True
+        return False
