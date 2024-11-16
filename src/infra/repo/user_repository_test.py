@@ -21,7 +21,6 @@ def test_insert_user():
     # SQL Commands
     new_user = user_repository.insert_user(name, password)
 
-    # Utilizando o método connect() corretamente
     with engine.connect() as connection:
         query_user = connection.execute(
             text("SELECT * FROM users WHERE id=:id"), {"id": new_user.id}
@@ -30,7 +29,6 @@ def test_insert_user():
         connection.execute(text("DELETE FROM users WHERE id=:id"), {"id": new_user.id})
         connection.commit()
 
-    # Asserções
     assert new_user.id == query_user.id
     assert new_user.name == query_user.name
     assert new_user.password == query_user.password
