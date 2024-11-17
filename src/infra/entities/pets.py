@@ -27,8 +27,7 @@ class Pets(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(20), unique=True, nullable=False)
-    species = Column(String, nullable=False)
-    id_pet = Column(Enum(AnimalTypes), nullable=False)
+    species = Column(Enum(AnimalTypes), nullable=False)
     age = Column(Integer)
     user_id = Column(Integer, ForeignKey("users.id"))
 
@@ -42,7 +41,6 @@ class Pets(Base):
             self.id == other.id
             and self.name == other.name
             and self.species == other.species
-            and self.id_pet == other.id_pet
             and self.age == other.age
             and self.user_id == other.user_id
         ):
