@@ -31,7 +31,7 @@ class Pets(Base):
     age = Column(Integer)
     user_id = Column(Integer, ForeignKey("users.id"))
 
-    def __rep__(self):
+    def __repr__(self):
         return (
             f"Pet [name={self.name}, specie = {self.species}, user_id = {self.user_id}]"
         )

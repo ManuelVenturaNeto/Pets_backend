@@ -7,7 +7,7 @@ from .user_repository import UserRepository
 
 faker = Faker()
 user_repository = UserRepository()
-db_connection_handler = DBConnectionHandler()
+db_connection = DBConnectionHandler()
 
 
 def test_insert_user():
@@ -20,7 +20,7 @@ def test_insert_user():
     password = faker.password()
 
     # connect to the database
-    engine = db_connection_handler.get_engine()
+    engine = db_connection.get_engine()
 
     # insert the generated random values into database
     new_user = user_repository.insert_user(name, password)
@@ -54,7 +54,7 @@ def test_select_user():
     # save the random values into a 'data' variable for comparison
     data = UsersModel(id=user_id, name=user_name, password=user_password)
 
-    engine = db_connection_handler.get_engine()
+    engine = db_connection.get_engine()
 
     with engine.connect() as connection:
         # insert the random values into the database using SQL commands
