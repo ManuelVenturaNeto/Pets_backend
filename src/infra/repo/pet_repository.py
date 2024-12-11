@@ -47,7 +47,6 @@ class PetRepository(PetRepositoryInterface):
     @classmethod
     def select_pet(cls, pet_id: int = None, user_id: int = None) -> List[Pets]:
         """
-        , name: str, species: int, age:int
         Select data into pet entity
         :param  - pet_id: id of pet
                 - user_id: id of owner
