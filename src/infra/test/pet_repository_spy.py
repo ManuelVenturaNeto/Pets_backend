@@ -32,4 +32,4 @@ class PetRepositorySpy:
         self.select_pet_param["pet_id"] = pet_id
         self.select_pet_param["user_id"] = user_id
 
-        return [mock_pets]
+        return [mock_pets()]
