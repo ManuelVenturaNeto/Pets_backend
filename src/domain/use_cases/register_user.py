@@ -10,8 +10,8 @@ class RegisterUser(ABC):
 
     @classmethod
     @abstractmethod
-    def register(cls, name: str, password: str) -> Dict[bool, Users]:
+    def register_user(cls, name: str, password: str) -> Dict[bool, Users]:
         """
         Case
         """
-        raise ValueError("Should implement method: register")
+        raise ValueError("Should implement method: register_user")
