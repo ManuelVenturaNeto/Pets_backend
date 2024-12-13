@@ -1,6 +1,6 @@
 from typing import List
 from src.domain.models import Users
-from src.domain.test import mock_users
+from src.domain.test import mock_user
 
 
 class UserRepositorySpy:
@@ -19,7 +19,7 @@ class UserRepositorySpy:
         self.insert_user_params["name"] = name
         self.insert_user_params["password"] = password
 
-        return mock_users()
+        return mock_user()
 
     def select_user(self, user_id: int = None, name: str = None) -> List[Users]:
         """
@@ -28,4 +28,4 @@ class UserRepositorySpy:
         self.select_user_params["user_id"] = user_id
         self.select_user_params["name"] = name
 
-        return [mock_users()]
+        return [mock_user()]

@@ -10,7 +10,7 @@ class RegisterPet(ABC):
 
     @classmethod
     @abstractmethod
-    def registrer_pet(
+    def register_pet(
         cls, name: str, species: str, user_informations: Dict[int, str], age: int = None
     ) -> Dict[bool, Pets]:
         """

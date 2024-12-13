@@ -14,7 +14,7 @@ def mock_pets() -> Pets:
     return Pets(
         id=faker.random_number(digits=5),
         name=faker.name(),
-        species=faker.enum(AnimalTypes),
+        species=faker.enum(AnimalTypes).name,
         age=faker.random_number(digits=2),
         user_id=faker.random_number(digits=5),
     )

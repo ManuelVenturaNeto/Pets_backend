@@ -18,7 +18,7 @@ class PetRepositorySpy:
         """
 
         self.insert_pet_param["name"] = name
-        self.insert_pet_param["spicies"] = species
+        self.insert_pet_param["species"] = species
         self.insert_pet_param["age"] = age
         self.insert_pet_param["user_id"] = user_id
 

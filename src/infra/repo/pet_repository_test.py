@@ -16,9 +16,9 @@ def test_insert_pet():
     Should insert pet in pet table and return it
     """
     name = faker.name()
-    species = faker.enum(AnimalTypes)
-    age = faker.random_number()
-    user_id = faker.random_number()
+    species = faker.enum(AnimalTypes).name
+    age = faker.random_number(digits=2)
+    user_id = faker.random_number(digits=5)
 
     new_pet = pet_repository.insert_pet(name, species, age, user_id)
     engine = db_connection.get_engine()

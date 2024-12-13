@@ -5,7 +5,7 @@ from .register import RegisterUser
 faker = Faker()
 
 
-def test_register():
+def test_register_user():
     """
     Testing registry method
     """
@@ -31,7 +31,7 @@ def test_register():
     assert response["Data"]
 
 
-def test_register_fail():
+def test_register_user_fail():
     """
     Testing registry method
     """

@@ -4,7 +4,7 @@ from src.domain.models import Users
 faker = Faker()
 
 
-def mock_users() -> Users:
+def mock_user() -> Users:
     """
     Mocking Users
     """
