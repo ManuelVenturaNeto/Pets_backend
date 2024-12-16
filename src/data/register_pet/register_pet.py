@@ -31,9 +31,7 @@ class RegisterPet(RegisterPetInterface):
         validate_entry = (
             isinstance(name, str)
             and isinstance(species, str)
-            and (
-                isinstance(age, int) or isinstance(age, type(None))
-            )  # pylint: disable=R1701
+            and (isinstance(age, int) or isinstance(age, type(None)))
         )
 
         user = self.__find_user_information(user_information)
