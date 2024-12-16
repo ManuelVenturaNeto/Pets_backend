@@ -7,14 +7,16 @@ from .register_user_controller import RegisterUserController
 faker = Faker()
 
 
-def test_handle():
-    """Testing handle method in RegisterUserController"""
+def test_route():
+    """
+    Testing route method in RegisterUserController
+    """
 
     register_user_use_case = RegisterUserSpy(UserRepositorySpy())
-    register_user_handler = RegisterUserController(register_user_use_case)
+    register_user_router = RegisterUserController(register_user_use_case)
     attributes = {"name": faker.name(), "password": faker.password()}
 
-    response = register_user_handler.handle(HttpRequest(body=attributes))
+    response = register_user_router.route(HttpRequest(body=attributes))
 
     # Testing input
     assert register_user_use_case.register_param["name"] == attributes["name"]
@@ -25,13 +27,15 @@ def test_handle():
     assert "error" not in response.body
 
 
-def test_handle_error_no_body():
-    """Testing handle method in RegisterUserController"""
+def test_route_error_400():
+    """
+    Testing route method in RegisterUserController
+    """
 
     register_user_use_case = RegisterUserSpy(UserRepositorySpy())
-    register_user_handler = RegisterUserController(register_user_use_case)
+    register_user_router = RegisterUserController(register_user_use_case)
 
-    response = register_user_handler.handle(HttpRequest())
+    response = register_user_router.route(HttpRequest())
 
     # Testing input
     assert register_user_use_case.register_param == {}  # pylint: disable=C1803
@@ -41,14 +45,16 @@ def test_handle_error_no_body():
     assert "error" in response.body
 
 
-def test_handle_error_wrong_body():
-    """Testing handle method in RegisterUserController"""
+def test_route_error_422():
+    """
+    Testing route method in RegisterUserController
+    """
 
     register_user_use_case = RegisterUserSpy(UserRepositorySpy())
-    register_user_handler = RegisterUserController(register_user_use_case)
+    register_user_router = RegisterUserController(register_user_use_case)
     attributes = {"name": faker.name()}
 
-    response = register_user_handler.handle(HttpRequest(body=attributes))
+    response = register_user_router.route(HttpRequest(body=attributes))
 
     # Testing input
     assert register_user_use_case.register_param == {}  # pylint: disable=C1803

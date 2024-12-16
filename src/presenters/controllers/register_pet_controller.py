@@ -1,17 +1,24 @@
+# pylint: disable=W0221, R0801
+
 from typing import Type
+from src.main.interfaces import RouteInterface
 from src.domain.use_cases import RegisterPet
 from src.presenters.helpers import HttpRequest, HttpResponse
 from src.presenters.errors import HttpErrors
 
 
-class RegisterPetController:
-    """Class to Define handle to register_pet use case"""
+class RegisterPetController(RouteInterface):
+    """
+    Class to Define route to register_pet use case
+    """
 
     def __init__(self, register_pet_use_case: Type[RegisterPet]):
         self.register_pet_use_case = register_pet_use_case
 
-    def handle(self, http_request: Type[HttpRequest]) -> HttpResponse:
-        """Method to call use case"""
+    def route(self, http_request: Type[HttpRequest]) -> HttpResponse:
+        """
+        Method to call use case
+        """
 
         response = None
 

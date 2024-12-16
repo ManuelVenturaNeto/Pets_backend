@@ -7,13 +7,13 @@ from .find_pets_controller import FindPetController
 faker = Faker()
 
 
-def test_handle():
+def test_route():
     """
     testing find pet use case
     """
 
     find_pet_user_case = FindPetSpy(PetRepositorySpy())
-    find_pet_handle = FindPetController(find_pet_user_case)
+    find_pet_route = FindPetController(find_pet_user_case)
 
     attributes = {
         "pet_id": faker.random_number(digits=5),
@@ -22,7 +22,7 @@ def test_handle():
 
     http_request = HttpRequest(query=attributes)
 
-    http_response = find_pet_handle.handle(http_request)
+    http_response = find_pet_route.route(http_request)
     # Testing input
     assert (
         find_pet_user_case.by_pet_id_and_user_id_param["pet_id"] == attributes["pet_id"]

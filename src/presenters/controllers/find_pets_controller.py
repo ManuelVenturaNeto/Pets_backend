@@ -1,10 +1,13 @@
+# pylint: disable=W0221
+
 from typing import Type
+from src.main.interfaces import RouteInterface
 from src.domain.use_cases import FindPet
 from src.presenters.helpers import HttpRequest, HttpResponse
 from src.presenters.errors import HttpErrors
 
 
-class FindPetController:
+class FindPetController(RouteInterface):
     """
     Class to define find pet controller
     """
@@ -12,7 +15,7 @@ class FindPetController:
     def __init__(self, find_pet_use_case: Type[FindPet]):
         self.find_pet_use_case = find_pet_use_case
 
-    def handle(self, http_request: Type[HttpRequest]) -> HttpResponse:
+    def route(self, http_request: Type[HttpRequest]) -> HttpResponse:
         """
         Method to call use case
         """

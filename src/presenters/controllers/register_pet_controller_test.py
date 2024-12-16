@@ -8,11 +8,13 @@ from .register_pet_controller import RegisterPetController
 faker = Faker()
 
 
-def test_handle():
-    """Testing handle method in RegisterUserHandle"""
+def test_route():
+    """
+    Testing route method in RegisterUserroute
+    """
 
     register_pet_use_case = RegisterPetSpy(PetRepositorySpy(), UserRepositorySpy())
-    register_pet_handler = RegisterPetController(register_pet_use_case)
+    register_pet_router = RegisterPetController(register_pet_use_case)
     attributes = {
         "name": faker.name(),
         "species": faker.enum(AnimalTypes).name,
@@ -23,7 +25,7 @@ def test_handle():
         },
     }
 
-    response = register_pet_handler.handle(HttpRequest(body=attributes))
+    response = register_pet_router.route(HttpRequest(body=attributes))
 
     # Testing input
     assert register_pet_use_case.register_pet_param["name"] == attributes["name"]
@@ -39,11 +41,13 @@ def test_handle():
     assert "error" not in response.body
 
 
-def test_handle_without_age():
-    """Testing handle method in RegisterUserhandler"""
+def test_route_without_age():
+    """
+    Testing route method in RegisterUserrouter
+    """
 
     register_pet_use_case = RegisterPetSpy(PetRepositorySpy(), UserRepositorySpy())
-    register_pet_handler = RegisterPetController(register_pet_use_case)
+    register_pet_router = RegisterPetController(register_pet_use_case)
     attributes = {
         "name": faker.name(),
         "species": faker.enum(AnimalTypes).name,
@@ -53,7 +57,7 @@ def test_handle_without_age():
         },
     }
 
-    response = register_pet_handler.handle(HttpRequest(body=attributes))
+    response = register_pet_router.route(HttpRequest(body=attributes))
 
     # Testing input
     assert register_pet_use_case.register_pet_param["name"] == attributes["name"]
@@ -69,11 +73,13 @@ def test_handle_without_age():
     assert "error" not in response.body
 
 
-def test_handle_user_id_in_user_information():
-    """Testing handle method in RegisterUserhandler"""
+def test_route_user_id_in_user_information():
+    """
+    Testing route method in RegisterUserrouter
+    """
 
     register_pet_use_case = RegisterPetSpy(PetRepositorySpy(), UserRepositorySpy())
-    register_pet_handler = RegisterPetController(register_pet_use_case)
+    register_pet_router = RegisterPetController(register_pet_use_case)
 
     attributes = {
         "name": faker.name(),
@@ -81,7 +87,7 @@ def test_handle_user_id_in_user_information():
         "user_information": {"user_name": faker.name()},
     }
 
-    response = register_pet_handler.handle(HttpRequest(body=attributes))
+    response = register_pet_router.route(HttpRequest(body=attributes))
 
     # Testing input
     assert register_pet_use_case.register_pet_param["name"] == attributes["name"]
@@ -97,13 +103,15 @@ def test_handle_user_id_in_user_information():
     assert "error" not in response.body
 
 
-def test_handle_error_no_body():
-    """Testing handle method in RegisterUserhandler"""
+def test_route_error_400():
+    """
+    Testing route method in RegisterUserrouter
+    """
 
     register_pet_use_case = RegisterPetSpy(PetRepositorySpy(), UserRepositorySpy())
-    register_pet_handler = RegisterPetController(register_pet_use_case)
+    register_pet_router = RegisterPetController(register_pet_use_case)
 
-    response = register_pet_handler.handle(HttpRequest())
+    response = register_pet_router.route(HttpRequest())
 
     # Testing input
     assert register_pet_use_case.register_pet_param == {}  # pylint: disable=C1803
@@ -113,11 +121,13 @@ def test_handle_error_no_body():
     assert "error" in response.body
 
 
-def test_handle_error_wrong_body():
-    """Testing handle method in RegisterUserhandler"""
+def test_route_error_422_wrong_body():
+    """
+    Testing route method in RegisterUserrouter
+    """
 
     register_pet_use_case = RegisterPetSpy(PetRepositorySpy(), UserRepositorySpy())
-    register_pet_handler = RegisterPetController(register_pet_use_case)
+    register_pet_router = RegisterPetController(register_pet_use_case)
 
     attributes = {
         "species": faker.enum(AnimalTypes).name,
@@ -127,7 +137,7 @@ def test_handle_error_wrong_body():
         },
     }
 
-    response = register_pet_handler.handle(HttpRequest(body=attributes))
+    response = register_pet_router.route(HttpRequest(body=attributes))
 
     # Testing input
     assert register_pet_use_case.register_pet_param == {}  # pylint: disable=C1803
@@ -137,11 +147,13 @@ def test_handle_error_wrong_body():
     assert "error" in response.body
 
 
-def test_handle_error_wrong_user_information():
-    """Testing handle method in RegisterUserhandler"""
+def test_route_error_422_wrong_user_information():
+    """
+    Testing route method in RegisterUserrouter
+    """
 
     register_pet_use_case = RegisterPetSpy(PetRepositorySpy(), UserRepositorySpy())
-    register_pet_handler = RegisterPetController(register_pet_use_case)
+    register_pet_router = RegisterPetController(register_pet_use_case)
 
     attributes = {
         "name": faker.name(),
@@ -149,7 +161,7 @@ def test_handle_error_wrong_user_information():
         "user_information": {},
     }
 
-    response = register_pet_handler.handle(HttpRequest(body=attributes))
+    response = register_pet_router.route(HttpRequest(body=attributes))
 
     # Testing input
     assert register_pet_use_case.register_pet_param == {}  # pylint: disable=C1803
