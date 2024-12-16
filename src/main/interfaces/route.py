@@ -8,9 +8,8 @@ class RouteInterface(ABC):
     Interface to Routes
     """
 
-    @classmethod
     @abstractmethod
-    def route(cls, http_request: Type[HttpRequest]) -> HttpResponse:
+    def route(self, http_request: Type[HttpRequest]) -> HttpResponse:
         """
         Defining Route
         """

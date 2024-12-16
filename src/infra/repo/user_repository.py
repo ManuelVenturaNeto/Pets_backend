@@ -42,7 +42,7 @@ class UserRepository(UserRepositoryInterface):
     def select_user(cls, user_id: int = None, name: str = None) -> List[Users]:
         """
         Select dada in user entity by id and/or name
-        :param  - user_id: id of the registry
+        :param  - user_id: id of the register
                 - name: User name
         :return - List with Users selected
         """

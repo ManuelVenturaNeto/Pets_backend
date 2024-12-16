@@ -9,7 +9,7 @@ faker = Faker()
 
 def test_register_pet():
     """
-    Testing registry method in RegisterPet
+    Testing register method in RegisterPet
     """
 
     pet_repo = PetRepositorySpy()
@@ -55,7 +55,7 @@ def test_register_pet():
 
 def test_register_pet_fail():
     """
-    Testing registry method in RegisterPet
+    Testing register method in RegisterPet
     """
 
     pet_repo = PetRepositorySpy()

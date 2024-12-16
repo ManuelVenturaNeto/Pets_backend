@@ -7,7 +7,7 @@ faker = Faker()
 
 def test_register_user():
     """
-    Testing registry method
+    Testing register method
     """
     user_repo = UserRepositorySpy()
     register_user = RegisterUser(user_repo)
@@ -33,7 +33,7 @@ def test_register_user():
 
 def test_register_user_fail():
     """
-    Testing registry method
+    Testing register method
     """
     user_repo = UserRepositorySpy()
     register_user = RegisterUser(user_repo)

@@ -11,7 +11,7 @@ class RegisterUserSpy:
         self.register_param = {}
 
     def register_user(self, name: str, password: str) -> Dict[bool, Users]:
-        """Registry user"""
+        """Register user"""
 
         self.register_param["name"] = name
         self.register_param["password"] = password
