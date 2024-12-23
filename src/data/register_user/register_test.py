@@ -1,3 +1,4 @@
+import bcrypt
 from faker import Faker
 from src.infra.test import UserRepositorySpy
 from .register import RegisterUser
@@ -24,7 +25,9 @@ def test_register_user():
 
     # Testing inputs
     assert user_repo.insert_user_params["name"] == attributes["name"]
-    assert user_repo.insert_user_params["password"] == attributes["password"]
+    assert bcrypt.checkpw(
+        attributes["password"].encode("utf-8"), user_repo.insert_user_params["password"]
+    )
 
     # Testing outputs
     assert response["Success"] is True
