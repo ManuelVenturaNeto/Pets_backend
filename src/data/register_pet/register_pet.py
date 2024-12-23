@@ -1,6 +1,7 @@
 # pylint: disable=W0237, R1701
 
 from typing import Type, Dict, List
+from src.infra.entities.pets import AnimalTypes
 from src.domain.models import Pets, Users
 from src.data.find_user import FindUser
 from src.domain.use_cases import RegisterPet as RegisterPetInterface
@@ -31,6 +32,7 @@ class RegisterPet(RegisterPetInterface):
         validate_entry = (
             isinstance(name, str)
             and isinstance(species, str)
+            and (species in AnimalTypes.__members__)
             and (isinstance(age, int) or isinstance(age, type(None)))
         )
 
