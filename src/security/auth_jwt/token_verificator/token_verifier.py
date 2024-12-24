@@ -1,6 +1,9 @@
+import os
 from functools import wraps
-from flask import jsonify, request
 import jwt
+from flask import jsonify, request
+from src.infra.repo.user_repository import UserRepository
+from src.data.find_user import FindUser
 from src.security.auth_jwt.token_handler import token_creator
 
 
@@ -14,15 +17,24 @@ def token_verify(function: callable) -> callable:
     @wraps(function)
     def decorated(*arg, **kwargs):
         raw_token = request.headers.get("Authorization")
-        uid = request.headers.get("uid")
+        name = request.args.get("name")
+
+        user_repo = UserRepository()
+        find_user = FindUser(user_repo)
+
+        user_response = find_user.by_name(name=name)
+        user = user_response["Data"][0]
+        uid = user.id
 
         # Without Token
-        if not raw_token or not uid:
+        if not raw_token and not uid:
             return jsonify({"error": "Bad Request"}), 400
 
         try:
             token = raw_token.split()[1]
-            token_information = jwt.decode(token, key="1234", algorithms="HS256")
+            token_information = jwt.decode(
+                token, key=str(os.getenv("TOKEN_KEY")), algorithms="HS256"
+            )
             token_uid = token_information["uid"]
 
         except jwt.ExpiredSignatureError:

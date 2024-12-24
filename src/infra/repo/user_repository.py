@@ -92,5 +92,3 @@ class UserRepository(UserRepositoryInterface):
 
         finally:
             db_connection.session.close()
-
-        return None

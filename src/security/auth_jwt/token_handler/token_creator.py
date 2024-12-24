@@ -49,12 +49,17 @@ class TokenCreator:
         :return - string with token
         """
 
-        return jwt.encode(
-            {
-                "uid": uid,
-                "exp": datetime.now(tz=timezone.utc)
-                + timedelta(minutes=self.__EXP_TIME_MIN),
-            },
-            key=self.__TOKEN_KEY,
-            algorithm="HS256",
-        )
+        validate_entry = isinstance(uid, int)
+
+        if validate_entry:
+            return jwt.encode(
+                {
+                    "uid": uid,
+                    "exp": datetime.now(tz=timezone.utc)
+                    + timedelta(minutes=self.__EXP_TIME_MIN),
+                },
+                key=self.__TOKEN_KEY,
+                algorithm="HS256",
+            )
+
+        return None

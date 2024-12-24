@@ -1,6 +1,11 @@
+# pylint: disable=W0613
+
+import bcrypt
 from flask import Blueprint, jsonify, request
 from src.security.auth_jwt.token_handler import token_creator
 from src.security.auth_jwt.token_verificator import token_verify
+from src.infra.repo.user_repository import UserRepository
+from src.data.find_user import FindUser
 from src.main.composer import (
     register_user_composer,
     register_pet_composer,
@@ -12,23 +17,53 @@ from src.main.adapter import flask_adapter
 api_routes_bp = Blueprint("api_routes", __name__)
 
 
-@api_routes_bp.route("/secret", methods=["GET"])
-@token_verify
-def secret_route(token):
+# @api_routes_bp.route("/Secret", methods=["GET"])
+# @token_verify
+# def secret_route(token):
 
-    # Devemos chegar aqui
-    return jsonify({"data": "Mensagem secreta", "token": token}), 200
+#     # Devemos chegar aqui
+#     return jsonify({"data": "Mensagem secreta", "token": token}), 200
 
 
 @api_routes_bp.route("/auth", methods=["POST"])
 def authorization_route():
+    """
+    athenticate user
+    """
 
-    token = token_creator.create(uid=12)
-    return jsonify({"token": token}), 200
+    name = request.args.get("name")
+    password = request.args.get("password")
+
+    if not name or not password:
+        return jsonify({"error": "Missing uid or password"}), 400
+
+    user_repo = UserRepository()
+    find_user = FindUser(user_repo)
+    user_response = find_user.by_name(name=name)
+
+    if not user_response["Success"] or not user_response["Data"]:
+        return jsonify({"error": "User not found"}), 404
+
+    user = user_response["Data"][0]
+    user_name = user.name
+    hash_password = user.password
+
+    input_password = bcrypt.checkpw(password.encode("utf-8"), hash_password)
+
+    if not input_password:
+        return jsonify({"error": "Invalid password"}), 401
+
+    if (user_name == name) and input_password:
+        token = token_creator.create(uid=int(user.id))
+
+        return jsonify({"token": token}), 200
+
+    return jsonify({"error": "User Unauthorized"}), 401
 
 
 @api_routes_bp.route("/api/users", methods=["POST"])
-def register_user():
+@token_verify
+def register_user(token):
     """
     register user route
     """
@@ -55,7 +90,8 @@ def register_user():
 
 
 @api_routes_bp.route("/api/pets", methods=["POST"])
-def register_pet():
+@token_verify
+def register_pet(token):
     """
     register pet route
     """
@@ -92,7 +128,8 @@ def register_pet():
 
 
 @api_routes_bp.route("/api/users", methods=["GET"])
-def finder_users():
+@token_verify
+def finder_users(token):
     """
     find users route
     """
@@ -124,7 +161,8 @@ def finder_users():
 
 
 @api_routes_bp.route("/api/pets", methods=["GET"])
-def finder_pets():
+@token_verify
+def finder_pets(token):
     """
     find pets route
     """
