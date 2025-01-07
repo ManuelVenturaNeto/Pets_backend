@@ -2,9 +2,13 @@
 
 ## Description
 
-<p>This API is designed for user and animal registration as part of the backend for a website. 
-To facilitate understanding, the project includes a layout in the "Diagramas" folder, containing Entity, Class, and Use Case diagrams. 
-The entire project is implemented in Python, adhering to Clean Code principles.</p>
+<p>This API is designed to allow animal shelters to register themselves and then register the animals under their care. 
+  Afterward, individuals interested in adopting animals can browse the available options. 
+  The system is built as a microservice and is currently in the early stages of development.
+
+To help with understanding the project, the "Diagramas" folder includes several diagrams, such as Entity, Class, and Use Case diagrams.
+
+The entire project is implemented in Python, following Clean Code principles to ensure maintainability and readability..</p>
 
 ## Running the Application
 
