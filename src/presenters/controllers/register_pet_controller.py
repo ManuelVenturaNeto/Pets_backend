@@ -29,32 +29,35 @@ class RegisterPetController(RouteInterface):
 
             if (
                 "name" in body_params
-                and "species" in body_params
-                and "user_information" in body_params
+                and "specie_name" in body_params
+                and "animal_shelter_information" in body_params
             ):
                 # if body param contain correct items
 
-                user_information_params = http_request.body["user_information"].keys()
+                animal_shelter_information_params = http_request.body["animal_shelter_information"].keys()
                 if (
-                    "user_id" in user_information_params
-                    or "user_name" in user_information_params
+                    "animal_shelter_id" in animal_shelter_information_params
+                    or "animal_shelter_name" in animal_shelter_information_params
                 ):
-                    # if user_information contain correct items
+                    # if animal_shelter_information contain correct items
 
                     name = http_request.body["name"]
-                    species = http_request.body["species"]
-                    user_information = http_request.body["user_information"]
+                    specie_name = http_request.body["specie_name"]
+                    animal_shelter_information = http_request.body["animal_shelter_information"]
 
                     if "age" in body_params:
                         age = http_request.body["age"]
                     else:
                         age = None
+                        
+                    adopted = False
 
                     response = self.register_pet_use_case.register_pet(
                         name=name,
-                        species=species,
-                        user_information=user_information,
+                        specie_name=specie_name,
+                        animal_shelter_information=animal_shelter_information,
                         age=age,
+                        adopted=adopted,
                     )
 
                 else:

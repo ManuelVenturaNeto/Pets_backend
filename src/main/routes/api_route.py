@@ -4,13 +4,15 @@ import bcrypt
 from flask import Blueprint, jsonify, request
 from src.security.auth_jwt.token_handler import token_creator
 from src.security.auth_jwt.token_verificator import token_verify
-from src.infra.repo.user_repository import UserRepository
-from src.data.find_user import FindUser
+from src.infra.repo.animal_shelter_repository import AnimalShelterRepository
+from src.data.find_animal_shelter import FindAnimalShelter
 from src.main.composer import (
-    register_user_composer,
+    register_animal_shelter_composer,
     register_pet_composer,
-    find_user_composer,
+    find_animal_shelter_composer,
     find_pet_composer,
+    register_specie_composer,
+    find_specie_composer,
 )
 from src.main.adapter import flask_adapter
 
@@ -28,7 +30,7 @@ api_routes_bp = Blueprint("api_routes", __name__)
 @api_routes_bp.route("/auth", methods=["POST"])
 def authorization_route():
     """
-    athenticate user
+    athenticate animal_shelter
     """
 
     name = request.args.get("name")
@@ -37,45 +39,49 @@ def authorization_route():
     if not name or not password:
         return jsonify({"error": "Missing uid or password"}), 400
 
-    user_repo = UserRepository()
-    find_user = FindUser(user_repo)
-    user_response = find_user.by_name(name=name)
+    animal_shelter_repo = AnimalShelterRepository()
+    find_animal_shelter = FindAnimalShelter(animal_shelter_repo)
+    animal_shelter_response = find_animal_shelter.by_name(name=name)
 
-    if not user_response["Success"] or not user_response["Data"]:
-        return jsonify({"error": "User not found"}), 404
+    if not animal_shelter_response["Success"] or not animal_shelter_response["Data"]:
+        return jsonify({"error": "AnimalShelter not found"}), 404
 
-    user = user_response["Data"][0]
-    user_name = user.name
-    hash_password = user.password
+    animal_shelter = animal_shelter_response["Data"][0]
+    animal_shelter_name = animal_shelter.name
+    hash_password = animal_shelter.password
 
     input_password = bcrypt.checkpw(password.encode("utf-8"), hash_password)
 
     if not input_password:
         return jsonify({"error": "Invalid password"}), 401
 
-    if (user_name == name) and input_password:
-        token = token_creator.create(uid=int(user.id))
+    if (animal_shelter_name == name) and input_password:
+        token = token_creator.create(uid=int(animal_shelter.id))
 
         return jsonify({"token": token}), 200
 
-    return jsonify({"error": "User Unauthorized"}), 401
+    return jsonify({"error": "AnimalShelter Unauthorized"}), 401
 
 
-@api_routes_bp.route("/api/users", methods=["POST"])
-@token_verify
-def register_user(token):
+@api_routes_bp.route("/api/animal_shelters", methods=["POST"])
+def register_animal_shelter():
     """
-    register user route
+    register animal_shelter route
     """
 
     message = {}
-    response = flask_adapter(request=request, api_route=register_user_composer())
+    response = flask_adapter(request=request, api_route=register_animal_shelter_composer())
 
     if response.status_code < 300:
         message = {
-            "type": "users",
+            "type": "animal_shelters",
             "id": response.body.id,
-            "attributes": {"name": response.body.name},
+            "attributes": {"name": response.body.name, 
+                           "cpf": response.body.cpf,
+                           "responsible_name": response.body.responsible_name,
+                           "email": response.body.email,
+                           "phone_number": response.body.phone_number,
+                           "address_id": response.body.address_id},
         }
 
         return jsonify({"data": message}), response.status_code
@@ -88,10 +94,34 @@ def register_user(token):
         response.status_code,
     )
 
+@api_routes_bp.route("/api/species", methods=["POST"])
+def register_specie():
+    """
+    register animal_shelter route
+    """
+
+    message = {}
+    response = flask_adapter(request=request, api_route=register_specie_composer())
+
+    if response.status_code < 300:
+        message = {
+            "type": "species",
+            "id": response.body.id,
+            "attributes": {"specie_name": response.body.specie_name},
+        }
+
+        return jsonify({"data": message}), response.status_code
+
+    # Handling errors
+    return (
+        jsonify(
+            {"error": {"status": response.status_code, "title": response.body["error"]}}
+        ),
+        response.status_code,
+    )
 
 @api_routes_bp.route("/api/pets", methods=["POST"])
-@token_verify
-def register_pet(token):
+def register_pet():
     """
     register pet route
     """
@@ -103,15 +133,16 @@ def register_pet(token):
         message = {
             "type": "pets",
             "id": response.body.id,
-            "user_attributes": {
+            "animal_shelter_attributes": {
                 "name": response.body.name,
                 "specie": response.body.species,
                 "age": response.body.age,
+                "adopted": response.body.adopted,
             },
             "relationship": {
                 "owner": {
-                    "type": "users",
-                    "id": response.body.user_id,
+                    "type": "animal_shelters",
+                    "id": response.body.animal_shelter_id,
                 },
             },
         }
@@ -127,15 +158,14 @@ def register_pet(token):
     )
 
 
-@api_routes_bp.route("/api/users", methods=["GET"])
-@token_verify
-def finder_users(token):
+@api_routes_bp.route("/api/animal_shelters", methods=["GET"])
+def finder_animal_shelters():
     """
-    find users route
+    find animal_shelters route
     """
 
     message = {}
-    response = flask_adapter(request=request, api_route=find_user_composer())
+    response = flask_adapter(request=request, api_route=find_animal_shelter_composer())
 
     if response.status_code < 300:
         message = []
@@ -143,9 +173,40 @@ def finder_users(token):
         for element in response.body:
             message.append(
                 {
-                    "type": "users",
+                    "type": "animal_shelters",
                     "id": element.id,
                     "attributest": {"name": element.name},
+                }
+            )
+
+        return jsonify({"data": message}), response.status_code
+
+    # Handling Errors
+    return (
+        jsonify(
+            {"error": {"status": response.status_code, "title": response.body["error"]}}
+        ),
+        response.status_code,
+    )
+    
+@api_routes_bp.route("/api/species", methods=["GET"])
+def finder_species():
+    """
+    find species route
+    """
+
+    message = {}
+    response = flask_adapter(request=request, api_route=find_specie_composer())
+
+    if response.status_code < 300:
+        message = []
+
+        for element in response.body:
+            message.append(
+                {
+                    "type": "species",
+                    "id": element.id,
+                    "attributest": {"specie_name": element.specie_name},
                 }
             )
 
@@ -161,8 +222,7 @@ def finder_users(token):
 
 
 @api_routes_bp.route("/api/pets", methods=["GET"])
-@token_verify
-def finder_pets(token):
+def finder_pets():
     """
     find pets route
     """
@@ -184,7 +244,7 @@ def finder_pets(token):
                         "age": element.age,
                     },
                     "relationships": {
-                        "owner": {"type": "users", "id": element.user_id}
+                        "owner": {"type": "animal_shelters", "id": element.animal_shelter_id}
                     },
                 }
             )

@@ -2,15 +2,15 @@ import os
 from functools import wraps
 import jwt
 from flask import jsonify, request
-from src.infra.repo.user_repository import UserRepository
-from src.data.find_user import FindUser
+from src.infra.repo.animal_shelter_repository import AnimalShelterRepository
+from src.data.find_animal_shelter import FindAnimalShelter
 from src.security.auth_jwt.token_handler import token_creator
 
 
 def token_verify(function: callable) -> callable:
     """Checking the valid Token and refreshing it. If not valid, return
     Info and stopping client request
-    :parram - http request.headers: (Username / Token)
+    :parram - http request.headers: (AnimalSheltername / Token)
     :return - Json with the corresponding information.
     """
 
@@ -19,12 +19,12 @@ def token_verify(function: callable) -> callable:
         raw_token = request.headers.get("Authorization")
         name = request.args.get("name")
 
-        user_repo = UserRepository()
-        find_user = FindUser(user_repo)
+        animal_shelter_repo = AnimalShelterRepository()
+        find_animal_shelter = FindAnimalShelter(animal_shelter_repo)
 
-        user_response = find_user.by_name(name=name)
-        user = user_response["Data"][0]
-        uid = user.id
+        animal_shelter_response = find_animal_shelter.by_name(name=name)
+        animal_shelter = animal_shelter_response["Data"][0]
+        uid = animal_shelter.id
 
         # Without Token
         if not raw_token and not uid:
@@ -71,7 +71,7 @@ def token_verify(function: callable) -> callable:
             return (
                 jsonify(
                     {
-                        "message": "User Unauthorized",
+                        "message": "AnimalShelter Unauthorized",
                     }
                 ),
                 401,

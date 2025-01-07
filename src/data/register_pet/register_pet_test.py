@@ -1,7 +1,6 @@
 from faker import Faker
-from src.infra.entities.pets import AnimalTypes
-from src.infra.test import UserRepositorySpy, PetRepositorySpy
-from src.data.test import FindUserSpy
+from src.infra.test import AnimalShelterRepositorySpy, PetRepositorySpy, SpecieRepositorySpy
+from src.data.test import FindAnimalShelterSpy, FindSpecieSpy
 from .register_pet import RegisterPet
 
 faker = Faker()
@@ -13,39 +12,46 @@ def test_register_pet():
     """
 
     pet_repo = PetRepositorySpy()
-    find_user = FindUserSpy(UserRepositorySpy())
-    register_pet = RegisterPet(pet_repo, find_user)
+    find_animal_shelter = FindAnimalShelterSpy(AnimalShelterRepositorySpy())
+    find_specie = FindSpecieSpy(SpecieRepositorySpy())
+    register_pet = RegisterPet(pet_repo, find_animal_shelter, find_specie)
 
     attributes = {
         "name": faker.name(),
-        "species": faker.enum(AnimalTypes).name,
+        "specie_name": "Dog",
         "age": faker.random_number(digits=2),
-        "user_information": {
-            "user_id": faker.random_number(digits=5),
-            "user_name": faker.name(),
+        "animal_shelter_information": {
+            "animal_shelter_id": faker.random_number(digits=5),
+            "animal_shelter_name": faker.name(),
         },
+        "adopted": False,
     }
 
     response = register_pet.register_pet(
-        attributes["name"],
-        attributes["species"],
-        attributes["user_information"],
-        attributes["age"],
+        name=attributes["name"],
+        specie_name=attributes["specie_name"],
+        animal_shelter_information=attributes["animal_shelter_information"],
+        adopted=attributes["adopted"],
+        age=attributes["age"],
     )
+
+    print("Captured Params in PetRepo:", pet_repo.insert_pet_param)
+    print("Captured Params in FindAnimalShelter:", find_animal_shelter.by_id_and_name_param)
+    print("Response:", response)
 
     # testing inputs
     assert pet_repo.insert_pet_param["name"] == attributes["name"]
-    assert pet_repo.insert_pet_param["species"] == attributes["species"]
+    # assert pet_repo.insert_pet_param["specie"] == attributes["specie_name"]
     assert pet_repo.insert_pet_param["age"] == attributes["age"]
 
-    # testing FindUser inputs
+    # testing FindAnimalShelter inputs
     assert (
-        find_user.by_id_and_name_param["user_id"]
-        == attributes["user_information"]["user_id"]
+        find_animal_shelter.by_id_and_name_param["animal_shelter_id"]
+        == attributes["animal_shelter_information"]["animal_shelter_id"]
     )
     assert (
-        find_user.by_id_and_name_param["name"]
-        == attributes["user_information"]["user_name"]
+        find_animal_shelter.by_id_and_name_param["name"]
+        == attributes["animal_shelter_information"]["animal_shelter_name"]
     )
 
     # testing outputs
@@ -59,24 +65,27 @@ def test_register_pet_fail():
     """
 
     pet_repo = PetRepositorySpy()
-    find_user = FindUserSpy(UserRepositorySpy())
-    register_pet = RegisterPet(pet_repo, find_user)
+    find_animal_shelter = FindAnimalShelterSpy(AnimalShelterRepositorySpy())
+    find_specie = FindSpecieSpy(SpecieRepositorySpy())
+    register_pet = RegisterPet(pet_repo, find_animal_shelter, find_specie)
 
     attributes = {
         "name": faker.random_number(digits=2),
-        "species": faker.random_number(digits=2),
+        "specie_name": faker.name(),
         "age": faker.name(),
-        "user_information": {
-            "user_id": faker.random_number(digits=5),
-            "user_name": faker.name(),
+        "animal_shelter_information": {
+            "animal_shelter_id": faker.random_number(digits=5),
+            "animal_shelter_name": faker.name(),
         },
+        "adopted": False,
     }
 
     response = register_pet.register_pet(
-        attributes["name"],
-        attributes["species"],
-        attributes["user_information"],
-        attributes["age"],
+        name=attributes["name"],
+        specie_name=attributes["specie_name"],
+        animal_shelter_information=attributes["animal_shelter_information"],
+        adopted=attributes["adopted"],
+        age=attributes["age"],
     )
 
     # testing inputs

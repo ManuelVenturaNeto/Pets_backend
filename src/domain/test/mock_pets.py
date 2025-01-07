@@ -1,6 +1,5 @@
 from faker import Faker
 from src.domain.models import Pets
-from src.infra.entities.pets import AnimalTypes
 
 
 faker = Faker()
@@ -14,7 +13,8 @@ def mock_pets() -> Pets:
     return Pets(
         id=faker.random_number(digits=5),
         name=faker.name(),
-        species=faker.enum(AnimalTypes).name,
+        species=faker.random_number(digits=1),
         age=faker.random_number(digits=2),
-        user_id=faker.random_number(digits=5),
+        animal_shelter_id=faker.random_number(digits=5),
+        adopted=faker.boolean(),
     )

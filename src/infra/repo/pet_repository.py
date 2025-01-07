@@ -15,19 +15,19 @@ class PetRepository(PetRepositoryInterface):
     """
 
     @classmethod
-    def insert_pet(cls, name: str, species: str, age: int, user_id: int) -> Pets:
+    def insert_pet(cls, name: str, species: int, age: int, animal_shelter_id: int, adopted: bool) -> Pets:
         """
         Insert data in pet entity
         :param  - name: name of animal
                 - species: enum with specie acepted
                 - age: age of animal
-                - user_id: id of pet owner (FK)
+                - animal_shelter_id: id of pet owner (FK)
         :return - tuble with new pet inserted
         """
         with DBConnectionHandler() as db_connection:
             try:
                 new_pet = PetsModel(
-                    name=name, species=species, age=age, user_id=user_id
+                    name=name, species=species, age=age, animal_shelter_id=animal_shelter_id, adopted=adopted
                 )
                 db_connection.session.add(new_pet)
                 db_connection.session.commit()
@@ -35,9 +35,10 @@ class PetRepository(PetRepositoryInterface):
                 return Pets(
                     id=new_pet.id,
                     name=new_pet.name,
-                    species=new_pet.species.name,
+                    species=new_pet.species,
                     age=new_pet.age,
-                    user_id=new_pet.user_id,
+                    animal_shelter_id=new_pet.animal_shelter_id,
+                    adopted=new_pet.adopted,
                 )
             except:
                 db_connection.session.rollback()
@@ -47,46 +48,42 @@ class PetRepository(PetRepositoryInterface):
         return None
 
     @classmethod
-    def select_pet(cls, pet_id: int = None, user_id: int = None) -> List[Pets]:
+    def select_pet(cls, pet_id: int = None, animal_shelter_id: int = None) -> List[Pets]:
         """
         Select data into pet entity
         :param  - pet_id: id of pet
-                - user_id: id of owner
+                - animal_shelter_id: id of owner
         :return - turple with selected pets
         """
 
         try:
             data_query = None
 
-            if pet_id and not user_id:
+            if pet_id and not animal_shelter_id:
                 with DBConnectionHandler() as db_connection:
                     data = (
                         db_connection.session.query(PetsModel)
                         .filter_by(id=pet_id)
                         .one()
                     )
-                    data.species = data.species.name
                     data_query = [data]
 
-            elif not pet_id and user_id:
+            elif not pet_id and animal_shelter_id:
                 with DBConnectionHandler() as db_connection:
                     data = (
                         db_connection.session.query(PetsModel)
-                        .filter_by(user_id=user_id)
+                        .filter_by(animal_shelter_id=animal_shelter_id)
                         .all()
                     )
-                    for pets in data:
-                        pets.species = pets.species.name
                     data_query = data
 
-            elif pet_id and user_id:
+            elif pet_id and animal_shelter_id:
                 with DBConnectionHandler() as db_connection:
                     data = (
                         db_connection.session.query(PetsModel)
-                        .filter_by(id=pet_id, user_id=user_id)
+                        .filter_by(id=pet_id, animal_shelter_id=animal_shelter_id)
                         .one()
                     )
-                    data.species = data.species.name
                     data_query = [data]
 
             return data_query
@@ -98,4 +95,3 @@ class PetRepository(PetRepositoryInterface):
             raise
         finally:
             db_connection.session.close()
-        return None

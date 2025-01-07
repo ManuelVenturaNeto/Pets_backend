@@ -12,24 +12,25 @@ class PetRepositorySpy:
         self.insert_pet_param = {}
         self.select_pet_param = {}
 
-    def insert_pet(self, name: str, species: str, age: int, user_id: int) -> Pets:
+    def insert_pet(self, name: str, specie: int, age: int, animal_shelter_id: int, adopted: bool) -> Pets:
         """
         Spy all the attributes
         """
 
         self.insert_pet_param["name"] = name
-        self.insert_pet_param["species"] = species
+        self.insert_pet_param["specie"] = specie
         self.insert_pet_param["age"] = age
-        self.insert_pet_param["user_id"] = user_id
+        self.insert_pet_param["animal_shelter_id"] = animal_shelter_id
+        self.insert_pet_param["adopted"] = adopted
 
         return mock_pets()
 
-    def select_pet(self, pet_id: int = None, user_id: int = None) -> List[Pets]:
+    def select_pet(self, pet_id: int = None, animal_shelter_id: int = None) -> List[Pets]:
         """
         Spy all the attributes
         """
 
         self.select_pet_param["pet_id"] = pet_id
-        self.select_pet_param["user_id"] = user_id
+        self.select_pet_param["animal_shelter_id"] = animal_shelter_id
 
         return [mock_pets()]

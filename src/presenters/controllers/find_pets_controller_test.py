@@ -12,12 +12,12 @@ def test_route():
     testing find pet use case
     """
 
-    find_pet_user_case = FindPetSpy(PetRepositorySpy())
-    find_pet_route = FindPetController(find_pet_user_case)
+    find_pet_animal_shelter_case = FindPetSpy(PetRepositorySpy())
+    find_pet_route = FindPetController(find_pet_animal_shelter_case)
 
     attributes = {
         "pet_id": faker.random_number(digits=5),
-        "user_id": faker.random_number(digits=5),
+        "animal_shelter_id": faker.random_number(digits=5),
     }
 
     http_request = HttpRequest(query=attributes)
@@ -25,11 +25,11 @@ def test_route():
     http_response = find_pet_route.route(http_request)
     # Testing input
     assert (
-        find_pet_user_case.by_pet_id_and_user_id_param["pet_id"] == attributes["pet_id"]
+        find_pet_animal_shelter_case.by_pet_id_and_animal_shelter_id_param["pet_id"] == attributes["pet_id"]
     )
     assert (
-        find_pet_user_case.by_pet_id_and_user_id_param["user_id"]
-        == attributes["user_id"]
+        find_pet_animal_shelter_case.by_pet_id_and_animal_shelter_id_param["animal_shelter_id"]
+        == attributes["animal_shelter_id"]
     )
 
     # Testing output

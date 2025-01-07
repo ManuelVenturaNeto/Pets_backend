@@ -18,7 +18,7 @@ class TokenCreator:
     def create(self, uid: int) -> str:
         """
         Return JWT
-        :param  - uid: user identify
+        :param  - uid: animal_shelter identify
         :return - string with token
         """
 
@@ -45,7 +45,7 @@ class TokenCreator:
     def __encode_token(self, uid: int):
         """
         Encode and creating an jwt with payload
-        :param  - uid: user identify
+        :param  - uid: animal_shelter identify
         :return - string with token
         """
 

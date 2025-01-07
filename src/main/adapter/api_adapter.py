@@ -18,8 +18,8 @@ def flask_adapter(request: any, api_route: Type[Route]) -> any:
 
         if "pet_id" in query_string_params:
             query_string_params["pet_id"] = int(query_string_params["pet_id"])
-        if "user_id" in query_string_params:
-            query_string_params["user_id"] = int(query_string_params["user_id"])
+        if "animal_shelter_id" in query_string_params:
+            query_string_params["animal_shelter_id"] = int(query_string_params["animal_shelter_id"])
 
     except Exception:
         http_error = HttpErrors.error_400()
