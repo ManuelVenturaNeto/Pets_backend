@@ -11,7 +11,7 @@ from src.infra.entities import UserAdopters as UserAdoptersModel
 
 class UserAdopterRepository(UserAdopterRepositoryInterface):
     """
-    Class to manemail UsersAdopter Repository
+    Class to manemail UserAdopter Repository
     """
 
     @classmethod
@@ -66,7 +66,12 @@ class UserAdopterRepository(UserAdopterRepositoryInterface):
                     query = db_connection.session.query(UserAdoptersModel).filter_by(id=id).one()
                     data_query = [query]
 
-            elif name or cpf or email or phone_number or address_id or pet_id:
+            elif pet_id:
+                with DBConnectionHandler() as db_connection:
+                    query = db_connection.session.query(UserAdoptersModel).filter_by(pet_id=pet_id).all()
+                    data_query = query
+
+            elif name or cpf or email or phone_number:
                 with DBConnectionHandler() as db_connection:
                     filters = {}
                     if name:
@@ -77,10 +82,6 @@ class UserAdopterRepository(UserAdopterRepositoryInterface):
                         filters["email"] = email
                     if phone_number:
                         filters["phone_number"] = phone_number
-                    if address_id:
-                        filters["address_id"] = address_id
-                    if pet_id:
-                        filters["pet_id"] = pet_id
 
                     query = db_connection.session.query(UserAdoptersModel).filter_by(**filters).all()
                     data_query = query
