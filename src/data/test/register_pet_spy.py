@@ -1,7 +1,7 @@
 # pylint: disable=W0237, R1701
 
 from typing import Dict, List
-from src.domain.test import mock_pets, mock_animal_shelter, mock_specie
+from src.domain.test import mock_pet, mock_animal_shelter, mock_specie
 from src.domain.models import Pets, AnimalShelters, Species
 from src.data.test import FindSpecieSpy
 
@@ -43,7 +43,7 @@ class RegisterPetSpy(FindSpecieSpy):
         checker = validate_entry and animal_shelter["Success"] and specie["Success"]
 
         if checker:
-            response = mock_pets()
+            response = mock_pet()
 
         return {"Success": checker, "Data": response}
 

@@ -10,11 +10,11 @@ class FindUserAdopter(ABC):
 
     @classmethod
     @abstractmethod
-    def by_id(cls, user_adopter_id: int) -> Dict[bool, List[UserAdopters]]:
+    def by_user_adopter_id(cls, user_adopter_id: int) -> Dict[bool, List[UserAdopters]]:
         """
         Specific Case
         """
-        raise ValueError("Should implement method: by_id")
+        raise ValueError("Should implement method: by_user_adopter_id")
     
     @classmethod
     @abstractmethod

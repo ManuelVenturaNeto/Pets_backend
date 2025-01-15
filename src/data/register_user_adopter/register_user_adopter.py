@@ -25,13 +25,7 @@ class RegisterUserAdopter(RegisterUserAdopterInterface):
         
         response = None
         
-        validate_entry = (
-            isinstance(name, str),
-            isinstance(cpf, int),
-            isinstance(email, str),
-            isinstance(phone_number, int),
-            isinstance(pet_id, int),
-        )
+        validate_entry = isinstance(name, str) and isinstance(cpf, int) and isinstance(email, str) and isinstance(phone_number, int) and isinstance(pet_id, int)
         
         find_pet = self.__find_by_pet_id(pet_id)
         
@@ -56,8 +50,10 @@ class RegisterUserAdopter(RegisterUserAdopterInterface):
 
         pet_founded = None
         
-        if isinstance(pet_id): pet_founded = self.find_pet.by_pet_id(pet_id)
+        if isinstance(pet_id, int): 
+            pet_founded = self.find_pet.by_pet_id(pet_id)
 
-        else: return {"Success": False, "Data": None}
+        else: 
+            return {"Success": False, "Data": None}
 
         return pet_founded

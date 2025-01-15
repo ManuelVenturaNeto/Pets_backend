@@ -10,7 +10,7 @@ class RegisterUserAdopter(ABC):
 
     @classmethod
     @abstractmethod
-    def register_user_adopter(cls, name: str, cpf: int, email: str, phone_number: int, cep: int, state: str, city: str, neighborhood: str, street: str, number: int, complement: str = None) -> Dict[bool, UserAdopters]:
+    def register_user_adopter(cls, name: str, cpf: int, pet_id: int, email: str, phone_number: int, cep: int, state: str, city: str, neighborhood: str, street: str, number: int, complement: str = None) -> Dict[bool, UserAdopters]:
         """
         Case
         """

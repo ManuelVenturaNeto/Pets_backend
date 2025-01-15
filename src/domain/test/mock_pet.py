@@ -5,7 +5,7 @@ from src.domain.models import Pets
 faker = Faker()
 
 
-def mock_pets() -> Pets:
+def mock_pet() -> Pets:
     """
     Mocking Pets
     """

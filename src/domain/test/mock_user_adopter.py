@@ -1,25 +1,24 @@
 from faker import Faker
-from src.domain.models import UserAdopter
+from src.domain.models import UserAdopters
 from .mock_address import mock_address
-from .mock_pets import mock_pets
+from .mock_pet import mock_pet
 
 
 faker = Faker()
 address = mock_address()
-pet = mock_pets()
+pet = mock_pet()
 
-def mock_user_adopters() -> UserAdopter:
+def mock_user_adopter() -> UserAdopters:
     """
     Mocking UserAdopter
     """
 
-    return UserAdopter(
+    return UserAdopters(
         id=faker.random_number(digits=5),
         name=faker.name(),
         cpf=faker.random_number(digits=11),
-        responsible_name=faker.name(),
         email=faker.email(),
         phone_number=faker.random_number(digits=11),
         address_id=address.id,
-        pet_it= pet.id,
+        pet_id= pet.id,
     )

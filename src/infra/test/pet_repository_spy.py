@@ -1,5 +1,5 @@
 from typing import List
-from src.domain.test import mock_pets
+from src.domain.test import mock_pet
 from src.domain.models import Pets
 
 
@@ -23,7 +23,7 @@ class PetRepositorySpy:
         self.insert_pet_param["animal_shelter_id"] = animal_shelter_id
         self.insert_pet_param["adopted"] = adopted
 
-        return mock_pets()
+        return mock_pet()
 
     def select_pet(self, pet_id: int = None, animal_shelter_id: int = None) -> List[Pets]:
         """
@@ -33,4 +33,4 @@ class PetRepositorySpy:
         self.select_pet_param["pet_id"] = pet_id
         self.select_pet_param["animal_shelter_id"] = animal_shelter_id
 
-        return [mock_pets()]
+        return [mock_pet()]

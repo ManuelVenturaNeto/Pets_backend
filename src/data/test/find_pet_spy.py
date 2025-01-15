@@ -1,6 +1,6 @@
 from typing import Dict, List
 from src.domain.models import Pets
-from src.domain.test import mock_pets
+from src.domain.test import mock_pet
 
 
 class FindPetSpy:
@@ -14,7 +14,7 @@ class FindPetSpy:
         self.by_animal_shelter_id_param = {}
         self.by_pet_id_and_animal_shelter_id_param = {}
 
-    def by_id(self, pet_id: int) -> Dict[bool, List[Pets]]:
+    def by_pet_id(self, pet_id: int) -> Dict[bool, List[Pets]]:
         """
         Select Pet by id of pet
         """
@@ -24,7 +24,7 @@ class FindPetSpy:
         validate_entry = isinstance(pet_id, int)
 
         if validate_entry:
-            response = [mock_pets()]
+            response = [mock_pet()]
 
         return {"Success": validate_entry, "Data": response}
 
@@ -38,7 +38,7 @@ class FindPetSpy:
         validate_entry = isinstance(animal_shelter_id, str)
 
         if validate_entry:
-            response = [mock_pets()]
+            response = [mock_pet()]
 
         return {"Success": validate_entry, "Data": response}
 
@@ -55,6 +55,6 @@ class FindPetSpy:
         validate_entry = isinstance(pet_id, int) and isinstance(animal_shelter_id, int)
 
         if validate_entry:
-            response = [mock_pets()]
+            response = [mock_pet()]
 
         return {"Success": validate_entry, "Data": response}

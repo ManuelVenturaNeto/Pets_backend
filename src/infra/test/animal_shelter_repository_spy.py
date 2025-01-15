@@ -1,6 +1,6 @@
 from typing import List
 from src.domain.models import AnimalShelters
-from src.domain.test import mock_animal_shelter, mock_address
+from src.domain.test import mock_animal_shelter
 
 
 class AnimalShelterRepositorySpy():
