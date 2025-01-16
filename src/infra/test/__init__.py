@@ -1,2 +1,5 @@
-from .user_repository_spy import UserRepositorySpy
+from .animal_shelter_repository_spy import AnimalShelterRepositorySpy
 from .pet_repository_spy import PetRepositorySpy
+from .address_repository_spy import AddressRepositorySpy
+from .specie_repository_spy import SpecieRepositorySpy
+from .user_adopter_repository_spy import UserAdopterRepositorySpy

@@ -9,14 +9,14 @@ class PetRepositoryInterface(ABC):
     """
 
     @abstractmethod
-    def insert_pet(self, name: str, species: str, age: int, user_id: int) -> Pets:
+    def insert_pet(self, name: str, specie: int, age: int, animal_shelter_id: int, adopted: bool) -> Pets:
         """
         Abstractmethod
         """
         raise ValueError("Method not implemented")
 
     @abstractmethod
-    def select_pet(self, pet_id: int = None, user_id: int = None) -> List[Pets]:
+    def select_pet(self, pet_id: int = None, animal_shelter_id: int = None) -> List[Pets]:
         """
         Abstractmethod
         """

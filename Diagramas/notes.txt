@@ -2,6 +2,8 @@
 First create folder config with db_config and db_base. Put those endpoints into __init__
 Then create folder entities with you classes. Each class will be one table on database. Put those endpoints into __init__
 
+python
+
 then in prompt run:
     from src.infra.config import *              #will import the files in config/__init__.py
     from src.infra.entities import *            #will import the files in entities/__init__.py

@@ -2,6 +2,9 @@
 
 disable =
       C0114, #missing-module-docstring
+      R0801, #simular lines in 2 files
+      W0237, #Parameter has been renamed
+      W0622, #Redefining built-in 'id'
 
 # Analyse import fallback blocks. This can be used to support both Python 2 and
 # 3 compatible code, which means that the block might have code that exists
@@ -108,7 +111,7 @@ recursive=no
 source-roots=
 
 # When enabled, pylint would attempt to guess common misconfiguration and emit
-# user-friendly hints instead of false-positive error messages.
+# animal_shelter-friendly hints instead of false-positive error messages.
 suggestion-mode=yes
 
 # Allow loading of arbitrary C extensions. Extensions are imported into the
@@ -293,7 +296,7 @@ exclude-too-few-public-methods=
 ignored-parents=
 
 # Maximum number of arguments for function / method.
-max-args=5
+max-args=20
 
 # Maximum number of attributes for a class (see R0902).
 max-attributes=7
@@ -305,13 +308,13 @@ max-bool-expr=10
 max-branches=12
 
 # Maximum number of locals for function / method body.
-max-locals=15
+max-locals=20
 
 # Maximum number of parents for a class (see R0901).
 max-parents=7
 
 # Maximum number of positional arguments for function / method.
-max-positional-arguments=5
+max-positional-arguments=20
 
 # Maximum number of public methods for a class (see R0904).
 max-public-methods=20
@@ -348,7 +351,7 @@ indent-after-paren=4
 indent-string='    '
 
 # Maximum number of characters on a single line.
-max-line-length=120
+max-line-length=150
 
 # Maximum number of lines in a module.
 max-module-lines=1000

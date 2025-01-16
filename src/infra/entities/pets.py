@@ -1,21 +1,6 @@
-import enum
-from sqlalchemy import Column, String, Integer, ForeignKey, Enum
+from sqlalchemy import Column, String, Integer, ForeignKey, Boolean
+from sqlalchemy.orm import relationship
 from src.infra.config import Base
-
-
-class AnimalTypes(enum.Enum):
-    """
-    Define Animal Types
-    """
-
-    DOG = "dog"
-    CAT = "cat"
-    FISH = "fish"
-    TURTLE = "turtle"
-    RABBIT = "rabbit"
-    MOUSE = "mouse"
-    HAMSTER = "hamster"
-    PARROT = "parrot"
 
 
 class Pets(Base):
@@ -26,13 +11,17 @@ class Pets(Base):
     __tablename__ = "pets"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(20), unique=True, nullable=False)
-    species = Column(Enum(AnimalTypes), nullable=False)
+    name = Column(String, nullable=False)
+    species = Column(Integer, ForeignKey("species.id"), nullable=False)
     age = Column(Integer)
-    user_id = Column(Integer, ForeignKey("users.id"))
+    animal_shelter_id = Column(
+        Integer, ForeignKey("animal_shelters.id"), nullable=False
+    )
+    adopted = Column(Boolean, default=False)
+    user_adopters = relationship("UserAdopters")
 
     def __repr__(self):
-        return f"Pet [name={self.name}, species = {self.species}, user_id = {self.user_id}]"
+        return f"Pet [name = {self.name}, species = {self.species}, animal_shelter_id = {self.animal_shelter_id}, adopted = {self.adopted}]"
 
     def __eq__(self, other):
         if (
@@ -40,7 +29,8 @@ class Pets(Base):
             and self.name == other.name
             and self.species == other.species
             and self.age == other.age
-            and self.user_id == other.user_id
+            and self.animal_shelter_id == other.animal_shelter_id
+            and self.adopted == other.adopted
         ):
             return True
         return False

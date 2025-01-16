@@ -11,8 +11,7 @@ class RegisterPet(ABC):
     @classmethod
     @abstractmethod
     def register_pet(
-        cls, name: str, species: str, user_informations: Dict[int, str], age: int = None
-    ) -> Dict[bool, Pets]:
+        cls, name: str, specie_name: str, animal_shelter_informations: Dict[int, str], adopted: bool, age: int = None) -> Dict[bool, Pets]:
         """
         Case
         """
