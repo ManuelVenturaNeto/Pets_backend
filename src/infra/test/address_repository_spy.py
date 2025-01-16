@@ -12,7 +12,16 @@ class AddressRepositorySpy:
         self.insert_address_params = {}
         self.select_address_params = {}
 
-    def insert_address(self,cep: int, state: str, city: str, neighborhood: str, street: str, number: int, complement: str = None) -> Addresses:
+    def insert_address(
+        self,
+        cep: int,
+        state: str,
+        city: str,
+        neighborhood: str,
+        street: str,
+        number: int,
+        complement: str = None,
+    ) -> Addresses:
         """
         Spy to all the attributes
         """
@@ -26,7 +35,17 @@ class AddressRepositorySpy:
 
         return mock_address()
 
-    def select_address(self, id: int = None, cep: int = None, state: str = None, city: str = None, neighborhood: str = None, street: str = None, number: int = None, complement: str = None) -> List[Addresses]:
+    def select_address(
+        self,
+        id: int = None,
+        cep: int = None,
+        state: str = None,
+        city: str = None,
+        neighborhood: str = None,
+        street: str = None,
+        number: int = None,
+        complement: str = None,
+    ) -> List[Addresses]:
         """
         Spy to all the attributes
         """

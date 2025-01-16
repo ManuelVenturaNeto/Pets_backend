@@ -2,7 +2,7 @@ from faker import Faker
 from src.infra.test import AddressRepositorySpy
 from .register_address import RegisterAddress
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_register_address():

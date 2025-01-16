@@ -2,7 +2,7 @@ from faker import Faker
 from src.infra.test import SpecieRepositorySpy
 from .register_specie import RegisterSpecie
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_register_specie():

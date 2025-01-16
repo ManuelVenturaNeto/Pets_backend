@@ -5,7 +5,7 @@ from src.infra.config import DBConnectionHandler
 from .specie_repository import SpecieRepository
 
 
-faker = Faker()
+faker = Faker("pt_BR")
 specie_repository = SpecieRepository()
 db_connection = DBConnectionHandler()
 
@@ -24,7 +24,9 @@ def test_insert_specie():
             text("SELECT * FROM species WHERE id=:id"), {"id": new_specie.id}
         ).fetchone()
 
-        connection.execute(text("DELETE FROM species WHERE id=:id"), {"id": new_specie.id})
+        connection.execute(
+            text("DELETE FROM species WHERE id=:id"), {"id": new_specie.id}
+        )
         connection.commit()
 
     assert new_specie.id == query_specie.id
@@ -45,9 +47,7 @@ def test_select_specie():
 
     with engine.connect() as connection:
         connection.execute(
-            text(
-                "INSERT INTO species (id, specie_name) VALUES (:id, :specie_name)"
-            ),
+            text("INSERT INTO species (id, specie_name) VALUES (:id, :specie_name)"),
             {
                 "id": id,
                 "specie_name": specie_name,
@@ -57,7 +57,9 @@ def test_select_specie():
 
         query_specie1 = specie_repository.select_specie(id=data.id)
         query_specie2 = specie_repository.select_specie(specie_name=data.specie_name)
-        query_specie3 = specie_repository.select_specie(id=data.id, specie_name=data.specie_name)
+        query_specie3 = specie_repository.select_specie(
+            id=data.id, specie_name=data.specie_name
+        )
 
         connection.execute(text("DELETE FROM species WHERE id=:id"), {"id": data.id})
         connection.commit()

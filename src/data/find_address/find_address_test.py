@@ -3,7 +3,7 @@ from src.infra.test import AddressRepositorySpy
 from .find_address import FindAddress
 
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_by_id():

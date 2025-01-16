@@ -3,7 +3,9 @@
 from typing import Type, Dict, List
 from src.domain.models import AnimalShelters
 from src.domain.use_cases import FindAnimalShelter as FindAnimalShelterInterface
-from src.data.interfaces import AnimalShelterRepositoryInterface as AnimalShelterRepository
+from src.data.interfaces import (
+    AnimalShelterRepositoryInterface as AnimalShelterRepository,
+)
 
 
 class FindAnimalShelter(FindAnimalShelterInterface):
@@ -57,6 +59,23 @@ class FindAnimalShelter(FindAnimalShelterInterface):
         validate_entry = isinstance(id, int) and isinstance(name, str)
 
         if validate_entry:
-            response = self.animal_shelter_repository.select_animal_shelter(id=id, name=name)
+            response = self.animal_shelter_repository.select_animal_shelter(
+                id=id, name=name
+            )
+
+        return {"Success": validate_entry, "Data": response}
+
+    def by_cpf(self, cpf: int) -> Dict[bool, List[AnimalShelters]]:
+        """
+        Select AnimalShelter by id
+        :param  - cpf: cpf from animal_shelter
+        :return - Dictionary of informations of the process
+        """
+
+        response = None
+        validate_entry = isinstance(cpf, int)
+
+        if validate_entry:
+            response = self.animal_shelter_repository.select_animal_shelter(cpf=cpf)
 
         return {"Success": validate_entry, "Data": response}

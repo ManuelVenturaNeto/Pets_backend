@@ -3,7 +3,7 @@ from faker import Faker
 from src.infra.test import AnimalShelterRepositorySpy, AddressRepositorySpy
 from .register_animal_shelter import RegisterAnimalShelter, RegisterAddress
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_register_animal_shelter():
@@ -19,8 +19,10 @@ def test_register_animal_shelter():
 
     attributes = {
         "name": faker.name(),
-        "password": faker.password(),
-        "cpf": faker.random_number(digits=11),
+        "password": faker.password(
+            length=12, special_chars=True, digits=True, upper_case=True, lower_case=True
+        ),
+        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
         "responsible_name": faker.name(),
         "email": faker.email(),
         "phone_number": faker.random_number(digits=11),
@@ -151,8 +153,10 @@ def test_register_animal_shelter_fail_address():
 
     attributes = {
         "name": faker.name(),
-        "password": faker.password(),
-        "cpf": faker.random_number(digits=11),
+        "password": faker.password(
+            length=12, special_chars=True, digits=True, upper_case=True, lower_case=True
+        ),
+        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
         "responsible_name": faker.name(),
         "email": faker.email(),
         "phone_number": faker.random_number(digits=11),

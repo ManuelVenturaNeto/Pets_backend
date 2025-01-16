@@ -4,7 +4,7 @@ from src.presenters.helpers import HttpRequest
 from src.infra.test import SpecieRepositorySpy
 from .register_specie_controller import RegisterSpecieController
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_route():

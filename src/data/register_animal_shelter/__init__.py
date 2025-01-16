@@ -1,1 +1,2 @@
 from .register_animal_shelter import RegisterAnimalShelter
+from .validate_animal_shelter import validator

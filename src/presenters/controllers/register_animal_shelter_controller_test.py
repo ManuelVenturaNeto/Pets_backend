@@ -4,7 +4,7 @@ from src.presenters.helpers import HttpRequest
 from src.infra.test import AnimalShelterRepositorySpy, AddressRepositorySpy
 from .register_animal_shelter_controller import RegisterAnimalShelterController
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_route():
@@ -20,8 +20,10 @@ def test_route():
     )
     attributes = {
         "name": faker.name(),
-        "password": faker.password(),
-        "cpf": faker.random_number(digits=11),
+        "password": faker.password(
+            length=12, special_chars=True, digits=True, upper_case=True, lower_case=True
+        ),
+        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
         "responsible_name": faker.name(),
         "email": faker.email(),
         "phone_number": faker.random_number(digits=11),

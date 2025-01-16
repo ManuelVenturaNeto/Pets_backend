@@ -5,7 +5,7 @@ from src.infra.entities import AnimalShelters as AnimalSheltersModel
 from .animal_shelter_repository import AnimalShelterRepository
 
 
-faker = Faker()
+faker = Faker("pt_BR")
 animal_shelter_repository = AnimalShelterRepository()
 db_connection = DBConnectionHandler()
 
@@ -17,7 +17,9 @@ def test_insert_animal_shelter():
 
     # generate random values for testing
     name = faker.name()
-    password = faker.password()
+    password = faker.password(
+        length=12, special_chars=True, digits=True, upper_case=True, lower_case=True
+    )
     cpf = faker.random_number(digits=11)
     responsible_name = faker.name()
     email = faker.email()
@@ -28,16 +30,22 @@ def test_insert_animal_shelter():
     engine = db_connection.get_engine()
 
     # insert the generated random values into database
-    new_animal_shelter = animal_shelter_repository.insert_animal_shelter(name, password, cpf, responsible_name, email, phone_number, adrress_id)
+    new_animal_shelter = animal_shelter_repository.insert_animal_shelter(
+        name, password, cpf, responsible_name, email, phone_number, adrress_id
+    )
 
     with engine.connect() as connection:
         # retrieve the inserted values from the database using SQL
         query_animal_shelter = connection.execute(
-            text("SELECT * FROM animal_shelters WHERE id=:id"), {"id": new_animal_shelter.id}
+            text("SELECT * FROM animal_shelters WHERE id=:id"),
+            {"id": new_animal_shelter.id},
         ).fetchone()
 
         # remove the test data from the database
-        connection.execute(text("DELETE FROM animal_shelters WHERE id=:id"), {"id": new_animal_shelter.id})
+        connection.execute(
+            text("DELETE FROM animal_shelters WHERE id=:id"),
+            {"id": new_animal_shelter.id},
+        )
         connection.commit()
 
     # compare the inserted value with the retrieved values from db
@@ -59,7 +67,9 @@ def test_select_animal_shelter():
     # generet random values for testing
     id = faker.random_number(digits=5)
     name = faker.name()
-    password = faker.password()
+    password = faker.password(
+        length=12, special_chars=True, digits=True, upper_case=True, lower_case=True
+    )
     cpf = faker.random_number(digits=11)
     responsible_name = faker.name()
     email = faker.email()
@@ -67,7 +77,16 @@ def test_select_animal_shelter():
     address_id = faker.random_number(digits=2)
 
     # save the random values into a 'data' variable for comparison
-    data = AnimalSheltersModel(id=id, name=name, password=password, cpf=cpf, responsible_name=responsible_name, email=email, phone_number=phone_number, address_id=address_id)
+    data = AnimalSheltersModel(
+        id=id,
+        name=name,
+        password=password,
+        cpf=cpf,
+        responsible_name=responsible_name,
+        email=email,
+        phone_number=phone_number,
+        address_id=address_id,
+    )
 
     engine = db_connection.get_engine()
 
@@ -75,19 +94,37 @@ def test_select_animal_shelter():
         # insert the random values into the database using SQL commands
         connection.execute(
             text(
-                "INSERT INTO animal_shelters (id, name, password, cpf, responsible_name, email, phone_number, address_id) VALUES (:id, :name, :password, :cpf, :responsible_name, :email, :phone_number, :address_id)"
+                "INSERT INTO animal_shelters (id, name, password, cpf, responsible_name, email, phone_number, address_id) \
+                    VALUES (:id, :name, :password, :cpf, :responsible_name, :email, :phone_number, :address_id)"
             ),
-            {"id": id, "name": name, "password": password, "cpf": cpf, "responsible_name": responsible_name, "email": email, "phone_number": phone_number, "address_id": address_id},
+            {
+                "id": id,
+                "name": name,
+                "password": password,
+                "cpf": cpf,
+                "responsible_name": responsible_name,
+                "email": email,
+                "phone_number": phone_number,
+                "address_id": address_id,
+            },
         )
         connection.commit()
 
         # run tests on the select_animal_shelter function to verify all use cases and saving in memory
-        query_animal_shelter1 = animal_shelter_repository.select_animal_shelter(animal_shelter_id=data.id)
-        query_animal_shelter2 = animal_shelter_repository.select_animal_shelter(name=data.name)
-        query_animal_shelter3 = animal_shelter_repository.select_animal_shelter(animal_shelter_id=data.id, name=data.name)
+        query_animal_shelter1 = animal_shelter_repository.select_animal_shelter(
+            animal_shelter_id=data.id
+        )
+        query_animal_shelter2 = animal_shelter_repository.select_animal_shelter(
+            name=data.name
+        )
+        query_animal_shelter3 = animal_shelter_repository.select_animal_shelter(
+            animal_shelter_id=data.id, name=data.name
+        )
 
         # clean up the database after the tests
-        connection.execute(text("DELETE FROM animal_shelters WHERE id=:id"), {"id": data.id})
+        connection.execute(
+            text("DELETE FROM animal_shelters WHERE id=:id"), {"id": data.id}
+        )
         connection.commit()
 
     # compare the random values with the data retrieved from the database

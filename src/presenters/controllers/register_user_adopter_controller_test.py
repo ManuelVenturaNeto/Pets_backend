@@ -4,7 +4,7 @@ from src.presenters.helpers import HttpRequest
 from src.infra.test import UserAdopterRepositorySpy, AddressRepositorySpy
 from .register_user_adopter_controller import RegisterUserAdopterController
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_route():
@@ -20,7 +20,7 @@ def test_route():
     )
     attributes = {
         "name": faker.name(),
-        "cpf": faker.random_number(digits=11),
+        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
         "email": faker.email(),
         "phone_number": faker.random_number(digits=11),
         "pet_id": faker.random_number(digits=1),

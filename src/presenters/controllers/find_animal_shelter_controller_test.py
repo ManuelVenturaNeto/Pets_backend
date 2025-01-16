@@ -4,7 +4,7 @@ from src.infra.test import AnimalShelterRepositorySpy
 from src.presenters.helpers import HttpRequest
 from .find_animal_shelter_controller import FindAnimalShelterController
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_route():

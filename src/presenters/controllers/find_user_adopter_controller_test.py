@@ -4,7 +4,7 @@ from src.infra.test import UserAdopterRepositorySpy
 from src.presenters.helpers import HttpRequest
 from .find_user_adopter_controller import FindUserAdopterController
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_route_by_user_adopter_id():

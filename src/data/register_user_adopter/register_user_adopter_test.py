@@ -9,7 +9,7 @@ from src.data.register_address import RegisterAddress
 from .register_user_adopter import RegisterUserAdopter
 
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_register_user_adopter():
@@ -26,7 +26,7 @@ def test_register_user_adopter():
 
     attributes = {
         "name": faker.name(),
-        "cpf": faker.random_number(digits=11),
+        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
         "responsible_name": faker.name(),
         "email": faker.email(),
         "phone_number": faker.random_number(digits=11),
@@ -148,7 +148,7 @@ def test_register_user_adopter_fail_address():
 
     attributes = {
         "name": faker.name(),
-        "cpf": faker.random_number(digits=11),
+        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
         "email": faker.email(),
         "phone_number": faker.random_number(digits=11),
         "pet_id": faker.random_number(digits=1),
@@ -198,7 +198,7 @@ def test_register_user_adopter_fail_pet_id():
 
     attributes = {
         "name": faker.name(),
-        "cpf": faker.random_number(digits=11),
+        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
         "responsible_name": faker.name(),
         "email": faker.email(),
         "phone_number": faker.random_number(digits=11),

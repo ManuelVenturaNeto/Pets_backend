@@ -3,7 +3,7 @@ from src.infra.test import SpecieRepositorySpy
 from .find_specie import FindSpecie
 
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_by_id():

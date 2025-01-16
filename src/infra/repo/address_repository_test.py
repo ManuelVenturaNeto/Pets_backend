@@ -5,7 +5,7 @@ from src.infra.config import DBConnectionHandler
 from .address_repository import AddressRepository
 
 
-faker = Faker()
+faker = Faker("pt_BR")
 address_repository = AddressRepository()
 db_connection = DBConnectionHandler()
 
@@ -22,7 +22,15 @@ def test_insert_address():
     complement = faker.street_name()
     number = faker.random_number(digits=2)
 
-    new_address = address_repository.insert_address(cep=cep, state=state, city=city, neighborhood=neighborhood, street=street, complement=complement, number=number)
+    new_address = address_repository.insert_address(
+        cep=cep,
+        state=state,
+        city=city,
+        neighborhood=neighborhood,
+        street=street,
+        complement=complement,
+        number=number,
+    )
     engine = db_connection.get_engine()
 
     with engine.connect() as connection:
@@ -30,7 +38,9 @@ def test_insert_address():
             text("SELECT * FROM addresses WHERE id=:id"), {"id": new_address.id}
         ).fetchone()
 
-        connection.execute(text("DELETE FROM addresses WHERE id=:id"), {"id": new_address.id})
+        connection.execute(
+            text("DELETE FROM addresses WHERE id=:id"), {"id": new_address.id}
+        )
         connection.commit()
 
     assert new_address.cep == query_address.cep
@@ -56,14 +66,24 @@ def test_select_address():
     complement = faker.street_name()
     number = faker.random_number(digits=2)
 
-    data = AddressesModel(id=id, cep=cep, state=state, city=city, neighborhood=neighborhood, street=street, complement=complement, number=number)
+    data = AddressesModel(
+        id=id,
+        cep=cep,
+        state=state,
+        city=city,
+        neighborhood=neighborhood,
+        street=street,
+        complement=complement,
+        number=number,
+    )
 
     engine = db_connection.get_engine()
 
     with engine.connect() as connection:
         connection.execute(
             text(
-                "INSERT INTO addresses (id, cep, state, city, neighborhood, street, complement, number) VALUES (:id, :cep, :state, :city, :neighborhood, :street, :complement, :number)"
+                "INSERT INTO addresses (id, cep, state, city, neighborhood, street, complement, number) \
+                    VALUES (:id, :cep, :state, :city, :neighborhood, :street, :complement, :number)"
             ),
             {
                 "id": id,
@@ -79,9 +99,18 @@ def test_select_address():
         connection.commit()
 
         query_address1 = address_repository.select_address(address_id=data.id)
-        query_address2 = address_repository.select_address(address_id=data.id, cep=data.cep)
+        query_address2 = address_repository.select_address(
+            address_id=data.id, cep=data.cep
+        )
         query_address3 = address_repository.select_address(cep=data.cep)
-        query_address4 = address_repository.select_address(cep=data.cep, state=data.state, city=data.city, neighborhood=data.neighborhood, street=street, number=data.number)
+        query_address4 = address_repository.select_address(
+            cep=data.cep,
+            state=data.state,
+            city=data.city,
+            neighborhood=data.neighborhood,
+            street=street,
+            number=data.number,
+        )
 
         connection.execute(text("DELETE FROM addresses WHERE id=:id"), {"id": data.id})
         connection.commit()

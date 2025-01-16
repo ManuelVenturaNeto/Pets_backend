@@ -5,7 +5,7 @@ from src.infra.config import DBConnectionHandler
 from .pet_repository import PetRepository
 
 
-faker = Faker()
+faker = Faker("pt_BR")
 pet_repository = PetRepository()
 db_connection = DBConnectionHandler()
 
@@ -51,14 +51,22 @@ def test_select_pet():
     animal_shelter_id = faker.random_number(digits=2)
     adopted = False
 
-    data = PetsModel(id=pet_id, name=name, species=species, age=age, animal_shelter_id=animal_shelter_id, adopted=adopted)
+    data = PetsModel(
+        id=pet_id,
+        name=name,
+        species=species,
+        age=age,
+        animal_shelter_id=animal_shelter_id,
+        adopted=adopted,
+    )
 
     engine = db_connection.get_engine()
 
     with engine.connect() as connection:
         connection.execute(
             text(
-                "INSERT INTO pets (id, name, species, age, animal_shelter_id, adopted) VALUES (:id, :name, :species, :age, :animal_shelter_id, :adopted)"
+                "INSERT INTO pets (id, name, species, age, animal_shelter_id, adopted) \
+                    VALUES (:id, :name, :species, :age, :animal_shelter_id, :adopted)"
             ),
             {
                 "id": pet_id,
@@ -73,7 +81,9 @@ def test_select_pet():
 
         query_pet1 = pet_repository.select_pet(pet_id=data.id)
         query_pet2 = pet_repository.select_pet(animal_shelter_id=data.animal_shelter_id)
-        query_pet3 = pet_repository.select_pet(pet_id=data.id, animal_shelter_id=data.animal_shelter_id)
+        query_pet3 = pet_repository.select_pet(
+            pet_id=data.id, animal_shelter_id=data.animal_shelter_id
+        )
 
         connection.execute(text("DELETE FROM pets WHERE id=:id"), {"id": data.id})
         connection.commit()

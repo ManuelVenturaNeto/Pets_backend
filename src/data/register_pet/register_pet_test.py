@@ -7,7 +7,7 @@ from src.infra.test import (
 from src.data.test import FindAnimalShelterSpy, FindSpecieSpy
 from .register_pet import RegisterPet
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_register_pet():

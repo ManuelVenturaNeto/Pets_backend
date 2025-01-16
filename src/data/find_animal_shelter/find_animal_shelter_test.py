@@ -3,7 +3,7 @@ from src.infra.test import AnimalShelterRepositorySpy
 from .find_animal_shelter import FindAnimalShelter
 
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_by_id():

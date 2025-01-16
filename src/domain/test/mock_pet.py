@@ -2,7 +2,7 @@ from faker import Faker
 from src.domain.models import Pets
 
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def mock_pet() -> Pets:

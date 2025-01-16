@@ -4,7 +4,7 @@ from src.infra.test import PetRepositorySpy
 from src.presenters.helpers import HttpRequest
 from .find_pets_controller import FindPetController
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_route():

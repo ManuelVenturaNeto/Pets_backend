@@ -8,7 +8,7 @@ from src.infra.test import (
 )
 from .register_pet_controller import RegisterPetController
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_route():

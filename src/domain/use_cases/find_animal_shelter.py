@@ -26,8 +26,18 @@ class FindAnimalShelter(ABC):
 
     @classmethod
     @abstractmethod
-    def by_id_and_name(cls, animal_shelter_id: int, name: str) -> Dict[bool, List[AnimalShelters]]:
+    def by_id_and_name(
+        cls, animal_shelter_id: int, name: str
+    ) -> Dict[bool, List[AnimalShelters]]:
         """
         Specific Case
         """
         raise ValueError("Should implement method: by_id and name")
+
+    @classmethod
+    @abstractmethod
+    def by_cpf(cls, cpf: int) -> Dict[bool, List[AnimalShelters]]:
+        """
+        Specific Case
+        """
+        raise ValueError("Should implement method: by_cpf")

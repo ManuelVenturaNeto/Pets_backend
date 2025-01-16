@@ -1,7 +1,7 @@
 from faker import Faker
 from src.domain.models import Species
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def mock_specie() -> Species:

@@ -3,7 +3,7 @@ from src.infra.test import UserAdopterRepositorySpy
 from .find_user_adopter import FindUserAdopter
 
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def test_by_user_adopter_id():
@@ -105,7 +105,7 @@ def test_by_user_information():
 
     attributes = {
         "name": faker.name(),
-        "cpf": faker.random_number(digits=11),
+        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
         "email": faker.email(),
         "phone_number": faker.random_number(digits=11),
     }

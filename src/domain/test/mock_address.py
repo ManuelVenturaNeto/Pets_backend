@@ -1,7 +1,7 @@
 from faker import Faker
 from src.domain.models import Addresses
 
-faker = Faker()
+faker = Faker("pt_BR")
 
 
 def mock_address() -> Addresses:
