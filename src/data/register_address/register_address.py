@@ -1,4 +1,4 @@
-# pylint: disable=arguments-differ
+# pylint: disable=arguments-differ, W0221, W0237
 
 from typing import Dict
 from src.domain.use_cases import RegisterAddress as RegisterAddressInterface
@@ -14,7 +14,16 @@ class RegisterAddress(RegisterAddressInterface):
     def __init__(self, address_repository: type[AddressRepository]):
         self.address_repository = address_repository
 
-    def register_address(self, cep: int, state: str, city: str, neighborhood: str, street: str, number: int, complement: str = None) -> Dict[bool, Addresses]:
+    def register_address(
+        self,
+        cep: int,
+        state: str,
+        city: str,
+        neighborhood: str,
+        street: str,
+        number: int,
+        complement: str = None,
+    ) -> Dict[bool, Addresses]:
         """
         Register address usecase
         :param  - cep: person cep
@@ -29,9 +38,25 @@ class RegisterAddress(RegisterAddressInterface):
 
         response = None
 
-        validate_entry = isinstance(cep, int) and isinstance(state, str) and isinstance(city, str) and isinstance(neighborhood, str) and isinstance(street, str) and isinstance(number, int)and (isinstance(complement, str) or isinstance(complement, type(None)))
+        validate_entry = (
+            isinstance(cep, int)
+            and isinstance(state, str)
+            and isinstance(city, str)
+            and isinstance(neighborhood, str)
+            and isinstance(street, str)
+            and isinstance(number, int)
+            and (isinstance(complement, (str, type(None))))
+        )
 
         if validate_entry:
-            response = self.address_repository.insert_address(cep=cep, state=state, city=city, neighborhood=neighborhood, street=street, number=number, complement=complement)
+            response = self.address_repository.insert_address(
+                cep=cep,
+                state=state,
+                city=city,
+                neighborhood=neighborhood,
+                street=street,
+                number=number,
+                complement=complement,
+            )
 
         return {"Success": validate_entry, "Data": response}

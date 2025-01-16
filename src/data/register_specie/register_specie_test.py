@@ -36,16 +36,15 @@ def test_register_specie_fail():
     register_specie = RegisterSpecie(specie_repo)
 
     attributes = {
-        "specie_name": faker.random_number(digits=2),       
+        "specie_name": faker.random_number(digits=2),
     }
 
     response = register_specie.register_specie(
         specie_name=attributes["specie_name"],
-
     )
 
     # Testing inputs
-    assert specie_repo.insert_specie_params == {}  # pylint: disable=C1803
+    assert not specie_repo.insert_specie_params
 
     # Testing outputs
     assert response["Success"] is False

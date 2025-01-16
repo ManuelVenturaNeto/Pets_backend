@@ -43,7 +43,7 @@ def test_by_id_fail():
     response = find_specie.by_id(id=attibutes["id"])
 
     # Testing inputs
-    assert specie_repo.select_specie_params == {}  # pylint: disable=C1803
+    assert not specie_repo.select_specie_params
 
     # Testing outputs
     assert response["Success"] is False
@@ -87,7 +87,7 @@ def test_by_specie_name_fail():
     response = find_specie.by_specie_name(specie_name=attibutes["specie_name"])
 
     # Testing inputs
-    assert specie_repo.select_specie_params == {}  # pylint: disable=C1803
+    assert not specie_repo.select_specie_params
 
     # Testing outputs
     assert response["Success"] is False
@@ -107,7 +107,9 @@ def test_by_id_and_specie_name():
         "specie_name": faker.name(),
     }
 
-    response = find_specie.by_id_and_specie_name(id=attibutes["id"], specie_name=attibutes["specie_name"])
+    response = find_specie.by_id_and_specie_name(
+        id=attibutes["id"], specie_name=attibutes["specie_name"]
+    )
 
     # Testing inputs
     assert specie_repo.select_specie_params["id"] == attibutes["id"]
@@ -131,11 +133,13 @@ def test_by_id_and_specie_name_fail():
         "specie_name": faker.random_number(digits=5),
     }
 
-    response = find_specie.by_id_and_specie_name(id=attibutes["id"], specie_name=attibutes["specie_name"])
+    response = find_specie.by_id_and_specie_name(
+        id=attibutes["id"], specie_name=attibutes["specie_name"]
+    )
 
     # Testing inputs
-    assert specie_repo.select_specie_params == {}  # pylint: disable=C1803
-    assert specie_repo.select_specie_params == {}  # pylint: disable=C1803
+    assert not specie_repo.select_specie_params
+    assert not specie_repo.select_specie_params
 
     # Testing outputs
     assert response["Success"] is False

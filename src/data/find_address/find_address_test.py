@@ -43,7 +43,7 @@ def test_by_id_fail():
     response = find_address.by_id(id=attibutes["id"])
 
     # Testing inputs
-    assert address_repo.select_address_params == {}  # pylint: disable=C1803
+    assert not address_repo.select_address_params
 
     # Testing outputs
     assert response["Success"] is False
@@ -67,13 +67,22 @@ def test_by_complete_discription():
         "number": faker.random_number(digits=3),
     }
 
-    response = find_address.by_complete_discription(cep=attibutes["cep"], state=attibutes["state"], city=attibutes["city"], neighborhood=attibutes["neighborhood"], street=attibutes["street"], number=attibutes["number"])
+    response = find_address.by_complete_discription(
+        cep=attibutes["cep"],
+        state=attibutes["state"],
+        city=attibutes["city"],
+        neighborhood=attibutes["neighborhood"],
+        street=attibutes["street"],
+        number=attibutes["number"],
+    )
 
     # Testing inputs
     assert address_repo.select_address_params["cep"] == attibutes["cep"]
     assert address_repo.select_address_params["state"] == attibutes["state"]
     assert address_repo.select_address_params["city"] == attibutes["city"]
-    assert address_repo.select_address_params["neighborhood"] == attibutes["neighborhood"]
+    assert (
+        address_repo.select_address_params["neighborhood"] == attibutes["neighborhood"]
+    )
     assert address_repo.select_address_params["street"] == attibutes["street"]
     assert address_repo.select_address_params["number"] == attibutes["number"]
 
@@ -99,10 +108,17 @@ def test_by_complete_discription_fail():
         "number": faker.name(),
     }
 
-    response = find_address.by_complete_discription(cep=attibutes["cep"], state=attibutes["state"], city=attibutes["city"], neighborhood=attibutes["neighborhood"], street=attibutes["street"], number=attibutes["number"])
+    response = find_address.by_complete_discription(
+        cep=attibutes["cep"],
+        state=attibutes["state"],
+        city=attibutes["city"],
+        neighborhood=attibutes["neighborhood"],
+        street=attibutes["street"],
+        number=attibutes["number"],
+    )
 
     # Testing inputs
-    assert address_repo.select_address_params == {}  # pylint: disable=C1803
+    assert not address_repo.select_address_params
 
     # Testing outputs
     assert response["Success"] is False
@@ -124,13 +140,20 @@ def test_by_cep_or_state_or_city_or_neighbohood():
         "neighborhood": faker.name(),
     }
 
-    response = find_address.by_cep_or_state_or_city_or_neighbohood(cep=attibutes["cep"], state=attibutes["state"], city=attibutes["city"], neighborhood=attibutes["neighborhood"])
+    response = find_address.by_cep_or_state_or_city_or_neighbohood(
+        cep=attibutes["cep"],
+        state=attibutes["state"],
+        city=attibutes["city"],
+        neighborhood=attibutes["neighborhood"],
+    )
 
     # Testing inputs
     assert address_repo.select_address_params["cep"] == attibutes["cep"]
     assert address_repo.select_address_params["state"] == attibutes["state"]
     assert address_repo.select_address_params["city"] == attibutes["city"]
-    assert address_repo.select_address_params["neighborhood"] == attibutes["neighborhood"]
+    assert (
+        address_repo.select_address_params["neighborhood"] == attibutes["neighborhood"]
+    )
 
     # Testing outputs
     assert response["Success"] is True
@@ -155,7 +178,7 @@ def test_by_cep_or_state_or_city_or_neighbohood_fail():
     response = find_address.by_cep_or_state_or_city_or_neighbohood(cep=attibutes["cep"])
 
     # Testing inputs
-    assert address_repo.select_address_params == {}  # pylint: disable=C1803
+    assert not address_repo.select_address_params
 
     # Testing outputs
     assert response["Success"] is False

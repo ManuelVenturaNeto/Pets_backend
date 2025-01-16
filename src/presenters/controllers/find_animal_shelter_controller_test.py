@@ -13,9 +13,14 @@ def test_route():
     """
 
     find_animal_shelter_use_case = FindAnimalShelterSpy(AnimalShelterRepositorySpy())
-    find_animal_shelter_controller = FindAnimalShelterController(find_animal_shelter_use_case)
+    find_animal_shelter_controller = FindAnimalShelterController(
+        find_animal_shelter_use_case
+    )
     http_request = HttpRequest(
-        query={"animal_shelter_id": faker.random_number(digits=5), "animal_shelter_name": faker.name()}
+        query={
+            "animal_shelter_id": faker.random_number(digits=5),
+            "animal_shelter_name": faker.name(),
+        }
     )
 
     response = find_animal_shelter_controller.route(http_request)
@@ -41,15 +46,17 @@ def test_route_error_400():
     """
 
     find_animal_shelter_use_case = FindAnimalShelterSpy(AnimalShelterRepositorySpy())
-    find_animal_shelter_controller = FindAnimalShelterController(find_animal_shelter_use_case)
+    find_animal_shelter_controller = FindAnimalShelterController(
+        find_animal_shelter_use_case
+    )
     http_request = HttpRequest()
 
     response = find_animal_shelter_controller.route(http_request)
 
     # testing inputs
-    assert find_animal_shelter_use_case.by_id_and_name_param == {}  # pylint: disable=C1803
-    assert find_animal_shelter_use_case.by_id_param == {}  # pylint: disable=C1803
-    assert find_animal_shelter_use_case.by_name_param == {}  # pylint: disable=C1803
+    assert not find_animal_shelter_use_case.by_id_and_name_param
+    assert not find_animal_shelter_use_case.by_id_param
+    assert not find_animal_shelter_use_case.by_name_param
 
     # testing outputs
     assert response.status_code == 400
@@ -62,7 +69,9 @@ def test_route_error_422():
     """
 
     find_animal_shelter_use_case = FindAnimalShelterSpy(AnimalShelterRepositorySpy())
-    find_animal_shelter_controller = FindAnimalShelterController(find_animal_shelter_use_case)
+    find_animal_shelter_controller = FindAnimalShelterController(
+        find_animal_shelter_use_case
+    )
     http_request = HttpRequest(
         query={
             "invalid_entry": faker.random_number(digits=5),
@@ -73,9 +82,9 @@ def test_route_error_422():
     response = find_animal_shelter_controller.route(http_request)
 
     # testing inputs
-    assert find_animal_shelter_use_case.by_id_and_name_param == {}  # pylint: disable=C1803
-    assert find_animal_shelter_use_case.by_id_param == {}  # pylint: disable=C1803
-    assert find_animal_shelter_use_case.by_name_param == {}  # pylint: disable=C1803
+    assert not find_animal_shelter_use_case.by_id_and_name_param
+    assert not find_animal_shelter_use_case.by_id_param
+    assert not find_animal_shelter_use_case.by_name_param
 
     # testing outputs
     assert response.status_code == 422

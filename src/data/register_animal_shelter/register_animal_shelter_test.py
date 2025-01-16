@@ -13,8 +13,9 @@ def test_register_animal_shelter():
     animal_shelter_repo = AnimalShelterRepositorySpy()
     address_repo = AddressRepositorySpy()
     register_address_service = RegisterAddress(address_repo)
-    register_animal_shelter = RegisterAnimalShelter(animal_shelter_repo, register_address_service)
-    
+    register_animal_shelter = RegisterAnimalShelter(
+        animal_shelter_repo, register_address_service
+    )
 
     attributes = {
         "name": faker.name(),
@@ -52,20 +53,33 @@ def test_register_animal_shelter():
     assert address_repo.insert_address_params["cep"] == attributes["cep"]
     assert address_repo.insert_address_params["state"] == attributes["state"]
     assert address_repo.insert_address_params["city"] == attributes["city"]
-    assert address_repo.insert_address_params["neighborhood"] == attributes["neighborhood"]
+    assert (
+        address_repo.insert_address_params["neighborhood"] == attributes["neighborhood"]
+    )
     assert address_repo.insert_address_params["street"] == attributes["street"]
     assert address_repo.insert_address_params["number"] == attributes["number"]
     assert address_repo.insert_address_params["complement"] == attributes["complement"]
-    
+
     # Testing inputs of register_animal_shelter
-    assert animal_shelter_repo.insert_animal_shelter_params["name"] == attributes["name"]
+    assert (
+        animal_shelter_repo.insert_animal_shelter_params["name"] == attributes["name"]
+    )
     assert bcrypt.checkpw(
-        attributes["password"].encode("utf-8"), animal_shelter_repo.insert_animal_shelter_params["password"]
+        attributes["password"].encode("utf-8"),
+        animal_shelter_repo.insert_animal_shelter_params["password"],
     )
     assert animal_shelter_repo.insert_animal_shelter_params["cpf"] == attributes["cpf"]
-    assert animal_shelter_repo.insert_animal_shelter_params["responsible_name"] == attributes["responsible_name"]
-    assert animal_shelter_repo.insert_animal_shelter_params["email"] == attributes["email"]
-    assert animal_shelter_repo.insert_animal_shelter_params["phone_number"] == attributes["phone_number"]
+    assert (
+        animal_shelter_repo.insert_animal_shelter_params["responsible_name"]
+        == attributes["responsible_name"]
+    )
+    assert (
+        animal_shelter_repo.insert_animal_shelter_params["email"] == attributes["email"]
+    )
+    assert (
+        animal_shelter_repo.insert_animal_shelter_params["phone_number"]
+        == attributes["phone_number"]
+    )
     # assert animal_shelter_repo.insert_animal_shelter_params["address_id"] == address_repo.insert_address_params["id"]
 
     # Testing outputs
@@ -80,7 +94,9 @@ def test_register_animal_shelter_fail():
     animal_shelter_repo = AnimalShelterRepositorySpy()
     address_repo = AddressRepositorySpy()
     register_address_service = RegisterAddress(address_repo)
-    register_animal_shelter = RegisterAnimalShelter(animal_shelter_repo, register_address_service)
+    register_animal_shelter = RegisterAnimalShelter(
+        animal_shelter_repo, register_address_service
+    )
 
     attributes = {
         "name": faker.random_number(digits=3),
@@ -115,11 +131,12 @@ def test_register_animal_shelter_fail():
     )
 
     # Testing inputs
-    assert animal_shelter_repo.insert_animal_shelter_params == {}  # pylint: disable=C1803
+    assert not animal_shelter_repo.insert_animal_shelter_params
 
     # Testing outputs
     assert response["Success"] is False
     assert response["Data"] is None
+
 
 def test_register_animal_shelter_fail_address():
     """
@@ -128,7 +145,9 @@ def test_register_animal_shelter_fail_address():
     animal_shelter_repo = AnimalShelterRepositorySpy()
     address_repo = AddressRepositorySpy()
     register_address_service = RegisterAddress(address_repo)
-    register_animal_shelter = RegisterAnimalShelter(animal_shelter_repo, register_address_service)
+    register_animal_shelter = RegisterAnimalShelter(
+        animal_shelter_repo, register_address_service
+    )
 
     attributes = {
         "name": faker.name(),
@@ -163,7 +182,7 @@ def test_register_animal_shelter_fail_address():
     )
 
     # Testing inputs
-    assert animal_shelter_repo.insert_animal_shelter_params == {}  # pylint: disable=C1803
+    assert not animal_shelter_repo.insert_animal_shelter_params
 
     # Testing outputs
     assert response["Success"] is False

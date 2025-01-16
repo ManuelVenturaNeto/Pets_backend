@@ -15,7 +15,16 @@ class AddressRepository(AddressRepositoryInterface):
     """
 
     @classmethod
-    def insert_address(cls, cep: int, state: str, city: str, neighborhood: str, street: str, number: int, complement: str = None) -> Addresses:
+    def insert_address(
+        cls,
+        cep: int,
+        state: str,
+        city: str,
+        neighborhood: str,
+        street: str,
+        number: int,
+        complement: str = None,
+    ) -> Addresses:
         """
         Insert data in address entity
         :param  - cep: cep of the address owner
@@ -24,13 +33,19 @@ class AddressRepository(AddressRepositoryInterface):
                 - neighborhood: id of address owner
                 - street: id of address owner
                 - number: id of address owner
-                - complement: id of address owner
+                - complement: id of address owner if it exists
         :return - tuble with new address inserted
         """
         with DBConnectionHandler() as db_connection:
             try:
                 new_address = AddressesModel(
-                    cep=cep, state=state, city=city, neighborhood=neighborhood, street=street, number=number, complement=complement
+                    cep=cep,
+                    state=state,
+                    city=city,
+                    neighborhood=neighborhood,
+                    street=street,
+                    number=number,
+                    complement=complement,
                 )
                 db_connection.session.add(new_address)
                 db_connection.session.commit()
@@ -53,7 +68,16 @@ class AddressRepository(AddressRepositoryInterface):
         return None
 
     @classmethod
-    def select_address(cls, address_id: int = None, cep: int = None, state: str = None, city: str = None, neighborhood: str = None, street: str = None, number: str = None) -> List[Addresses]:
+    def select_address(
+        cls,
+        address_id: int = None,
+        cep: int = None,
+        state: str = None,
+        city: str = None,
+        neighborhood: str = None,
+        street: str = None,
+        number: str = None,
+    ) -> List[Addresses]:
         """
         Select data into address entity
         :param  - id: id of address
@@ -67,22 +91,37 @@ class AddressRepository(AddressRepositoryInterface):
 
         try:
             data_query = None
-            
+
             if address_id:
                 with DBConnectionHandler() as db_connection:
-                    data = (db_connection.session.query(AddressesModel).filter_by(id=address_id).one())
+                    data = (
+                        db_connection.session.query(AddressesModel)
+                        .filter_by(id=address_id)
+                        .one()
+                    )
 
                     data_query = [data]
 
             elif cep and state and city and neighborhood and street and number:
                 with DBConnectionHandler() as db_connection:
-                    data = (db_connection.session.query(AddressesModel).filter_by(cep=cep, state=state, city=city, neighborhood=neighborhood, street=street, number=number).one())
+                    data = (
+                        db_connection.session.query(AddressesModel)
+                        .filter_by(
+                            cep=cep,
+                            state=state,
+                            city=city,
+                            neighborhood=neighborhood,
+                            street=street,
+                            number=number,
+                        )
+                        .one()
+                    )
 
                     data_query = [data]
 
             elif cep or state or city or neighborhood:
                 with DBConnectionHandler() as db_connection:
-                    
+
                     filters = {}
                     if cep:
                         filters["cep"] = cep
@@ -93,7 +132,9 @@ class AddressRepository(AddressRepositoryInterface):
                     if neighborhood:
                         filters["neighborhood"] = neighborhood
 
-                    query = db_connection.session.query(AddressesModel).filter_by(**filters)
+                    query = db_connection.session.query(AddressesModel).filter_by(
+                        **filters
+                    )
                     data_query = query.all()
 
             return data_query

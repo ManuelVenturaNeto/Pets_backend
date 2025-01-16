@@ -11,10 +11,12 @@ class Pets(Base):
     __tablename__ = "pets"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String, unique=True, nullable=False)
+    name = Column(String, nullable=False)
     species = Column(Integer, ForeignKey("species.id"), nullable=False)
     age = Column(Integer)
-    animal_shelter_id = Column(Integer, ForeignKey("animal_shelters.id"), nullable=False)
+    animal_shelter_id = Column(
+        Integer, ForeignKey("animal_shelters.id"), nullable=False
+    )
     adopted = Column(Boolean, default=False)
     user_adopters = relationship("UserAdopters")
 

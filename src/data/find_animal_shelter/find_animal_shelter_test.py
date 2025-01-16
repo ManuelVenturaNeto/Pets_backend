@@ -43,7 +43,7 @@ def test_by_id_fail():
     response = find_animal_shelter.by_id(id=attibutes["id"])
 
     # Testing inputs
-    assert animal_shelter_repo.select_animal_shelter_params == {}  # pylint: disable=C1803
+    assert not animal_shelter_repo.select_animal_shelter_params
 
     # Testing outputs
     assert response["Success"] is False
@@ -87,7 +87,7 @@ def test_by_name_fail():
     response = find_animal_shelter.by_name(name=attibutes["name"])
 
     # Testing inputs
-    assert animal_shelter_repo.select_animal_shelter_params == {}  # pylint: disable=C1803
+    assert not animal_shelter_repo.select_animal_shelter_params
 
     # Testing outputs
     assert response["Success"] is False
@@ -107,7 +107,9 @@ def test_by_id_and_name():
         "name": faker.name(),
     }
 
-    response = find_animal_shelter.by_id_and_name(id=attibutes["id"], name=attibutes["name"])
+    response = find_animal_shelter.by_id_and_name(
+        id=attibutes["id"], name=attibutes["name"]
+    )
 
     # Testing inputs
     assert animal_shelter_repo.select_animal_shelter_params["id"] == attibutes["id"]
@@ -131,11 +133,13 @@ def test_by_id_and_name_fail():
         "name": faker.random_number(digits=5),
     }
 
-    response = find_animal_shelter.by_id_and_name(id=attibutes["id"], name=attibutes["name"])
+    response = find_animal_shelter.by_id_and_name(
+        id=attibutes["id"], name=attibutes["name"]
+    )
 
     # Testing inputs
-    assert animal_shelter_repo.select_animal_shelter_params == {}  # pylint: disable=C1803
-    assert animal_shelter_repo.select_animal_shelter_params == {}  # pylint: disable=C1803
+    assert not animal_shelter_repo.select_animal_shelter_params
+    assert not animal_shelter_repo.select_animal_shelter_params
 
     # Testing outputs
     assert response["Success"] is False

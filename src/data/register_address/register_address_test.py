@@ -36,7 +36,9 @@ def test_register_address():
     assert address_repo.insert_address_params["cep"] == attributes["cep"]
     assert address_repo.insert_address_params["state"] == attributes["state"]
     assert address_repo.insert_address_params["city"] == attributes["city"]
-    assert address_repo.insert_address_params["neighborhood"] == attributes["neighborhood"]
+    assert (
+        address_repo.insert_address_params["neighborhood"] == attributes["neighborhood"]
+    )
     assert address_repo.insert_address_params["street"] == attributes["street"]
     assert address_repo.insert_address_params["number"] == attributes["number"]
     assert address_repo.insert_address_params["complement"] == attributes["complement"]
@@ -60,7 +62,7 @@ def test_register_address_fail():
         "neighborhood": faker.random_number(digits=3),
         "street": faker.random_number(digits=3),
         "number": faker.state_abbr(),
-        "complement": faker.random_number(digits=3),        
+        "complement": faker.random_number(digits=3),
     }
 
     response = register_address.register_address(
@@ -74,7 +76,7 @@ def test_register_address_fail():
     )
 
     # Testing inputs
-    assert address_repo.insert_address_params == {}  # pylint: disable=C1803
+    assert not address_repo.insert_address_params
 
     # Testing outputs
     assert response["Success"] is False

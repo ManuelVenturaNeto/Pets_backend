@@ -1,5 +1,9 @@
 from faker import Faker
-from src.infra.test import AnimalShelterRepositorySpy, PetRepositorySpy, SpecieRepositorySpy
+from src.infra.test import (
+    AnimalShelterRepositorySpy,
+    PetRepositorySpy,
+    SpecieRepositorySpy,
+)
 from src.data.test import FindAnimalShelterSpy, FindSpecieSpy
 from .register_pet import RegisterPet
 
@@ -34,10 +38,6 @@ def test_register_pet():
         adopted=attributes["adopted"],
         age=attributes["age"],
     )
-
-    print("Captured Params in PetRepo:", pet_repo.insert_pet_param)
-    print("Captured Params in FindAnimalShelter:", find_animal_shelter.by_id_and_name_param)
-    print("Response:", response)
 
     # testing inputs
     assert pet_repo.insert_pet_param["name"] == attributes["name"]
@@ -89,9 +89,9 @@ def test_register_pet_fail():
     )
 
     # testing inputs
-    assert pet_repo.insert_pet_param == {}  # pylint: disable=C1803
-    assert pet_repo.insert_pet_param == {}  # pylint: disable=C1803
-    assert pet_repo.insert_pet_param == {}  # pylint: disable=C1803
+    assert not pet_repo.insert_pet_param
+    assert not pet_repo.insert_pet_param
+    assert not pet_repo.insert_pet_param
 
     # testing outputs
     assert response["Success"] is False

@@ -10,13 +10,12 @@ class UserAdopters(Base):
     __tablename__ = "user_adopters"
 
     id = Column(Integer, primary_key=True)
-    name = Column(String, unique=True, nullable=False)
-    cpf = Column(Integer, unique=True, nullable=False)
-    email = Column(String, unique=True, nullable=False)
-    phone_number = Column(Integer, unique=True, nullable=False)
+    name = Column(String, nullable=False)
+    cpf = Column(Integer, nullable=False)
+    email = Column(String, nullable=False)
+    phone_number = Column(Integer, nullable=False)
     address_id = Column(Integer, ForeignKey("addresses.id"), nullable=False)
     pet_id = Column(Integer, ForeignKey("pets.id"), nullable=False)
-
 
     def __repr__(self):
         return f"User_Adopter [name={self.name}]"

@@ -15,8 +15,8 @@ class AnimalShelters(Base):
     password = Column(String, nullable=False)
     cpf = Column(Integer, unique=True, nullable=False)
     responsible_name = Column(String, nullable=False)
-    email = Column(String, unique=True, nullable=False)
-    phone_number = Column(Integer, unique=True, nullable=False)
+    email = Column(String, nullable=False)
+    phone_number = Column(Integer, nullable=False)
     address_id = Column(Integer, ForeignKey("addresses.id"), nullable=False)
     id_pet = relationship("Pets")
 

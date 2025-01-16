@@ -1,5 +1,9 @@
 from faker import Faker
-from src.infra.test import UserAdopterRepositorySpy, AddressRepositorySpy, PetRepositorySpy
+from src.infra.test import (
+    UserAdopterRepositorySpy,
+    AddressRepositorySpy,
+    PetRepositorySpy,
+)
 from src.data.test import FindPetSpy
 from src.data.register_address import RegisterAddress
 from .register_user_adopter import RegisterUserAdopter
@@ -16,8 +20,9 @@ def test_register_user_adopter():
     address_repo = AddressRepositorySpy()
     register_address_service = RegisterAddress(address_repo)
     find_pet = FindPetSpy(PetRepositorySpy())
-    register_user_adopter = RegisterUserAdopter(user_adopter_repo, find_pet, register_address_service)
-    
+    register_user_adopter = RegisterUserAdopter(
+        user_adopter_repo, find_pet, register_address_service
+    )
 
     attributes = {
         "name": faker.name(),
@@ -54,19 +59,24 @@ def test_register_user_adopter():
     assert address_repo.insert_address_params["cep"] == attributes["cep"]
     assert address_repo.insert_address_params["state"] == attributes["state"]
     assert address_repo.insert_address_params["city"] == attributes["city"]
-    assert address_repo.insert_address_params["neighborhood"] == attributes["neighborhood"]
+    assert (
+        address_repo.insert_address_params["neighborhood"] == attributes["neighborhood"]
+    )
     assert address_repo.insert_address_params["street"] == attributes["street"]
     assert address_repo.insert_address_params["number"] == attributes["number"]
     assert address_repo.insert_address_params["complement"] == attributes["complement"]
-    
+
     # Testing inputs of find pet
     # assert address_repo.insert_address_params["pet_id"] == attributes["pet_id"]
-    
+
     # Testing inputs of register_user_adopter
     assert user_adopter_repo.insert_user_adopter_params["name"] == attributes["name"]
     assert user_adopter_repo.insert_user_adopter_params["cpf"] == attributes["cpf"]
     assert user_adopter_repo.insert_user_adopter_params["email"] == attributes["email"]
-    assert user_adopter_repo.insert_user_adopter_params["phone_number"] == attributes["phone_number"]
+    assert (
+        user_adopter_repo.insert_user_adopter_params["phone_number"]
+        == attributes["phone_number"]
+    )
     # assert user_adopter_repo.insert_user_adopter_params["address_id"] == address_repo.insert_address_params["id"]
 
     # Testing outputs
@@ -82,7 +92,9 @@ def test_register_user_adopter_fail():
     address_repo = AddressRepositorySpy()
     register_address_service = RegisterAddress(address_repo)
     find_pet = FindPetSpy(PetRepositorySpy())
-    register_user_adopter = RegisterUserAdopter(user_adopter_repo, find_pet, register_address_service)
+    register_user_adopter = RegisterUserAdopter(
+        user_adopter_repo, find_pet, register_address_service
+    )
 
     attributes = {
         "name": faker.random_number(digits=3),
@@ -115,11 +127,12 @@ def test_register_user_adopter_fail():
     )
 
     # Testing inputs
-    assert user_adopter_repo.insert_user_adopter_params == {}  # pylint: disable=C1803
+    assert not user_adopter_repo.insert_user_adopter_params
 
     # Testing outputs
     assert response["Success"] is False
     assert response["Data"] is None
+
 
 def test_register_user_adopter_fail_address():
     """
@@ -129,7 +142,9 @@ def test_register_user_adopter_fail_address():
     address_repo = AddressRepositorySpy()
     register_address_service = RegisterAddress(address_repo)
     find_pet = FindPetSpy(PetRepositorySpy())
-    register_user_adopter = RegisterUserAdopter(user_adopter_repo, find_pet, register_address_service)
+    register_user_adopter = RegisterUserAdopter(
+        user_adopter_repo, find_pet, register_address_service
+    )
 
     attributes = {
         "name": faker.name(),
@@ -162,11 +177,12 @@ def test_register_user_adopter_fail_address():
     )
 
     # Testing inputs
-    assert user_adopter_repo.insert_user_adopter_params == {}  # pylint: disable=C1803
+    assert not user_adopter_repo.insert_user_adopter_params
 
     # Testing outputs
     assert response["Success"] is False
     assert response["Data"] is None
+
 
 def test_register_user_adopter_fail_pet_id():
     """
@@ -176,7 +192,9 @@ def test_register_user_adopter_fail_pet_id():
     address_repo = AddressRepositorySpy()
     register_address_service = RegisterAddress(address_repo)
     find_pet = FindPetSpy(PetRepositorySpy())
-    register_user_adopter = RegisterUserAdopter(user_adopter_repo, find_pet, register_address_service)
+    register_user_adopter = RegisterUserAdopter(
+        user_adopter_repo, find_pet, register_address_service
+    )
 
     attributes = {
         "name": faker.name(),
@@ -210,7 +228,7 @@ def test_register_user_adopter_fail_pet_id():
     )
 
     # Testing inputs
-    assert user_adopter_repo.insert_user_adopter_params == {}  # pylint: disable=C1803
+    assert not user_adopter_repo.insert_user_adopter_params
 
     # Testing outputs
     assert response["Success"] is False

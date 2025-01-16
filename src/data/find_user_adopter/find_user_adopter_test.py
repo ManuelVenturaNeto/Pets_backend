@@ -16,10 +16,15 @@ def test_by_user_adopter_id():
 
     attributes = {"user_adopter_id": faker.random_number(digits=5)}
 
-    response = find_user_adopter.by_user_adopter_id(user_adopter_id=attributes["user_adopter_id"])
+    response = find_user_adopter.by_user_adopter_id(
+        user_adopter_id=attributes["user_adopter_id"]
+    )
 
     # testing input
-    assert user_adopter_repo.select_user_adopter_params["id"] == attributes["user_adopter_id"]
+    assert (
+        user_adopter_repo.select_user_adopter_params["id"]
+        == attributes["user_adopter_id"]
+    )
 
     # testing output
     assert response["Success"] is True
@@ -36,10 +41,12 @@ def test_by_user_adopter_id_fail():
 
     attributes = {"user_adopter_id": faker.name()}
 
-    response = find_user_adopter.by_user_adopter_id(user_adopter_id=attributes["user_adopter_id"])
+    response = find_user_adopter.by_user_adopter_id(
+        user_adopter_id=attributes["user_adopter_id"]
+    )
 
     # testing input
-    assert user_adopter_repo.select_user_adopter_params == {}  # pylint: disable=C1803
+    assert not user_adopter_repo.select_user_adopter_params
 
     # testing output
     assert response["Success"] is False
@@ -59,7 +66,9 @@ def test_by_pet_id():
     response = find_user_adopter.by_pet_id(pet_id=attributes["pet_id"])
 
     # testing input
-    assert user_adopter_repo.select_user_adopter_params["pet_id"] == attributes["pet_id"]
+    assert (
+        user_adopter_repo.select_user_adopter_params["pet_id"] == attributes["pet_id"]
+    )
 
     # testing output
     assert response["Success"] is True
@@ -79,7 +88,7 @@ def test_by_pet_id_fail():
     response = find_user_adopter.by_pet_id(pet_id=attributes["pet_id"])
 
     # testing input
-    assert user_adopter_repo.select_user_adopter_params == {}  # pylint: disable=C1803
+    assert not user_adopter_repo.select_user_adopter_params
 
     # testing output
     assert response["Success"] is False
@@ -102,14 +111,20 @@ def test_by_user_information():
     }
 
     response = find_user_adopter.by_user_information(
-        name=attributes["name"], cpf=attributes["cpf"], email=attributes["email"], phone_number=attributes["phone_number"]
+        name=attributes["name"],
+        cpf=attributes["cpf"],
+        email=attributes["email"],
+        phone_number=attributes["phone_number"],
     )
 
     # testing input
     assert user_adopter_repo.select_user_adopter_params["name"] == attributes["name"]
     assert user_adopter_repo.select_user_adopter_params["cpf"] == attributes["cpf"]
     assert user_adopter_repo.select_user_adopter_params["email"] == attributes["email"]
-    assert user_adopter_repo.select_user_adopter_params["phone_number"] == attributes["phone_number"]
+    assert (
+        user_adopter_repo.select_user_adopter_params["phone_number"]
+        == attributes["phone_number"]
+    )
 
     # testing output
     assert response["Success"] is True
@@ -129,8 +144,8 @@ def test_by_user_information_fail():
     response = find_user_adopter.by_user_information(name=attributes["name"])
 
     # testing input
-    assert user_adopter_repo.select_user_adopter_params == {}  # pylint: disable=C1803
-    assert user_adopter_repo.select_user_adopter_params == {}  # pylint: disable=C1803
+    assert not user_adopter_repo.select_user_adopter_params
+    assert not user_adopter_repo.select_user_adopter_params
 
     # testing output
     assert response["Success"] is False
