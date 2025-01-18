@@ -19,10 +19,10 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
         cls,
         name: str,
         password: str,
-        cpf: int,
+        cpf: str,
         responsible_name: str,
         email: str,
-        phone_number: int,
+        phone_number: str,
         address_id: int,
     ) -> AnimalShelters:
         """
@@ -71,11 +71,11 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
 
     @classmethod
     def select_animal_shelter(
-        cls, animal_shelter_id: int = None, name: str = None, cpf: int = None
+        cls, id: int = None, name: str = None, cpf: str = None, address_id: int = None
     ) -> List[AnimalShelters]:
         """
         Select dada in animal_shelter entity by id and/or name
-        :param  - animal_shelter_id: id of the register
+        :param  - id: id of the register
                 - name: AnimalShelter name
         :return - List with AnimalShelters selected
         """
@@ -83,17 +83,17 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
         try:
             query_data = None
 
-            if animal_shelter_id and not name:
+            if id and not name:
 
                 with DBConnectionHandler() as db_connection:
                     data = (
                         db_connection.session.query(AnimalSheltersModel)
-                        .filter_by(id=animal_shelter_id)
+                        .filter_by(id=id)
                         .one()
                     )
                     query_data = [data]
 
-            elif not animal_shelter_id and name:
+            elif not id and name:
 
                 with DBConnectionHandler() as db_connection:
                     data = (
@@ -103,12 +103,12 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
                     )
                     query_data = [data]
 
-            elif animal_shelter_id and name:
+            elif id and name:
 
                 with DBConnectionHandler() as db_connection:
                     data = (
                         db_connection.session.query(AnimalSheltersModel)
-                        .filter_by(id=animal_shelter_id, name=name)
+                        .filter_by(id=id, name=name)
                         .one()
                     )
                     query_data = [data]
@@ -119,6 +119,16 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
                     data = (
                         db_connection.session.query(AnimalSheltersModel)
                         .filter_by(cpf=cpf)
+                        .one()
+                    )
+                    query_data = [data]
+
+            elif address_id:
+
+                with DBConnectionHandler() as db_connection:
+                    data = (
+                        db_connection.session.query(AnimalSheltersModel)
+                        .filter_by(address_id=address_id)
                         .one()
                     )
                     query_data = [data]

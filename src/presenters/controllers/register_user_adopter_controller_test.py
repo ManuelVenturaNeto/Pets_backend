@@ -20,11 +20,11 @@ def test_route():
     )
     attributes = {
         "name": faker.name(),
-        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
+        "cpf": faker.cpf().replace(".", "").replace("-", ""),
         "email": faker.email(),
-        "phone_number": faker.random_number(digits=11),
+        "phone_number": str(faker.random_number(digits=11)).zfill(11),
         "pet_id": faker.random_number(digits=1),
-        "cep": faker.random_number(digits=8),
+        "cep": str(faker.random_number(digits=8)).zfill(8),
         "state": faker.state_abbr(),
         "city": faker.name(),
         "neighborhood": faker.name(),

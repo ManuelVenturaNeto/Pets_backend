@@ -7,10 +7,10 @@ from src.infra.repo.animal_shelter_repository import AnimalShelterRepository
 def validator(
     name: str,
     password: str,
-    cpf: int,
+    cpf: str,
     responsible_name: str,
     email: str,
-    phone_number: int,
+    phone_number: str,
 ) -> bool:
     """
     Function to validade AnimalShelter data
@@ -19,10 +19,10 @@ def validator(
     validate_entry = (
         isinstance(name, str)
         and isinstance(password, str)
-        and isinstance(cpf, int)
+        and isinstance(cpf, str)
         and isinstance(responsible_name, str)
         and isinstance(email, str)
-        and isinstance(phone_number, int)
+        and isinstance(phone_number, str)
     )
 
     valid_name = validator_name(name)
@@ -72,7 +72,7 @@ def validator_password(password: str) -> bool:
     return False
 
 
-def validator_cpf(cpf: int) -> bool:
+def validator_cpf(cpf: str) -> bool:
     """
     Check if the cpf isnt in database and if that cpf is valid
     """
@@ -81,20 +81,19 @@ def validator_cpf(cpf: int) -> bool:
     if not validation["Data"]:
         cpf_str = str(cpf).zfill(11)
         cpf_validator = CPF().validate(cpf_str)
+
         return cpf_validator
 
     return False
 
 
-def validator_phone_number(phone_number: int) -> bool:
+def validator_phone_number(phone_number: str) -> bool:
     """
-    Check phone number countin 11 digits and if DDD is valid
+    Check phone number countin 11 digits
     """
     phone_number = str(phone_number)
 
     if len(phone_number) == 11:
-
-        if phone_number[:2] >= "11":
-            return True
+        return True
 
     return False

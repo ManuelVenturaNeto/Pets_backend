@@ -3,7 +3,7 @@ from src.main.routes.api_route import api_routes_bp
 from src.main.composer import register_user_adopter_composer, find_user_adopter_composer
 from src.main.adapter import flask_adapter
 
-# from src.security.auth_jwt.token_verificator import token_verify
+# from src.infra.auth_jwt.token_verificator import token_verify
 
 
 @api_routes_bp.route("/api/user_adopters", methods=["POST"])

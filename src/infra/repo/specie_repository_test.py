@@ -35,7 +35,7 @@ def test_insert_specie():
 
 def test_select_specie():
     """
-    Should select species in specie table and return it
+    Should select specie in species table and return it
     """
 
     id = faker.random_number(digits=5)

@@ -1,16 +1,16 @@
 from validate_docbr import CPF
 
 
-def validator(name: str, cpf: int, email: str, phone_number: int, pet_id: int) -> bool:
+def validator(name: str, cpf: str, email: str, phone_number: str, pet_id: int) -> bool:
     """
     Function to validade UserAdopter data
     """
 
     validate_entry = (
         isinstance(name, str)
-        and isinstance(cpf, int)
+        and isinstance(cpf, str)
         and isinstance(email, str)
-        and isinstance(phone_number, int)
+        and isinstance(phone_number, str)
         and isinstance(pet_id, int)
     )
 
@@ -24,7 +24,7 @@ def validator(name: str, cpf: int, email: str, phone_number: int, pet_id: int) -
     return False
 
 
-def validator_cpf(cpf: int) -> bool:
+def validator_cpf(cpf: str) -> bool:
     """
     Check if that cpf is valid
     """
@@ -35,15 +35,13 @@ def validator_cpf(cpf: int) -> bool:
     return cpf_validator
 
 
-def validator_phone_number(phone_number: int) -> bool:
+def validator_phone_number(phone_number: str) -> bool:
     """
-    Check phone number countin 11 digits and if DDD is valid
+    Check phone number countin 11 digits
     """
     phone_number = str(phone_number)
 
     if len(phone_number) == 11:
-
-        if phone_number[:2] >= "11":
-            return True
+        return True
 
     return False

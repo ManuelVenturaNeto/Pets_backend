@@ -15,11 +15,13 @@ class PetRepository(PetRepositoryInterface):
     """
 
     @classmethod
-    def insert_pet(cls, name: str, species: int, age: int, animal_shelter_id: int, adopted: bool) -> Pets:
+    def insert_pet(
+        cls, name: str, specie: int, age: int, animal_shelter_id: int, adopted: bool
+    ) -> Pets:
         """
         Insert data in pet entity
         :param  - name: name of animal
-                - species: enum with specie acepted
+                - specie: enum with specie acepted
                 - age: age of animal
                 - animal_shelter_id: id of pet owner (FK)
         :return - tuble with new pet inserted
@@ -27,7 +29,11 @@ class PetRepository(PetRepositoryInterface):
         with DBConnectionHandler() as db_connection:
             try:
                 new_pet = PetsModel(
-                    name=name, species=species, age=age, animal_shelter_id=animal_shelter_id, adopted=adopted
+                    name=name,
+                    specie=specie,
+                    age=age,
+                    animal_shelter_id=animal_shelter_id,
+                    adopted=adopted,
                 )
                 db_connection.session.add(new_pet)
                 db_connection.session.commit()
@@ -35,7 +41,7 @@ class PetRepository(PetRepositoryInterface):
                 return Pets(
                     id=new_pet.id,
                     name=new_pet.name,
-                    species=new_pet.species,
+                    specie=new_pet.specie,
                     age=new_pet.age,
                     animal_shelter_id=new_pet.animal_shelter_id,
                     adopted=new_pet.adopted,
@@ -48,7 +54,9 @@ class PetRepository(PetRepositoryInterface):
         return None
 
     @classmethod
-    def select_pet(cls, pet_id: int = None, animal_shelter_id: int = None) -> List[Pets]:
+    def select_pet(
+        cls, pet_id: int = None, animal_shelter_id: int = None
+    ) -> List[Pets]:
         """
         Select data into pet entity
         :param  - pet_id: id of pet
@@ -90,8 +98,10 @@ class PetRepository(PetRepositoryInterface):
 
         except NoResultFound:
             return []
+
         except:
             db_connection.session.rollback()
             raise
+
         finally:
             db_connection.session.close()

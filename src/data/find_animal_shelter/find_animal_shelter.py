@@ -65,7 +65,7 @@ class FindAnimalShelter(FindAnimalShelterInterface):
 
         return {"Success": validate_entry, "Data": response}
 
-    def by_cpf(self, cpf: int) -> Dict[bool, List[AnimalShelters]]:
+    def by_cpf(self, cpf: str) -> Dict[bool, List[AnimalShelters]]:
         """
         Select AnimalShelter by id
         :param  - cpf: cpf from animal_shelter

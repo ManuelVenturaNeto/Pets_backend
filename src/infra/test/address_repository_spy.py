@@ -14,7 +14,7 @@ class AddressRepositorySpy:
 
     def insert_address(
         self,
-        cep: int,
+        cep: str,
         state: str,
         city: str,
         neighborhood: str,
@@ -38,7 +38,7 @@ class AddressRepositorySpy:
     def select_address(
         self,
         id: int = None,
-        cep: int = None,
+        cep: str = None,
         state: str = None,
         city: str = None,
         neighborhood: str = None,

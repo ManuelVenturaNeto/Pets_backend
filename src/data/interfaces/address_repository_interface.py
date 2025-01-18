@@ -9,14 +9,33 @@ class AddressRepositoryInterface(ABC):
     """
 
     @abstractmethod
-    def insert_address(cls, cep: int, state: str, city: str, neighborhood: str, street: str, number: int, complement: str = None) -> Addresses:
+    def insert_address(
+        self,
+        cep: str,
+        state: str,
+        city: str,
+        neighborhood: str,
+        street: str,
+        number: int,
+        complement: str = None,
+    ) -> Addresses:
         """
         Abstractmethod
         """
         raise ValueError("Method not implemented")
 
     @abstractmethod
-    def select_address(cls, id: int = None, cep: int = None, state: str = None, city: str = None, neighborhood: str = None, street: str = None, number: str = None, complement: str = None) -> List[Addresses]:
+    def select_address(
+        self,
+        id: int = None,
+        cep: str = None,
+        state: str = None,
+        city: str = None,
+        neighborhood: str = None,
+        street: str = None,
+        number: str = None,
+        complement: str = None,
+    ) -> List[Addresses]:
         """
         Abstractmethod
         """

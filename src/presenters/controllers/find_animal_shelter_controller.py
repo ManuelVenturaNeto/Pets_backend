@@ -25,11 +25,14 @@ class FindAnimalShelterController(RouteInterface):
         if http_request.query:
             query_string_params = http_request.query.keys()
 
-            if "animal_shelter_id" in query_string_params and "animal_shelter_name" in query_string_params:
+            if (
+                "animal_shelter_id" in query_string_params
+                and "animal_shelter_name" in query_string_params
+            ):
                 animal_shelter_id = http_request.query["animal_shelter_id"]
                 animal_shelter_name = http_request.query["animal_shelter_name"]
                 response = self.find_animal_shelter_use_case.by_id_and_name(
-                    animal_shelter_id=animal_shelter_id, name=animal_shelter_name
+                    id=animal_shelter_id, name=animal_shelter_name
                 )
 
             elif (
@@ -37,14 +40,16 @@ class FindAnimalShelterController(RouteInterface):
                 and "animal_shelter_name" not in query_string_params
             ):
                 animal_shelter_id = http_request.query["animal_shelter_id"]
-                response = self.find_animal_shelter_use_case.by_id(animal_shelter_id=animal_shelter_id)
+                response = self.find_animal_shelter_use_case.by_id(id=animal_shelter_id)
 
             elif (
                 "animal_shelter_id" not in query_string_params
                 and "animal_shelter_name" in query_string_params
             ):
                 animal_shelter_name = http_request.query["animal_shelter_name"]
-                response = self.find_animal_shelter_use_case.by_name(name=animal_shelter_name)
+                response = self.find_animal_shelter_use_case.by_name(
+                    name=animal_shelter_name
+                )
 
             else:
                 response = {"Success": False, "Data": None}

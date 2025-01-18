@@ -59,7 +59,7 @@ def test_by_complete_discription():
     find_address = FindAddress(address_repo)
 
     attibutes = {
-        "cep": faker.random_number(digits=8),
+        "cep": str(faker.random_number(digits=8)).zfill(8),
         "state": faker.state_abbr(),
         "city": faker.name(),
         "neighborhood": faker.name(),
@@ -134,7 +134,7 @@ def test_by_cep_or_state_or_city_or_neighbohood():
     find_address = FindAddress(address_repo)
 
     attibutes = {
-        "cep": faker.random_number(digits=8),
+        "cep": str(faker.random_number(digits=8)).zfill(8),
         "state": faker.state_abbr(),
         "city": faker.name(),
         "neighborhood": faker.name(),
@@ -169,7 +169,7 @@ def test_by_cep_or_state_or_city_or_neighbohood_fail():
     find_address = FindAddress(address_repo)
 
     attibutes = {
-        "cep": faker.name(),
+        "cep": faker.random_number(digits=8),
         "state": faker.state_abbr(),
         "city": faker.name(),
         "neighborhood": faker.name(),

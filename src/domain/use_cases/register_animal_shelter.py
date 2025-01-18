@@ -10,7 +10,22 @@ class RegisterAnimalShelter(ABC):
 
     @classmethod
     @abstractmethod
-    def register_animal_shelter(cls, name: str, password: str, cpf: int, responsible_name: str, email: str, phone_number: int, cep: int, state: str, city: str, neighborhood: str, street: str, number: int, complement: str = None) -> Dict[bool, AnimalShelters]:
+    def register_animal_shelter(
+        cls,
+        name: str,
+        password: str,
+        cpf: str,
+        responsible_name: str,
+        email: str,
+        phone_number: str,
+        cep: str,
+        state: str,
+        city: str,
+        neighborhood: str,
+        street: str,
+        number: int,
+        complement: str = None,
+    ) -> Dict[bool, AnimalShelters]:
         """
         Case
         """

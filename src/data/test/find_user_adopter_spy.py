@@ -47,9 +47,9 @@ class FindUserAdopterSpy:
     def by_user_information(
         self,
         name: str = None,
-        cpf: int = None,
+        cpf: str = None,
         email: str = None,
-        phone_number: int = None,
+        phone_number: str = None,
     ) -> Dict[bool, List[UserAdopters]]:
         """
         Fetch user information based on provided parameters.
@@ -68,9 +68,9 @@ class FindUserAdopterSpy:
         response = None
         validate_entry = (
             isinstance(name, (str, type(None)))
-            or isinstance(cpf, (int, type(None)))
+            or isinstance(cpf, (str, type(None)))
             or isinstance(email, (str, type(None)))
-            or isinstance(phone_number, (int, type(None)))
+            or isinstance(phone_number, (str, type(None)))
         ) and (
             isinstance(name, str)
             or isinstance(cpf, str)

@@ -14,7 +14,7 @@ def test_insert_address():
     """
     Should insert address in addresses table and return it
     """
-    cep = faker.random_number(digits=8)
+    cep = str(faker.random_number(digits=8))
     state = faker.state_abbr()
     city = faker.city()
     neighborhood = faker.name()
@@ -58,7 +58,7 @@ def test_select_address():
     """
 
     id = faker.random_number(digits=5)
-    cep = faker.random_number(digits=8)
+    cep = str(faker.random_number(digits=8)).zfill(8)
     state = faker.state_abbr()
     city = faker.city()
     neighborhood = faker.name()

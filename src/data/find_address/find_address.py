@@ -30,7 +30,15 @@ class FindAddress(FindAddressInterface):
 
         return {"Success": validate_entry, "Data": response}
 
-    def by_complete_discription(self, cep: int, state: str, city: str, neighborhood: str, street: str, number: int) -> Dict[bool, List[Addresses]]:
+    def by_complete_discription(
+        self,
+        cep: str,
+        state: str,
+        city: str,
+        neighborhood: str,
+        street: str,
+        number: int,
+    ) -> Dict[bool, List[Addresses]]:
         """
         Select Address by complete discription
         :param  - cep: cep from address
@@ -43,14 +51,34 @@ class FindAddress(FindAddressInterface):
         """
 
         response = None
-        validate_entry = isinstance(cep, int) and isinstance(state, str) and isinstance(city, str) and isinstance(neighborhood, str) and isinstance(street, str) and isinstance(number, int)
+        validate_entry = (
+            isinstance(cep, str)
+            and isinstance(state, str)
+            and isinstance(city, str)
+            and isinstance(neighborhood, str)
+            and isinstance(street, str)
+            and isinstance(number, int)
+        )
 
         if validate_entry:
-            response = self.address_repository.select_address(cep=cep, state=state, city=city, neighborhood=neighborhood, street=street, number=number)
+            response = self.address_repository.select_address(
+                cep=cep,
+                state=state,
+                city=city,
+                neighborhood=neighborhood,
+                street=street,
+                number=number,
+            )
 
         return {"Success": validate_entry, "Data": response}
 
-    def by_cep_or_state_or_city_or_neighbohood(self, cep: int = None, state: str = None, city: str = None, neighborhood: str = None) -> Dict[bool, List[Addresses]]:
+    def by_cep_or_state_or_city_or_neighbohood(
+        self,
+        cep: str = None,
+        state: str = None,
+        city: str = None,
+        neighborhood: str = None,
+    ) -> Dict[bool, List[Addresses]]:
         """
         Select Address by cep or state or city or neighborhood
         :param  - cep: cep from address
@@ -63,12 +91,15 @@ class FindAddress(FindAddressInterface):
         response = None
         validate_entry = False
         if cep or state or city or neighborhood:
-            validate_entry = (isinstance(cep, type(None)) or isinstance(cep, int)) and \
-                            (isinstance(state, type(None)) or isinstance(state, str)) and \
-                            (isinstance(city, type(None)) or isinstance(city, str)) and \
-                            (isinstance(neighborhood, type(None)) or isinstance(neighborhood, str))
-
+            validate_entry = (
+                isinstance(cep, (str, type(None)))
+                and isinstance(state, (str, type(None)))
+                and isinstance(city, (str, type(None)))
+                and isinstance(neighborhood, (str, type(None)))
+            )
         if validate_entry:
-            response = self.address_repository.select_address(cep=cep, state=state, city=city, neighborhood=neighborhood)
+            response = self.address_repository.select_address(
+                cep=cep, state=state, city=city, neighborhood=neighborhood
+            )
 
         return {"Success": validate_entry, "Data": response}

@@ -17,9 +17,9 @@ def mock_user_adopter() -> UserAdopters:
     return UserAdopters(
         id=faker.random_number(digits=5),
         name=faker.name(),
-        cpf=faker.random_number(digits=11),
+        cpf=faker.cpf().replace(".", "").replace("-", ""),
         email=faker.email(),
-        phone_number=faker.random_number(digits=11),
+        phone_number=str(faker.random_number(digits=11)).zfill(11),
         address_id=address.id,
         pet_id=pet.id,
     )

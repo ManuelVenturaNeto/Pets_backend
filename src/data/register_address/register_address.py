@@ -16,7 +16,7 @@ class RegisterAddress(RegisterAddressInterface):
 
     def register_address(
         self,
-        cep: int,
+        cep: str,
         state: str,
         city: str,
         neighborhood: str,
@@ -39,7 +39,7 @@ class RegisterAddress(RegisterAddressInterface):
         response = None
 
         validate_entry = (
-            isinstance(cep, int)
+            isinstance(cep, str)
             and isinstance(state, str)
             and isinstance(city, str)
             and isinstance(neighborhood, str)

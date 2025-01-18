@@ -105,9 +105,9 @@ def test_by_user_information():
 
     attributes = {
         "name": faker.name(),
-        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
+        "cpf": faker.cpf().replace(".", "").replace("-", ""),
         "email": faker.email(),
-        "phone_number": faker.random_number(digits=11),
+        "phone_number": str(faker.random_number(digits=11)).zfill(11),
     }
 
     response = find_user_adopter.by_user_information(

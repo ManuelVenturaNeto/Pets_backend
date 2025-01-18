@@ -1,6 +1,6 @@
 # pylint: disable=C0411
 
-from src.config.jwt_config_file import jwt_config
+from src.infra.config.jwt_config_file import jwt_config
 from .token_creator import TokenCreator
 
 token_creator = TokenCreator(

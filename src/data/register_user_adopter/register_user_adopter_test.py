@@ -26,12 +26,12 @@ def test_register_user_adopter():
 
     attributes = {
         "name": faker.name(),
-        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
+        "cpf": faker.cpf().replace(".", "").replace("-", ""),
         "responsible_name": faker.name(),
         "email": faker.email(),
-        "phone_number": faker.random_number(digits=11),
+        "phone_number": str(faker.random_number(digits=11)).zfill(11),
         "pet_id": faker.random_number(digits=1),
-        "cep": faker.random_number(digits=8),
+        "cep": str(faker.random_number(digits=8)).zfill(8),
         "state": faker.state_abbr(),
         "city": faker.name(),
         "neighborhood": faker.name(),
@@ -102,7 +102,7 @@ def test_register_user_adopter_fail():
         "email": faker.random_number(digits=3),
         "phone_number": faker.name(),
         "pet_id": faker.random_number(digits=1),
-        "cep": faker.random_number(digits=8),
+        "cep": str(faker.random_number(digits=8)).zfill(8),
         "state": faker.state_abbr(),
         "city": faker.name(),
         "neighborhood": faker.name(),
@@ -148,9 +148,9 @@ def test_register_user_adopter_fail_address():
 
     attributes = {
         "name": faker.name(),
-        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
+        "cpf": faker.cpf().replace(".", "").replace("-", ""),
         "email": faker.email(),
-        "phone_number": faker.random_number(digits=11),
+        "phone_number": str(faker.random_number(digits=11)),
         "pet_id": faker.random_number(digits=1),
         "cep": faker.name(),
         "state": faker.random_number(digits=11),
@@ -198,12 +198,12 @@ def test_register_user_adopter_fail_pet_id():
 
     attributes = {
         "name": faker.name(),
-        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
+        "cpf": faker.cpf().replace(".", "").replace("-", ""),
         "responsible_name": faker.name(),
         "email": faker.email(),
-        "phone_number": faker.random_number(digits=11),
+        "phone_number": str(faker.random_number(digits=11)).zfill(11),
         "pet_id": faker.name(),
-        "cep": faker.random_number(digits=8),
+        "cep": str(faker.random_number(digits=8)).zfill(8),
         "state": faker.state_abbr(),
         "city": faker.name(),
         "neighborhood": faker.name(),

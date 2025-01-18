@@ -29,7 +29,9 @@ class FindPet(FindPetInterface):
 
         return {"Success": validate_entry, "Data": response}
 
-    def by_animal_shelter_id(self, animal_shelter_id: Type[PetRepository]) -> Dict[bool, List[Pets]]:
+    def by_animal_shelter_id(
+        self, animal_shelter_id: Type[PetRepository]
+    ) -> Dict[bool, List[Pets]]:
         """
         Select Pet for AnimalShelter id
         :param  - animal_shelter_id: id of animal_shelter
@@ -41,7 +43,9 @@ class FindPet(FindPetInterface):
         validate_entry = isinstance(animal_shelter_id, int)
 
         if validate_entry:
-            response = self.pet_repository.select_pet(animal_shelter_id=animal_shelter_id)
+            response = self.pet_repository.select_pet(
+                animal_shelter_id=animal_shelter_id
+            )
 
         return {"Success": validate_entry, "Data": response}
 
@@ -60,6 +64,8 @@ class FindPet(FindPetInterface):
         validate_entry = isinstance(pet_id, int) and isinstance(animal_shelter_id, int)
 
         if validate_entry:
-            response = self.pet_repository.select_pet(pet_id=pet_id, animal_shelter_id=animal_shelter_id)
+            response = self.pet_repository.select_pet(
+                pet_id=pet_id, animal_shelter_id=animal_shelter_id
+            )
 
         return {"Success": validate_entry, "Data": response}

@@ -28,11 +28,11 @@ class RegisterAnimalShelter(RegisterAnimalShelterInterface):
         self,
         name: str,
         password: str,
-        cpf: int,
+        cpf: str,
         responsible_name: str,
         email: str,
-        phone_number: int,
-        cep: int,
+        phone_number: str,
+        cep: str,
         state: str,
         city: str,
         neighborhood: str,
@@ -81,6 +81,7 @@ class RegisterAnimalShelter(RegisterAnimalShelterInterface):
                 hashed_password = bcrypt.hashpw(
                     password.encode("utf-8"), bcrypt.gensalt()
                 )
+
                 response = self.animal_shelter_repository.insert_animal_shelter(
                     name=name,
                     password=hashed_password,

@@ -13,7 +13,7 @@ def test_register_address():
     register_address = RegisterAddress(address_repo)
 
     attributes = {
-        "cep": faker.random_number(digits=8),
+        "cep": str(faker.random_number(digits=8)).zfill(8),
         "state": faker.state_abbr(),
         "city": faker.name(),
         "neighborhood": faker.name(),

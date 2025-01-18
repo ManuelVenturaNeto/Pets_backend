@@ -15,9 +15,9 @@ def test_insert_user_adopter():
     Should insert user_adopter in user_adopter table and return it
     """
     name = faker.name()
-    cpf = faker.random_number(digits=11)
+    cpf = faker.cpf().replace(".", "").replace("-", "")
     email = faker.email()
-    phone_number = faker.random_number(digits=11)
+    phone_number = str(faker.random_number(digits=11))
     address_id = faker.random_number(digits=2)
     pet_id = faker.random_number(digits=2)
 
@@ -53,9 +53,9 @@ def test_select_user_adopter():
 
     user_adopter_id = faker.random_number(digits=5)
     name = faker.name()
-    cpf = faker.random_number(digits=11)
+    cpf = faker.cpf().replace(".", "").replace("-", "")
     email = faker.email()
-    phone_number = faker.random_number(digits=11)
+    phone_number = str(faker.random_number(digits=11)).zfill(11)
     address_id = faker.random_number(digits=2)
     pet_id = faker.random_number(digits=2)
 

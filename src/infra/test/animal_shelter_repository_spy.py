@@ -3,7 +3,7 @@ from src.domain.models import AnimalShelters
 from src.domain.test import mock_animal_shelter
 
 
-class AnimalShelterRepositorySpy():
+class AnimalShelterRepositorySpy:
     """
     Spy to AnimalShelter Repository
     """
@@ -12,7 +12,16 @@ class AnimalShelterRepositorySpy():
         self.insert_animal_shelter_params = {}
         self.select_animal_shelter_params = {}
 
-    def insert_animal_shelter(self, name: str, password: str, cpf: str, responsible_name: str, email: str, phone_number: int, address_id: int) -> AnimalShelters:
+    def insert_animal_shelter(
+        self,
+        name: str,
+        password: str,
+        cpf: str,
+        responsible_name: str,
+        email: str,
+        phone_number: str,
+        address_id: int,
+    ) -> AnimalShelters:
         """
         Spy to all the attributes
         """
@@ -26,7 +35,16 @@ class AnimalShelterRepositorySpy():
 
         return mock_animal_shelter()
 
-    def select_animal_shelter(self, id: int = None, name: str = None, cpf: str = None, responsible_name: str = None, email: str = None, phone_number: int = None, address_id: int = None) -> List[AnimalShelters]:
+    def select_animal_shelter(
+        self,
+        id: int = None,
+        name: str = None,
+        cpf: str = None,
+        responsible_name: str = None,
+        email: str = None,
+        phone_number: str = None,
+        address_id: int = None,
+    ) -> List[AnimalShelters]:
         """
         Spy to all the attributes
         """

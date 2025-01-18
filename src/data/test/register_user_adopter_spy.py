@@ -14,11 +14,11 @@ class RegisterUserAdopterSpy:
     def register_user_adopter(
         self,
         name: str,
-        cpf: int,
+        cpf: str,
         email: str,
-        phone_number: int,
+        phone_number: str,
         pet_id,
-        cep: int,
+        cep: str,
         state: str,
         city: str,
         neighborhood: str,
@@ -44,9 +44,9 @@ class RegisterUserAdopterSpy:
         response = None
         validate_entry = (
             isinstance(name, str)
-            and isinstance(cpf, int)
+            and isinstance(cpf, str)
             and isinstance(email, str)
-            and isinstance(phone_number, int)
+            and isinstance(phone_number, str)
             and isinstance(pet_id, int)
         )
 

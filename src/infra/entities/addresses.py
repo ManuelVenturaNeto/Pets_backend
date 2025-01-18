@@ -11,7 +11,7 @@ class Addresses(Base):
     __tablename__ = "addresses"
 
     id = Column(Integer, primary_key=True)
-    cep = Column(Integer, nullable=False)
+    cep = Column(String, nullable=False)
     state = Column(String(2), nullable=False)
     city = Column(String, nullable=False)
     neighborhood = Column(String, nullable=False)
@@ -22,7 +22,8 @@ class Addresses(Base):
     address_id = relationship("AnimalShelters")
 
     def __repr__(self):
-        return f"Address [cep={self.cep}, state = {self.state}, city = {self.city}, neighborhood = {self.neighborhood}, street = {self.street}, complement = {self.complement}, number = {self.number}]"
+        return f"Address [cep={self.cep}, state = {self.state}, city = {self.city}, \
+            neighborhood = {self.neighborhood}, street = {self.street}, complement = {self.complement}, number = {self.number}]"
 
     def __eq__(self, other):
         if (

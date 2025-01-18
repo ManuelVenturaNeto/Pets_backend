@@ -22,11 +22,11 @@ def test_register_animal_shelter():
         "password": faker.password(
             length=12, special_chars=True, digits=True, upper_case=True, lower_case=True
         ),
-        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
+        "cpf": faker.cpf().replace(".", "").replace("-", ""),
         "responsible_name": faker.name(),
         "email": faker.email(),
-        "phone_number": faker.random_number(digits=11),
-        "cep": faker.random_number(digits=8),
+        "phone_number": str(faker.random_number(digits=11)).zfill(11),
+        "cep": str(faker.random_number(digits=8)).zfill(8),
         "state": faker.state_abbr(),
         "city": faker.name(),
         "neighborhood": faker.name(),
@@ -52,6 +52,10 @@ def test_register_animal_shelter():
     )
 
     # Testing inputs of register_address_service
+
+    print(attributes["cep"])
+    print(attributes.items())
+    print(address_repo.insert_address_params["cep"])
     assert address_repo.insert_address_params["cep"] == attributes["cep"]
     assert address_repo.insert_address_params["state"] == attributes["state"]
     assert address_repo.insert_address_params["city"] == attributes["city"]
@@ -75,6 +79,7 @@ def test_register_animal_shelter():
         animal_shelter_repo.insert_animal_shelter_params["responsible_name"]
         == attributes["responsible_name"]
     )
+
     assert (
         animal_shelter_repo.insert_animal_shelter_params["email"] == attributes["email"]
     )
@@ -103,11 +108,11 @@ def test_register_animal_shelter_fail():
     attributes = {
         "name": faker.random_number(digits=3),
         "password": faker.random_number(digits=3),
-        "cpf": faker.name(),
+        "cpf": faker.random_number(digits=11),
         "responsible_name": faker.random_number(digits=3),
         "email": faker.random_number(digits=3),
-        "phone_number": faker.name(),
-        "cep": faker.random_number(digits=8),
+        "phone_number": faker.random_number(digits=11),
+        "cep": str(faker.random_number(digits=8)).zfill(8),
         "state": faker.state_abbr(),
         "city": faker.name(),
         "neighborhood": faker.name(),
@@ -156,11 +161,11 @@ def test_register_animal_shelter_fail_address():
         "password": faker.password(
             length=12, special_chars=True, digits=True, upper_case=True, lower_case=True
         ),
-        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
+        "cpf": faker.cpf().replace(".", "").replace("-", ""),
         "responsible_name": faker.name(),
         "email": faker.email(),
-        "phone_number": faker.random_number(digits=11),
-        "cep": faker.name(),
+        "phone_number": str(faker.random_number(digits=11)).zfill(11),
+        "cep": faker.random_number(digits=8),
         "state": faker.random_number(digits=11),
         "city": faker.random_number(digits=11),
         "neighborhood": faker.random_number(digits=11),

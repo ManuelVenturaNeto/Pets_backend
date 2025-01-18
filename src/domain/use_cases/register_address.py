@@ -10,7 +10,16 @@ class RegisterAddress(ABC):
 
     @classmethod
     @abstractmethod
-    def register_address(cls, cep: int, state: str, city: str, neighborhood: str, street: str, number: int, complement: str = None) -> Dict[bool, Addresses]:
+    def register_address(
+        cls,
+        cep: str,
+        state: str,
+        city: str,
+        neighborhood: str,
+        street: str,
+        number: int,
+        complement: str = None,
+    ) -> Dict[bool, Addresses]:
         """
         Case
         """

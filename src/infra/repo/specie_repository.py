@@ -44,7 +44,7 @@ class SpecieRepository(SpecieRepositoryInterface):
         Select data into specie entity
         :param  - id: id of specie
                 - specie_name: id of owner
-        :return - turple with selected species
+        :return - turple with selected specie
         """
 
         try:
@@ -53,9 +53,7 @@ class SpecieRepository(SpecieRepositoryInterface):
             if id and not specie_name:
                 with DBConnectionHandler() as db_connection:
                     data = (
-                        db_connection.session.query(SpeciesModel)
-                        .filter_by(id=id)
-                        .one()
+                        db_connection.session.query(SpeciesModel).filter_by(id=id).one()
                     )
                     data_query = [data]
 

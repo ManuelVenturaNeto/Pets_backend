@@ -20,10 +20,10 @@ def test_insert_animal_shelter():
     password = faker.password(
         length=12, special_chars=True, digits=True, upper_case=True, lower_case=True
     )
-    cpf = faker.random_number(digits=11)
+    cpf = faker.cpf().replace(".", "").replace("-", "")
     responsible_name = faker.name()
     email = faker.email()
-    phone_number = faker.random_number(digits=11)
+    phone_number = str(faker.random_number(digits=11))
     adrress_id = faker.random_number(digits=2)
 
     # connect to the database
@@ -70,10 +70,10 @@ def test_select_animal_shelter():
     password = faker.password(
         length=12, special_chars=True, digits=True, upper_case=True, lower_case=True
     )
-    cpf = faker.random_number(digits=11)
+    cpf = faker.cpf().replace(".", "").replace("-", "")
     responsible_name = faker.name()
     email = faker.email()
-    phone_number = faker.random_number(digits=11)
+    phone_number = str(faker.random_number(digits=11)).zfill(11)
     address_id = faker.random_number(digits=2)
 
     # save the random values into a 'data' variable for comparison
@@ -112,13 +112,13 @@ def test_select_animal_shelter():
 
         # run tests on the select_animal_shelter function to verify all use cases and saving in memory
         query_animal_shelter1 = animal_shelter_repository.select_animal_shelter(
-            animal_shelter_id=data.id
+            id=data.id
         )
         query_animal_shelter2 = animal_shelter_repository.select_animal_shelter(
             name=data.name
         )
         query_animal_shelter3 = animal_shelter_repository.select_animal_shelter(
-            animal_shelter_id=data.id, name=data.name
+            id=data.id, name=data.name
         )
 
         # clean up the database after the tests

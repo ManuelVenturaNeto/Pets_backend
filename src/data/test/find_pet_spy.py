@@ -50,7 +50,9 @@ class FindPetSpy:
         """
 
         self.by_pet_id_and_animal_shelter_id_param["pet_id"] = pet_id
-        self.by_pet_id_and_animal_shelter_id_param["animal_shelter_id"] = animal_shelter_id
+        self.by_pet_id_and_animal_shelter_id_param["animal_shelter_id"] = (
+            animal_shelter_id
+        )
         response = None
         validate_entry = isinstance(pet_id, int) and isinstance(animal_shelter_id, int)
 

@@ -11,7 +11,22 @@ class RegisterAnimalShelterSpy:
         self.register_address_service = register_address_service
         self.register_param = {}
 
-    def register_animal_shelter(self, name: str, password: str, cpf: int, responsible_name: str, email: str, phone_number: int, cep: int, state: str, city: str, neighborhood: str, street: str, number: int, complement: str = None) -> Dict[bool, AnimalShelters]:
+    def register_animal_shelter(
+        self,
+        name: str,
+        password: str,
+        cpf: str,
+        responsible_name: str,
+        email: str,
+        phone_number: str,
+        cep: str,
+        state: str,
+        city: str,
+        neighborhood: str,
+        street: str,
+        number: int,
+        complement: str = None,
+    ) -> Dict[bool, AnimalShelters]:
         """Register animal_shelter"""
 
         self.register_param["name"] = name
@@ -27,7 +42,6 @@ class RegisterAnimalShelterSpy:
         self.register_param["street"] = street
         self.register_param["number"] = number
         self.register_param["complement"] = complement
-        
 
         response = None
         validate_entry = isinstance(name, str) and isinstance(password, str)

@@ -23,11 +23,11 @@ def test_route():
         "password": faker.password(
             length=12, special_chars=True, digits=True, upper_case=True, lower_case=True
         ),
-        "cpf": int(faker.cpf().replace(".", "").replace("-", "")),
+        "cpf": faker.cpf().replace(".", "").replace("-", ""),
         "responsible_name": faker.name(),
         "email": faker.email(),
-        "phone_number": faker.random_number(digits=11),
-        "cep": faker.random_number(digits=8),
+        "phone_number": str(faker.random_number(digits=11)).zfill(11),
+        "cep": str(faker.random_number(digits=8)).zfill(8),
         "state": faker.state_abbr(),
         "city": faker.name(),
         "neighborhood": faker.name(),

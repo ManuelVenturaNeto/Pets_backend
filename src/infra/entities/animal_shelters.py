@@ -13,10 +13,10 @@ class AnimalShelters(Base):
     id = Column(Integer, primary_key=True)
     name = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
-    cpf = Column(Integer, unique=True, nullable=False)
+    cpf = Column(String, unique=True, nullable=False)
     responsible_name = Column(String, nullable=False)
     email = Column(String, nullable=False)
-    phone_number = Column(Integer, nullable=False)
+    phone_number = Column(String, nullable=False)
     address_id = Column(Integer, ForeignKey("addresses.id"), nullable=False)
     id_pet = relationship("Pets")
 

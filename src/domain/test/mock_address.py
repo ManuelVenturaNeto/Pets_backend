@@ -11,7 +11,7 @@ def mock_address() -> Addresses:
 
     return Addresses(
         id=faker.random_number(digits=5),
-        cep=faker.random_number(digits=8),
+        cep=str(faker.random_number(digits=8)).zfill(8),
         state=faker.state_abbr(),
         city=faker.name(),
         neighborhood=faker.name(),

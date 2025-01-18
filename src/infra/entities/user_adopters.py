@@ -11,9 +11,9 @@ class UserAdopters(Base):
 
     id = Column(Integer, primary_key=True)
     name = Column(String, nullable=False)
-    cpf = Column(Integer, nullable=False)
+    cpf = Column(String, nullable=False)
     email = Column(String, nullable=False)
-    phone_number = Column(Integer, nullable=False)
+    phone_number = Column(String, nullable=False)
     address_id = Column(Integer, ForeignKey("addresses.id"), nullable=False)
     pet_id = Column(Integer, ForeignKey("pets.id"), nullable=False)
 

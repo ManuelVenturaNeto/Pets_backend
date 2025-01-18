@@ -50,9 +50,9 @@ class FindUserAdopter(FindUserAdopterInterface):
     def by_user_information(
         self,
         name: str = None,
-        cpf: int = None,
+        cpf: str = None,
         email: str = None,
-        phone_number: int = None,
+        phone_number: str = None,
     ) -> Dict[bool, List[UserAdopters]]:
         """
         Fetch user information based on provided parameters.

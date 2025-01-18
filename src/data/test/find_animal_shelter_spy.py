@@ -14,14 +14,14 @@ class FindAnimalShelterSpy:
         self.by_name_param = {}
         self.by_id_and_name_param = {}
 
-    def by_id(self, animal_shelter_id: int) -> Dict[bool, List[AnimalShelters]]:
+    def by_id(self, id: int) -> Dict[bool, List[AnimalShelters]]:
         """
         Select AnimalShelter by id
         """
 
-        self.by_id_param["animal_shelter_id"] = animal_shelter_id
+        self.by_id_param["animal_shelter_id"] = id
         response = None
-        validate_entry = isinstance(animal_shelter_id, int)
+        validate_entry = isinstance(id, int)
 
         if validate_entry:
             response = [mock_animal_shelter()]
@@ -44,18 +44,18 @@ class FindAnimalShelterSpy:
 
         return {"Success": validate_entry, "Data": response}
 
-    def by_id_and_name(self, animal_shelter_id: int, name: str) -> Dict[bool, List[AnimalShelters]]:
+    def by_id_and_name(self, id: int, name: str) -> Dict[bool, List[AnimalShelters]]:
         """
-        Select AnimalShelter by animal_shelter_id and name
-        :param  - animal_shelter_id: id from animal_shelter
+        Select AnimalShelter by id and name
+        :param  - id: id from animal_shelter
                 - name: name from animal_shelter
         :return - Dictionary of informations of the process
         """
 
-        self.by_id_and_name_param["animal_shelter_id"] = animal_shelter_id
+        self.by_id_and_name_param["animal_shelter_id"] = id
         self.by_id_and_name_param["name"] = name
         response = None
-        validate_entry = isinstance(animal_shelter_id, int) and isinstance(name, str)
+        validate_entry = isinstance(id, int) and isinstance(name, str)
 
         if validate_entry:
             response = [mock_animal_shelter()]

@@ -6,7 +6,7 @@ from src.main.composer import (
 )
 from src.main.adapter import flask_adapter
 
-# from src.security.auth_jwt.token_verificator import token_verify
+# from src.infra.auth_jwt.token_verificator import token_verify
 
 
 @api_routes_bp.route("/api/pets", methods=["POST"])
@@ -24,7 +24,7 @@ def register_pet():
             "id": response.body.id,
             "animal_shelter_attributes": {
                 "name": response.body.name,
-                "specie": response.body.species,
+                "specie": response.body.specie,
                 "age": response.body.age,
                 "adopted": response.body.adopted,
             },
@@ -66,7 +66,7 @@ def finder_pets():
                     "id": element.id,
                     "attributest": {
                         "name": element.name,
-                        "species": element.species,
+                        "specie": element.specie,
                         "age": element.age,
                     },
                     "relationships": {

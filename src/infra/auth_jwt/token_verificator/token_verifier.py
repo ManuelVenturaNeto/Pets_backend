@@ -4,7 +4,7 @@ import jwt
 from flask import jsonify, request
 from src.infra.repo.animal_shelter_repository import AnimalShelterRepository
 from src.data.find_animal_shelter import FindAnimalShelter
-from src.security.auth_jwt.token_handler import token_creator
+from src.infra.auth_jwt.token_handler import token_creator
 
 
 def token_verify(function: callable) -> callable:

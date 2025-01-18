@@ -155,7 +155,7 @@ def test_route_error_422_wrong_body():
     register_pet_router = RegisterPetController(register_pet_use_case)
 
     attributes = {
-        "species": "Dog",
+        "specie": "Dog",
         "animal_shelter_information": {
             "animal_shelter_id": faker.random_number(),
             "animal_shelter_name": faker.name(),
@@ -185,7 +185,7 @@ def test_route_error_422_wrong_animal_shelter_information():
 
     attributes = {
         "name": faker.name(),
-        "species": "Dog",
+        "specie": "Dog",
         "animal_shelter_information": {},
         "adopted": False,
     }

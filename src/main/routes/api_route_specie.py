@@ -6,7 +6,7 @@ from src.main.composer import (
 )
 from src.main.adapter import flask_adapter
 
-# from src.security.auth_jwt.token_verificator import token_verify
+# from src.infra.auth_jwt.token_verificator import token_verify
 
 
 @api_routes_bp.route("/api/species", methods=["POST"])

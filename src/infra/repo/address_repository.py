@@ -17,7 +17,7 @@ class AddressRepository(AddressRepositoryInterface):
     @classmethod
     def insert_address(
         cls,
-        cep: int,
+        cep: str,
         state: str,
         city: str,
         neighborhood: str,
@@ -71,7 +71,7 @@ class AddressRepository(AddressRepositoryInterface):
     def select_address(
         cls,
         address_id: int = None,
-        cep: int = None,
+        cep: str = None,
         state: str = None,
         city: str = None,
         neighborhood: str = None,
