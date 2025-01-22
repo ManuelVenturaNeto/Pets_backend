@@ -62,10 +62,13 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
                     address_id=new_animal_shelter.address_id,
                 )
             except:
-                db_connection.session.rollback()
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.rollback()
                 raise
+
             finally:
-                db_connection.session.close()
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.close()
 
         return None
 
@@ -138,8 +141,80 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
         except NoResultFound:
             return []
         except:
-            db_connection.session.rollback()
+            with DBConnectionHandler() as db_connection:
+                db_connection.session.rollback()
             raise
 
         finally:
-            db_connection.session.close()
+            with DBConnectionHandler() as db_connection:
+                db_connection.session.close()
+
+    @classmethod
+    def delete_animal_shelter(cls, id: int) -> bool:
+        """
+        Delete data from animal_shelter entity
+        :param  - id: id of the animal_shelter to be deleted
+        :return - True if the animal_shelter was deleted, False otherwise
+        """
+        with DBConnectionHandler() as db_connection:
+            try:
+                animal_shelter_to_delete = (
+                    db_connection.session.query(AnimalSheltersModel)
+                    .filter_by(id=id)
+                    .one_or_none()
+                )
+                if animal_shelter_to_delete:
+                    db_connection.session.delete(animal_shelter_to_delete)
+                    db_connection.session.commit()
+                    return True
+                return False
+            except:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.rollback()
+                raise
+            finally:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.close()
+
+    @classmethod
+    def update_animal_shelter(cls, id: int, **kwargs) -> AnimalShelters:
+        """
+        Update data in user_adopter entity
+        :param  - id: id of the user_adopter to be updated
+                - **kwargs: dictionary containing fields and their new values
+        :return - Updated user_adopter data as an instance of UserAdopters, or None if not found
+        """
+        with DBConnectionHandler() as db_connection:
+            try:
+                animal_shelter_to_update = (
+                    db_connection.session.query(AnimalSheltersModel)
+                    .filter_by(id=id)
+                    .one_or_none()
+                )
+                if animal_shelter_to_update:
+                    # Atualiza os parâmetros com base no kwargs
+                    for key, value in kwargs.items():
+                        if hasattr(animal_shelter_to_update, key):
+                            setattr(animal_shelter_to_update, key, value)
+
+                    db_connection.session.commit()
+
+                    # Certifica-se de passar todos os campos obrigatórios
+                    return AnimalShelters(
+                        id=animal_shelter_to_update.id,
+                        name=animal_shelter_to_update.name,
+                        password=animal_shelter_to_update.password,
+                        cpf=animal_shelter_to_update.cpf,
+                        responsible_name=animal_shelter_to_update.responsible_name,
+                        email=animal_shelter_to_update.email,
+                        phone_number=animal_shelter_to_update.phone_number,
+                        address_id=animal_shelter_to_update.address_id,
+                    )
+                return None
+            except:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.rollback()
+                raise
+            finally:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.close()

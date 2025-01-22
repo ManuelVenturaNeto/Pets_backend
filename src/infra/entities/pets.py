@@ -10,7 +10,7 @@ class Pets(Base):
 
     __tablename__ = "pets"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False)
     specie = Column(Integer, ForeignKey("species.id"), nullable=False)
     age = Column(Integer)
@@ -21,7 +21,7 @@ class Pets(Base):
     user_adopters = relationship("UserAdopters")
 
     def __repr__(self):
-        return f"Pet [name = {self.name}, specie = {self.specie}, animal_shelter_id = {self.animal_shelter_id}, adopted = {self.adopted}]"
+        return f"Pet [name = {self.name}, specie = {self.specie}, animal_shelter_id = {self.animal_shelter_id}]"
 
     def __eq__(self, other):
         if (

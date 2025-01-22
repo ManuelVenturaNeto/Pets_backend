@@ -10,7 +10,7 @@ class AnimalShelters(Base):
 
     __tablename__ = "animal_shelters"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, unique=True, nullable=False)
     password = Column(String, nullable=False)
     cpf = Column(String, unique=True, nullable=False)

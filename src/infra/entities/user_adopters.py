@@ -9,7 +9,7 @@ class UserAdopters(Base):
 
     __tablename__ = "user_adopters"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String, nullable=False)
     cpf = Column(String, nullable=False)
     email = Column(String, nullable=False)

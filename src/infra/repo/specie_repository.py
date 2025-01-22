@@ -80,7 +80,68 @@ class SpecieRepository(SpecieRepositoryInterface):
         except NoResultFound:
             return []
         except:
-            db_connection.session.rollback()
+            with DBConnectionHandler() as db_connection:
+                db_connection.session.rollback()
             raise
         finally:
-            db_connection.session.close()
+            with DBConnectionHandler() as db_connection:
+                db_connection.session.close()
+
+    @classmethod
+    def delete_specie(cls, id: int) -> bool:
+        """
+        Delete data from specie entity
+        :param  - id: id of the specie to be deleted
+        :return - True if the specie was deleted, False otherwise
+        """
+        with DBConnectionHandler() as db_connection:
+            try:
+                specie_to_delete = (
+                    db_connection.session.query(SpeciesModel)
+                    .filter_by(id=id)
+                    .one_or_none()
+                )
+                if specie_to_delete:
+                    db_connection.session.delete(specie_to_delete)
+                    db_connection.session.commit()
+                    return True
+                return False
+            except:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.rollback()
+                raise
+            finally:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.close()
+
+    @classmethod
+    def update_specie(cls, id: int, new_specie_name: str) -> Species:
+        """
+        Update data in specie entity
+        :param  - id: id of the specie to be updated
+                - new_specie_name: new name for the specie
+        :return - Updated specie data
+        """
+        with DBConnectionHandler() as db_connection:
+            try:
+                specie_to_update = (
+                    db_connection.session.query(SpeciesModel)
+                    .filter_by(id=id)
+                    .one_or_none()
+                )
+                if specie_to_update:
+                    specie_to_update.specie_name = new_specie_name
+                    db_connection.session.commit()
+                    return Species(
+                        id=specie_to_update.id,
+                        specie_name=specie_to_update.specie_name,
+                    )
+                return None
+            except:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.rollback()
+                raise
+
+            finally:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.close()

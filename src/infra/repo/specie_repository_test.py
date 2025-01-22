@@ -67,3 +67,82 @@ def test_select_specie():
     assert data in query_specie1
     assert data in query_specie2
     assert data in query_specie3
+
+
+def test_delete_specie():
+    """
+    Should delete specie in species table and return bool
+    """
+    id = faker.random_number(digits=5)
+    specie_name = faker.name()
+
+    engine = db_connection.get_engine()
+
+    with engine.connect() as connection:
+        connection.execute(
+            text(
+                "INSERT INTO species (id, specie_name) \
+                    VALUES (:id, :specie_name)"
+            ),
+            {
+                "id": id,
+                "specie_name": specie_name,
+            },
+        )
+        connection.commit()
+
+    deleted_element = specie_repository.delete_specie(id=id)
+
+    assert deleted_element is True
+
+    with engine.connect() as connection:
+        result = connection.execute(
+            text("SELECT * FROM species WHERE id = :id"), {"id": id}
+        ).fetchone()
+        assert result is None
+
+
+def test_update_specie():
+    """
+    Should update specie data in the species table and return the updated object
+    """
+    id = faker.random_number(digits=5)
+    specie_name = "Fake Specie One"
+    new_specie_name = "Fake Specie Two"
+
+    engine = db_connection.get_engine()
+
+    with engine.connect() as connection:
+        connection.execute(
+            text(
+                "INSERT INTO species (id, specie_name) \
+                    VALUES (:id, :specie_name)"
+            ),
+            {
+                "id": id,
+                "specie_name": specie_name,
+            },
+        )
+        connection.commit()
+
+    # Chamada do método de atualização
+    updated_specie = specie_repository.update_specie(
+        id=id, new_specie_name=new_specie_name
+    )
+
+    # Validação do retorno
+    assert updated_specie is not None
+    assert updated_specie.specie_name == new_specie_name
+    assert updated_specie.id == id
+
+    # Verificar que os dados foram realmente atualizados no banco de dados
+    with engine.connect() as connection:
+        result = connection.execute(
+            text("SELECT specie_name FROM species WHERE id = :id"), {"id": id}
+        ).fetchone()
+
+        connection.execute(text("DELETE FROM species WHERE id=:id"), {"id": id})
+        connection.commit()
+
+    assert result is not None
+    assert result[0] == new_specie_name

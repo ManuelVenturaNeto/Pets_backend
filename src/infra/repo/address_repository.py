@@ -61,10 +61,13 @@ class AddressRepository(AddressRepositoryInterface):
                     complement=new_address.complement,
                 )
             except:
-                db_connection.session.rollback()
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.rollback()
                 raise
+
             finally:
-                db_connection.session.close()
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.close()
         return None
 
     @classmethod
@@ -142,8 +145,79 @@ class AddressRepository(AddressRepositoryInterface):
         except NoResultFound:
             return []
         except:
-            db_connection.session.rollback()
+            with DBConnectionHandler() as db_connection:
+                db_connection.session.rollback()
             raise
         finally:
             with DBConnectionHandler() as db_connection:
                 db_connection.session.close()
+
+    @classmethod
+    def delete_address(cls, id: int) -> bool:
+        """
+        Delete data from address entity
+        :param  - id: id of the address to be deleted
+        :return - True if the address was deleted, False otherwise
+        """
+        with DBConnectionHandler() as db_connection:
+            try:
+                address_to_delete = (
+                    db_connection.session.query(AddressesModel)
+                    .filter_by(id=id)
+                    .one_or_none()
+                )
+                if address_to_delete:
+                    db_connection.session.delete(address_to_delete)
+                    db_connection.session.commit()
+                    return True
+                return False
+            except:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.rollback()
+                raise
+            finally:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.close()
+
+    @classmethod
+    def update_address(cls, id: int, **kwargs) -> Addresses:
+        """
+        Update data in address entity
+        :param  - id: id of the address to be updated
+                - **kwargs: dictionary containing fields and their new values
+        :return - Updated address data as an instance of UserAdopters, or None if not found
+        """
+        with DBConnectionHandler() as db_connection:
+            try:
+                address_to_update = (
+                    db_connection.session.query(AddressesModel)
+                    .filter_by(id=id)
+                    .one_or_none()
+                )
+                if address_to_update:
+                    # Atualiza os parâmetros com base no kwargs
+                    for key, value in kwargs.items():
+                        if hasattr(address_to_update, key):
+                            setattr(address_to_update, key, value)
+
+                    db_connection.session.commit()
+
+                    # Certifica-se de passar todos os campos obrigatórios
+                    return Addresses(
+                        id=address_to_update.id,
+                        cep=address_to_update.cep,
+                        state=address_to_update.state,
+                        city=address_to_update.city,
+                        neighborhood=address_to_update.neighborhood,
+                        street=address_to_update.street,
+                        number=address_to_update.number,
+                        complement=address_to_update.complement,
+                    )
+                return None
+            except:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.rollback()
+                raise
+            finally:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.close()

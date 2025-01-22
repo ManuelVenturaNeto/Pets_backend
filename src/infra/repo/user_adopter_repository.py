@@ -56,10 +56,12 @@ class UserAdopterRepository(UserAdopterRepositoryInterface):
                     pet_id=new_user_adopter.pet_id,
                 )
             except:
-                db_connection.session.rollback()
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.rollback()
                 raise
             finally:
-                db_connection.session.close()
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.close()
         return None
 
     @classmethod
@@ -134,7 +136,78 @@ class UserAdopterRepository(UserAdopterRepositoryInterface):
         except NoResultFound:
             return []
         except:
-            db_connection.session.rollback()
+            with DBConnectionHandler() as db_connection:
+                db_connection.session.rollback()
             raise
         finally:
-            db_connection.session.close()
+            with DBConnectionHandler() as db_connection:
+                db_connection.session.close()
+
+    @classmethod
+    def delete_user_adopter(cls, id: int) -> bool:
+        """
+        Delete data from user_adopter entity
+        :param  - id: id of the user_adopter to be deleted
+        :return - True if the user_adopter was deleted, False otherwise
+        """
+        with DBConnectionHandler() as db_connection:
+            try:
+                user_adopter_to_delete = (
+                    db_connection.session.query(UserAdoptersModel)
+                    .filter_by(id=id)
+                    .one_or_none()
+                )
+                if user_adopter_to_delete:
+                    db_connection.session.delete(user_adopter_to_delete)
+                    db_connection.session.commit()
+                    return True
+                return False
+            except:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.rollback()
+                raise
+            finally:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.close()
+
+    @classmethod
+    def update_user_adopter(cls, id: int, **kwargs) -> UserAdopters:
+        """
+        Update data in user_adopter entity
+        :param  - id: id of the user_adopter to be updated
+                - **kwargs: dictionary containing fields and their new values
+        :return - Updated user_adopter data as an instance of UserAdopters, or None if not found
+        """
+        with DBConnectionHandler() as db_connection:
+            try:
+                user_adopter_to_update = (
+                    db_connection.session.query(UserAdoptersModel)
+                    .filter_by(id=id)
+                    .one_or_none()
+                )
+                if user_adopter_to_update:
+                    # Atualiza os parâmetros com base no kwargs
+                    for key, value in kwargs.items():
+                        if hasattr(user_adopter_to_update, key):
+                            setattr(user_adopter_to_update, key, value)
+
+                    db_connection.session.commit()
+
+                    # Certifica-se de passar todos os campos obrigatórios
+                    return UserAdopters(
+                        id=user_adopter_to_update.id,
+                        name=user_adopter_to_update.name,
+                        cpf=user_adopter_to_update.cpf,
+                        email=user_adopter_to_update.email,
+                        phone_number=user_adopter_to_update.phone_number,
+                        address_id=user_adopter_to_update.address_id,
+                        pet_id=user_adopter_to_update.pet_id,
+                    )
+                return None
+            except:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.rollback()
+                raise
+            finally:
+                with DBConnectionHandler() as db_connection:
+                    db_connection.session.close()
