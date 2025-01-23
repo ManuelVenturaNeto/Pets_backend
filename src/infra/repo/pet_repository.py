@@ -139,7 +139,7 @@ class PetRepository(PetRepositoryInterface):
                     db_connection.session.close()
 
     @classmethod
-    def update_pet(cls, id: int, **kwargs) -> Pets:
+    def update_pet(cls, id: int, **kwargs: any) -> Pets:
         """
         Update data in pet entity
         :param  - id: id of the pet to be updated
@@ -154,14 +154,13 @@ class PetRepository(PetRepositoryInterface):
                     .one_or_none()
                 )
                 if pet_to_update:
-                    # Atualiza os parâmetros com base no kwargs
+                    # Update the params based into kwrgs
                     for key, value in kwargs.items():
                         if hasattr(pet_to_update, key):
                             setattr(pet_to_update, key, value)
 
                     db_connection.session.commit()
 
-                    # Certifica-se de passar todos os campos obrigatórios
                     return PetsModel(
                         id=pet_to_update.id,
                         name=pet_to_update.name,

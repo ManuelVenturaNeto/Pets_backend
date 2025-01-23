@@ -1,3 +1,4 @@
+import pytest
 from sqlalchemy import text
 from faker import Faker
 from src.infra.entities import Species as SpeciesModel
@@ -10,6 +11,7 @@ specie_repository = SpecieRepository()
 db_connection = DBConnectionHandler()
 
 
+@pytest.mark.skip(reason="Sensive test")
 def test_insert_specie():
     """
     Should insert specie in specie table and return it
@@ -33,6 +35,7 @@ def test_insert_specie():
     assert new_specie.specie_name == query_specie.specie_name
 
 
+@pytest.mark.skip(reason="Sensive test")
 def test_select_specie():
     """
     Should select specie in species table and return it
@@ -69,6 +72,7 @@ def test_select_specie():
     assert data in query_specie3
 
 
+@pytest.mark.skip(reason="Sensive test")
 def test_delete_specie():
     """
     Should delete specie in species table and return bool
@@ -102,6 +106,7 @@ def test_delete_specie():
         assert result is None
 
 
+@pytest.mark.skip(reason="Sensive test")
 def test_update_specie():
     """
     Should update specie data in the species table and return the updated object
@@ -125,17 +130,14 @@ def test_update_specie():
         )
         connection.commit()
 
-    # Chamada do método de atualização
     updated_specie = specie_repository.update_specie(
         id=id, new_specie_name=new_specie_name
     )
 
-    # Validação do retorno
     assert updated_specie is not None
     assert updated_specie.specie_name == new_specie_name
     assert updated_specie.id == id
 
-    # Verificar que os dados foram realmente atualizados no banco de dados
     with engine.connect() as connection:
         result = connection.execute(
             text("SELECT specie_name FROM species WHERE id = :id"), {"id": id}

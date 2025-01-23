@@ -177,7 +177,7 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
                     db_connection.session.close()
 
     @classmethod
-    def update_animal_shelter(cls, id: int, **kwargs) -> AnimalShelters:
+    def update_animal_shelter(cls, id: int, **kwargs: any) -> AnimalShelters:
         """
         Update data in user_adopter entity
         :param  - id: id of the user_adopter to be updated
@@ -192,14 +192,13 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
                     .one_or_none()
                 )
                 if animal_shelter_to_update:
-                    # Atualiza os parâmetros com base no kwargs
+                    # Update params based into kwargs
                     for key, value in kwargs.items():
                         if hasattr(animal_shelter_to_update, key):
                             setattr(animal_shelter_to_update, key, value)
 
                     db_connection.session.commit()
 
-                    # Certifica-se de passar todos os campos obrigatórios
                     return AnimalShelters(
                         id=animal_shelter_to_update.id,
                         name=animal_shelter_to_update.name,

@@ -180,7 +180,7 @@ class AddressRepository(AddressRepositoryInterface):
                     db_connection.session.close()
 
     @classmethod
-    def update_address(cls, id: int, **kwargs) -> Addresses:
+    def update_address(cls, id: int, **kwargs: any) -> Addresses:
         """
         Update data in address entity
         :param  - id: id of the address to be updated
@@ -195,14 +195,13 @@ class AddressRepository(AddressRepositoryInterface):
                     .one_or_none()
                 )
                 if address_to_update:
-                    # Atualiza os parâmetros com base no kwargs
+                    # Update params based into kwargs
                     for key, value in kwargs.items():
                         if hasattr(address_to_update, key):
                             setattr(address_to_update, key, value)
 
                     db_connection.session.commit()
 
-                    # Certifica-se de passar todos os campos obrigatórios
                     return Addresses(
                         id=address_to_update.id,
                         cep=address_to_update.cep,

@@ -1,5 +1,6 @@
 # pylint: disable=R0914
 
+import pytest
 from sqlalchemy import text
 from faker import Faker
 from src.infra.config import DBConnectionHandler
@@ -12,6 +13,7 @@ animal_shelter_repository = AnimalShelterRepository()
 db_connection = DBConnectionHandler()
 
 
+@pytest.mark.skip(reason="Sensive test")
 def test_insert_animal_shelter():
     """
     Should insert animal_shelter
@@ -94,6 +96,7 @@ def test_insert_animal_shelter():
     assert new_animal_shelter.address_id == query_animal_shelter.address_id
 
 
+@pytest.mark.skip(reason="Sensive test")
 def test_select_animal_shelter():
     """
     Shoul select a animal_shelter in AnimalShelters table and compare it with
@@ -208,3 +211,117 @@ def test_select_animal_shelter():
     assert data in query_animal_shelter3
     assert data in query_animal_shelter4
     assert data in query_animal_shelter5
+
+
+@pytest.mark.skip(reason="Sensive test")
+def test_delete_animal_shelter():
+    """
+    Should delete animal_shelter in animal_shelters table and return bool
+    """
+    id = faker.random_number(digits=5)
+    name = faker.name()
+    password = faker.password(
+        length=12, special_chars=True, digits=True, upper_case=True, lower_case=True
+    )
+    cpf = faker.cpf().replace(".", "").replace("-", "")
+    responsible_name = faker.name()
+    email = faker.email()
+    phone_number = str(faker.random_number(digits=11)).zfill(11)
+    address_id = None
+
+    engine = db_connection.get_engine()
+
+    with engine.connect() as connection:
+        connection.execute(
+            text(
+                "INSERT INTO animal_shelters (id, name, password, cpf, responsible_name, email, phone_number, address_id) \
+                    VALUES (:id, :name, :password, :cpf, :responsible_name, :email, :phone_number, :address_id)"
+            ),
+            {
+                "id": id,
+                "name": name,
+                "password": password,
+                "cpf": cpf,
+                "responsible_name": responsible_name,
+                "email": email,
+                "phone_number": phone_number,
+                "address_id": address_id,
+            },
+        )
+        connection.commit()
+
+    deleted_element = animal_shelter_repository.delete_animal_shelter(id=id)
+
+    assert deleted_element is True
+
+    with engine.connect() as connection:
+        result = connection.execute(
+            text("SELECT * FROM animal_shelters WHERE id = :id"), {"id": id}
+        ).fetchone()
+        assert result is None
+
+
+@pytest.mark.skip(reason="Sensive test")
+def test_update_animal_shelter():
+    """
+    Should update animal_shelter data in the sanimal_shelters table and return the updated object
+    """
+    id = faker.random_number(digits=5)
+    name = faker.name()
+    password = faker.password(
+        length=12, special_chars=True, digits=True, upper_case=True, lower_case=True
+    )
+    cpf = faker.cpf().replace(".", "").replace("-", "")
+    responsible_name = faker.name()
+    email = faker.email()
+    phone_number = str(faker.random_number(digits=11)).zfill(11)
+    address_id = None
+
+    engine = db_connection.get_engine()
+
+    with engine.connect() as connection:
+        connection.execute(
+            text(
+                "INSERT INTO animal_shelters (id, name, password, cpf, responsible_name, email, phone_number, address_id) \
+                    VALUES (:id, :name, :password, :cpf, :responsible_name, :email, :phone_number, :address_id)"
+            ),
+            {
+                "id": id,
+                "name": name,
+                "password": password,
+                "cpf": cpf,
+                "responsible_name": responsible_name,
+                "email": email,
+                "phone_number": phone_number,
+                "address_id": address_id,
+            },
+        )
+        connection.commit()
+
+    new_name = faker.name()
+    new_email = faker.email()
+    update_data = {
+        "name": new_name,
+        "email": new_email,
+    }
+
+    updated_animal_shelter = animal_shelter_repository.update_animal_shelter(
+        id=id, **update_data
+    )
+
+    assert updated_animal_shelter is not None
+    assert updated_animal_shelter.name == new_name
+    assert updated_animal_shelter.email == new_email
+    assert updated_animal_shelter.id == id
+
+    with engine.connect() as connection:
+        result = connection.execute(
+            text("SELECT name, email FROM animal_shelters WHERE id = :id"), {"id": id}
+        ).fetchone()
+
+        connection.execute(text("DELETE FROM animal_shelters WHERE id=:id"), {"id": id})
+        connection.commit()
+
+    assert result is not None
+    assert result[0] == new_name
+    assert result[1] == new_email

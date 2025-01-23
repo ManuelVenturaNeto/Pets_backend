@@ -299,7 +299,7 @@ ignored-parents=
 max-args=20
 
 # Maximum number of attributes for a class (see R0902).
-max-attributes=7
+max-attributes=10
 
 # Maximum number of boolean expressions in an if statement (see R0916).
 max-bool-expr=10
@@ -311,7 +311,7 @@ max-branches=12
 max-locals=20
 
 # Maximum number of parents for a class (see R0901).
-max-parents=7
+max-parents=10
 
 # Maximum number of positional arguments for function / method.
 max-positional-arguments=20

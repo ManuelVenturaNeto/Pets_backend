@@ -171,7 +171,7 @@ class UserAdopterRepository(UserAdopterRepositoryInterface):
                     db_connection.session.close()
 
     @classmethod
-    def update_user_adopter(cls, id: int, **kwargs) -> UserAdopters:
+    def update_user_adopter(cls, id: int, **kwargs: any) -> UserAdopters:
         """
         Update data in user_adopter entity
         :param  - id: id of the user_adopter to be updated
@@ -186,14 +186,13 @@ class UserAdopterRepository(UserAdopterRepositoryInterface):
                     .one_or_none()
                 )
                 if user_adopter_to_update:
-                    # Atualiza os parâmetros com base no kwargs
+                    # Update the params based into kwargs
                     for key, value in kwargs.items():
                         if hasattr(user_adopter_to_update, key):
                             setattr(user_adopter_to_update, key, value)
 
                     db_connection.session.commit()
 
-                    # Certifica-se de passar todos os campos obrigatórios
                     return UserAdopters(
                         id=user_adopter_to_update.id,
                         name=user_adopter_to_update.name,

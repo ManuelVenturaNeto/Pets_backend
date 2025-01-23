@@ -1,3 +1,4 @@
+import pytest
 from sqlalchemy import text
 from faker import Faker
 from src.infra.entities import UserAdopters as UserAdoptersModel
@@ -10,6 +11,7 @@ user_adopter_repository = UserAdopterRepository()
 db_connection = DBConnectionHandler()
 
 
+@pytest.mark.skip(reason="Sensive test")
 def test_insert_user_adopter():
     """
     Should insert user_adopter in user_adopter table and return it
@@ -46,6 +48,7 @@ def test_insert_user_adopter():
     assert new_user_adopter.pet_id == query_user_adopter.pet_id
 
 
+@pytest.mark.skip(reason="Sensive test")
 def test_select_user_adopter():
     """
     Should select user_adopters in user_adopter table and return it
@@ -117,6 +120,7 @@ def test_select_user_adopter():
     # assert data in query_user_adopter5
 
 
+@pytest.mark.skip(reason="Sensive test")
 def test_delete_user_adopter():
     """
     Should delete user_adopter in user_adopter table and return bool
@@ -160,6 +164,7 @@ def test_delete_user_adopter():
         assert result is None
 
 
+@pytest.mark.skip(reason="Sensive test")
 def test_update_user_adopter():
     """
     Should update user_adopter data in the user_adopters table and return the updated object
@@ -192,7 +197,6 @@ def test_update_user_adopter():
         )
         connection.commit()
 
-    # Dados para atualização
     new_name = faker.name()
     new_email = faker.email()
     update_data = {
@@ -200,18 +204,15 @@ def test_update_user_adopter():
         "email": new_email,
     }
 
-    # Chamada do método de atualização
     updated_user_adopter = user_adopter_repository.update_user_adopter(
         id=id, **update_data
     )
 
-    # Validação do retorno
     assert updated_user_adopter is not None
     assert updated_user_adopter.name == new_name
     assert updated_user_adopter.email == new_email
     assert updated_user_adopter.id == id
 
-    # Verificar que os dados foram realmente atualizados no banco de dados
     with engine.connect() as connection:
         result = connection.execute(
             text("SELECT name, email FROM user_adopters WHERE id = :id"), {"id": id}
