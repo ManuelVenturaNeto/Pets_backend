@@ -28,7 +28,7 @@ class FindUserAdopterController(RouteInterface):
 
             if "user_adopter_id" in query_string_params:
 
-                user_adopter_id = http_request.query["user_adopter_id"]
+                user_adopter_id = int(http_request.query["user_adopter_id"])
 
                 response = self.find_user_adopter_use_case.by_user_adopter_id(
                     user_adopter_id=user_adopter_id
@@ -36,7 +36,7 @@ class FindUserAdopterController(RouteInterface):
 
             elif "pet_id" in query_string_params:
 
-                pet_id = http_request.query["pet_id"]
+                pet_id = int(http_request.query["pet_id"])
 
                 response = self.find_user_adopter_use_case.by_pet_id(pet_id=pet_id)
 

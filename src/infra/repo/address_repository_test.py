@@ -3,6 +3,7 @@ from sqlalchemy import text
 from faker import Faker
 from src.infra.entities import Addresses as AddressesModel
 from src.infra.config import DBConnectionHandler
+from src.infra.test import reset_auto_increment
 from .address_repository import AddressRepository
 
 
@@ -52,6 +53,8 @@ def test_insert_address():
     assert new_address.street == query_address.street
     assert new_address.complement == query_address.complement
     assert new_address.number == query_address.number
+
+    reset_auto_increment("addresses")
 
 
 @pytest.mark.skip(reason="Sensive test")
@@ -123,6 +126,8 @@ def test_select_address():
     assert data in query_address3
     assert data in query_address4
 
+    reset_auto_increment("addresses")
+
 
 @pytest.mark.skip(reason="Sensive test")
 def test_delete_address():
@@ -168,6 +173,8 @@ def test_delete_address():
             text("SELECT * FROM addresses WHERE id = :id"), {"id": id}
         ).fetchone()
         assert result is None
+
+    reset_auto_increment("addresses")
 
 
 @pytest.mark.skip(reason="Sensive test")
@@ -229,3 +236,5 @@ def test_update_address():
     assert result is not None
     assert result[0] == new_city
     assert not result[1]
+
+    reset_auto_increment("addresses")

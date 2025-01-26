@@ -12,13 +12,37 @@ The entire project is implemented in Python, following Clean Code principles to 
 
 ## Running the Application
 
-<p>If you're using Windows, you can clone the repository and execute the following command in your terminal:</p>
-<code>bash install.sh</code>
-<br>
-<br>
-<p>This command will create a virtual environment, install the dependencies listed in 'requirements.txt', and generate an '.env' file. 
+## Instalação
 
-Than is important you change de your TOKEN_KEY from '.env'
+1. Clone o repositorio do github:
 
-After that, you can start the application by running:</p>
-<code>python run.py</code>
+```terminal
+  https://github.com/ManuelVenturaNeto/Pets_backend.git
+```
+2. Entre na parta: 
+
+```terminal
+  CD Pets_backend
+```  
+3. Crie o docker-compose:
+
+```terminal
+  docker-compose -f docker-compose.yml up --build
+```
+4. Popule a tabela de espécies
+
+```terminal
+  docker-compose exec docker-python python -m populate.species
+```
+
+## Conxão com DBeaver
+
+1. conecte-se com MySQL com os seguintes parametros:
+
+Servidor: localhost
+
+Porta: 3307
+
+Nome de usuário: root
+
+Senha: manuel

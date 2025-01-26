@@ -3,6 +3,7 @@ from sqlalchemy import text
 from faker import Faker
 from src.infra.entities import Species as SpeciesModel
 from src.infra.config import DBConnectionHandler
+from src.infra.test import reset_auto_increment
 from .specie_repository import SpecieRepository
 
 
@@ -33,6 +34,8 @@ def test_insert_specie():
 
     assert new_specie.id == query_specie.id
     assert new_specie.specie_name == query_specie.specie_name
+
+    reset_auto_increment("pets")
 
 
 @pytest.mark.skip(reason="Sensive test")
@@ -71,6 +74,8 @@ def test_select_specie():
     assert data in query_specie2
     assert data in query_specie3
 
+    reset_auto_increment("pets")
+
 
 @pytest.mark.skip(reason="Sensive test")
 def test_delete_specie():
@@ -104,6 +109,8 @@ def test_delete_specie():
             text("SELECT * FROM species WHERE id = :id"), {"id": id}
         ).fetchone()
         assert result is None
+
+    reset_auto_increment("pets")
 
 
 @pytest.mark.skip(reason="Sensive test")
@@ -148,3 +155,5 @@ def test_update_specie():
 
     assert result is not None
     assert result[0] == new_specie_name
+
+    reset_auto_increment("pets")

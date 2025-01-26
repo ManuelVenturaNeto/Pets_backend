@@ -10,43 +10,17 @@ class DBConnectionHandler:
     Class to manage database connections using SQLAlchemy.
     """
 
-    # # ========== SQLITE ==========
-
-    # def __init__(self):
-    #     """
-    #     Initializes the DBConnectionHandler with a connection string and session attributes.
-    #     """
-    #     self.__connection_string = "sqlite:///storage.db"
-    #     self.session = None
-
-    # def get_engine(self):
-    #     """
-    #     Return connection engine
-    #     :param  - None
-    #     :return - engine connection to Database
-    #     """
-    #     engine = create_engine(self.__connection_string)
-    #     return engine
-
-    # def __enter__(self):
-    #     engine = create_engine(self.__connection_string)
-    #     session_maker = sessionmaker()
-    #     self.session = session_maker(bind=engine)
-    #     return self
-
-    # def __exit__(self, exc_type, exc_val, exc_tb):
-    #     self.session.close()  # pylint: disable=no-member
-
     # ========== MYSQL ==========
 
     def __init__(self):
-        self.__connection_string = "{}://{}:{}@{}:{}/{}".format(
-            "mysql+pymysql",
-            "root",
-            f'{str(os.getenv("MYSQLPASSWORD"))}',
-            "localhost",
-            "3306",
-            "pets_backend_db",
+        db_host = os.getenv("DB_HOST", "localhost")  # Default to 'localhost'
+        db_port = os.getenv("DB_PORT", "3306")  # Default to '3306'
+        db_user = os.getenv("DB_USER", "root")  # Default to 'root'
+        db_password = os.getenv("DB_PASSWORD")
+        db_name = os.getenv("DB_NAME", "pets_backend_db")
+
+        self.__connection_string = (
+            f"mysql+pymysql://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
         )
         self.__engine = self.__create_database_engine()
         self.session = None

@@ -5,6 +5,7 @@ from sqlalchemy import text
 from faker import Faker
 from src.infra.config import DBConnectionHandler
 from src.infra.entities import AnimalShelters as AnimalSheltersModel
+from src.infra.test import reset_auto_increment
 from .animal_shelter_repository import AnimalShelterRepository
 
 
@@ -94,6 +95,9 @@ def test_insert_animal_shelter():
     assert new_animal_shelter.email == query_animal_shelter.email
     assert new_animal_shelter.phone_number == query_animal_shelter.phone_number
     assert new_animal_shelter.address_id == query_animal_shelter.address_id
+
+    reset_auto_increment("addresses")
+    reset_auto_increment("animal_shelters")
 
 
 @pytest.mark.skip(reason="Sensive test")
@@ -212,6 +216,9 @@ def test_select_animal_shelter():
     assert data in query_animal_shelter4
     assert data in query_animal_shelter5
 
+    reset_auto_increment("addresses")
+    reset_auto_increment("animal_shelters")
+
 
 @pytest.mark.skip(reason="Sensive test")
 def test_delete_animal_shelter():
@@ -259,6 +266,9 @@ def test_delete_animal_shelter():
             text("SELECT * FROM animal_shelters WHERE id = :id"), {"id": id}
         ).fetchone()
         assert result is None
+
+    reset_auto_increment("addresses")
+    reset_auto_increment("animal_shelters")
 
 
 @pytest.mark.skip(reason="Sensive test")
@@ -325,3 +335,6 @@ def test_update_animal_shelter():
     assert result is not None
     assert result[0] == new_name
     assert result[1] == new_email
+
+    reset_auto_increment("addresses")
+    reset_auto_increment("animal_shelters")

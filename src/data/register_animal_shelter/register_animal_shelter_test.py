@@ -1,3 +1,4 @@
+from unittest.mock import patch
 import bcrypt
 from faker import Faker
 from src.infra.test import AnimalShelterRepositorySpy, AddressRepositorySpy
@@ -35,27 +36,31 @@ def test_register_animal_shelter():
         "complement": faker.name(),
     }
 
-    response = register_animal_shelter.register_animal_shelter(
-        name=attributes["name"],
-        password=attributes["password"],
-        cpf=attributes["cpf"],
-        responsible_name=attributes["responsible_name"],
-        email=attributes["email"],
-        phone_number=attributes["phone_number"],
-        cep=attributes["cep"],
-        state=attributes["state"],
-        city=attributes["city"],
-        neighborhood=attributes["neighborhood"],
-        street=attributes["street"],
-        number=attributes["number"],
-        complement=attributes["complement"],
-    )
+    with patch(
+        "src.data.find_animal_shelter.FindAnimalShelter.by_name",
+        return_value={"Data": None},
+    ), patch(
+        "src.data.find_animal_shelter.FindAnimalShelter.by_cpf",
+        return_value={"Data": None},
+    ):
+        response = register_animal_shelter.register_animal_shelter(
+            name=attributes["name"],
+            password=attributes["password"],
+            cpf=attributes["cpf"],
+            responsible_name=attributes["responsible_name"],
+            email=attributes["email"],
+            phone_number=attributes["phone_number"],
+            cep=attributes["cep"],
+            state=attributes["state"],
+            city=attributes["city"],
+            neighborhood=attributes["neighborhood"],
+            street=attributes["street"],
+            number=attributes["number"],
+            complement=attributes["complement"],
+        )
 
     # Testing inputs of register_address_service
 
-    print(attributes["cep"])
-    print(attributes.items())
-    print(address_repo.insert_address_params["cep"])
     assert address_repo.insert_address_params["cep"] == attributes["cep"]
     assert address_repo.insert_address_params["state"] == attributes["state"]
     assert address_repo.insert_address_params["city"] == attributes["city"]
@@ -121,21 +126,28 @@ def test_register_animal_shelter_fail():
         "complement": faker.name(),
     }
 
-    response = register_animal_shelter.register_animal_shelter(
-        name=attributes["name"],
-        password=attributes["password"],
-        cpf=attributes["cpf"],
-        responsible_name=attributes["responsible_name"],
-        email=attributes["email"],
-        phone_number=attributes["phone_number"],
-        cep=attributes["cep"],
-        state=attributes["state"],
-        city=attributes["city"],
-        neighborhood=attributes["neighborhood"],
-        street=attributes["street"],
-        number=attributes["number"],
-        complement=attributes["complement"],
-    )
+    with patch(
+        "src.data.find_animal_shelter.FindAnimalShelter.by_name",
+        return_value={"Data": None},
+    ), patch(
+        "src.data.find_animal_shelter.FindAnimalShelter.by_cpf",
+        return_value={"Data": None},
+    ):
+        response = register_animal_shelter.register_animal_shelter(
+            name=attributes["name"],
+            password=attributes["password"],
+            cpf=attributes["cpf"],
+            responsible_name=attributes["responsible_name"],
+            email=attributes["email"],
+            phone_number=attributes["phone_number"],
+            cep=attributes["cep"],
+            state=attributes["state"],
+            city=attributes["city"],
+            neighborhood=attributes["neighborhood"],
+            street=attributes["street"],
+            number=attributes["number"],
+            complement=attributes["complement"],
+        )
 
     # Testing inputs
     assert not animal_shelter_repo.insert_animal_shelter_params
@@ -174,21 +186,28 @@ def test_register_animal_shelter_fail_address():
         "complement": faker.name(),
     }
 
-    response = register_animal_shelter.register_animal_shelter(
-        name=attributes["name"],
-        password=attributes["password"],
-        cpf=attributes["cpf"],
-        responsible_name=attributes["responsible_name"],
-        email=attributes["email"],
-        phone_number=attributes["phone_number"],
-        cep=attributes["cep"],
-        state=attributes["state"],
-        city=attributes["city"],
-        neighborhood=attributes["neighborhood"],
-        street=attributes["street"],
-        number=attributes["number"],
-        complement=attributes["complement"],
-    )
+    with patch(
+        "src.data.find_animal_shelter.FindAnimalShelter.by_name",
+        return_value={"Data": None},
+    ), patch(
+        "src.data.find_animal_shelter.FindAnimalShelter.by_cpf",
+        return_value={"Data": None},
+    ):
+        response = register_animal_shelter.register_animal_shelter(
+            name=attributes["name"],
+            password=attributes["password"],
+            cpf=attributes["cpf"],
+            responsible_name=attributes["responsible_name"],
+            email=attributes["email"],
+            phone_number=attributes["phone_number"],
+            cep=attributes["cep"],
+            state=attributes["state"],
+            city=attributes["city"],
+            neighborhood=attributes["neighborhood"],
+            street=attributes["street"],
+            number=attributes["number"],
+            complement=attributes["complement"],
+        )
 
     # Testing inputs
     assert not animal_shelter_repo.insert_animal_shelter_params

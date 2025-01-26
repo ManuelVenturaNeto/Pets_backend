@@ -3,6 +3,7 @@ from sqlalchemy import text
 from faker import Faker
 from src.infra.entities import Pets as PetsModel
 from src.infra.config import DBConnectionHandler
+from src.infra.test import reset_auto_increment
 from .pet_repository import PetRepository
 
 
@@ -39,6 +40,8 @@ def test_insert_pet():
     assert new_pet.age == query_pet.age
     assert new_pet.animal_shelter_id == query_pet.animal_shelter_id
     assert new_pet.adopted == query_pet.adopted
+
+    reset_auto_increment("pets")
 
 
 @pytest.mark.skip(reason="Sensive test")
@@ -95,6 +98,8 @@ def test_select_pet():
     # assert data in query_pet2
     assert data in query_pet3
 
+    reset_auto_increment("pets")
+
 
 @pytest.mark.skip(reason="Sensive test")
 def test_delete_pet():
@@ -136,6 +141,8 @@ def test_delete_pet():
             text("SELECT * FROM pets WHERE id = :id"), {"id": id}
         ).fetchone()
         assert result is None
+
+    reset_auto_increment("pets")
 
 
 @pytest.mark.skip(reason="Sensive test")
@@ -195,3 +202,5 @@ def test_update_pets():
     assert result is not None
     assert result[0] == new_name
     assert result[1] == status_adopted
+
+    reset_auto_increment("pets")

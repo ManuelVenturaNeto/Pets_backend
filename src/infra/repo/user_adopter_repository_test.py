@@ -3,6 +3,7 @@ from sqlalchemy import text
 from faker import Faker
 from src.infra.entities import UserAdopters as UserAdoptersModel
 from src.infra.config import DBConnectionHandler
+from src.infra.test import reset_auto_increment
 from .user_adopter_repository import UserAdopterRepository
 
 
@@ -46,6 +47,8 @@ def test_insert_user_adopter():
     assert new_user_adopter.phone_number == query_user_adopter.phone_number
     assert new_user_adopter.address_id == query_user_adopter.address_id
     assert new_user_adopter.pet_id == query_user_adopter.pet_id
+
+    reset_auto_increment("user_adopters")
 
 
 @pytest.mark.skip(reason="Sensive test")
@@ -119,6 +122,8 @@ def test_select_user_adopter():
     assert data in query_user_adopter4
     # assert data in query_user_adopter5
 
+    reset_auto_increment("user_adopters")
+
 
 @pytest.mark.skip(reason="Sensive test")
 def test_delete_user_adopter():
@@ -162,6 +167,8 @@ def test_delete_user_adopter():
             text("SELECT * FROM user_adopters WHERE id = :id"), {"id": id}
         ).fetchone()
         assert result is None
+
+    reset_auto_increment("user_adopters")
 
 
 @pytest.mark.skip(reason="Sensive test")
@@ -224,3 +231,5 @@ def test_update_user_adopter():
     assert result is not None
     assert result[0] == new_name
     assert result[1] == new_email
+
+    reset_auto_increment("user_adopters")

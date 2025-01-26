@@ -50,3 +50,9 @@ class S3Handler:
         Return the custom domain of image
         """
         return self.custom_domain
+
+    def get_cache_control(self):
+        """
+        Return the cache_control
+        """
+        return self.cache_control

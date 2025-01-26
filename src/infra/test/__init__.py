@@ -3,3 +3,4 @@ from .pet_repository_spy import PetRepositorySpy
 from .address_repository_spy import AddressRepositorySpy
 from .specie_repository_spy import SpecieRepositorySpy
 from .user_adopter_repository_spy import UserAdopterRepositorySpy
+from .teste_aux import reset_auto_increment
