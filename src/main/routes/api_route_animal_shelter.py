@@ -1,3 +1,4 @@
+import logging
 from flask import jsonify, request
 from src.main.routes.api_route import api_routes_bp
 from src.main.composer import (
@@ -5,8 +6,12 @@ from src.main.composer import (
     find_animal_shelter_composer,
 )
 from src.main.adapter import flask_adapter
+from src.infra.config import RabbitMQClient
 
 # from src.infra.auth_jwt.token_verificator import token_verify
+
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 @api_routes_bp.route("/api/animal_shelters", methods=["POST"])
@@ -33,6 +38,15 @@ def register_animal_shelter():
                 "address_id": response.body.address_id,
             },
         }
+
+        try:
+            # Sending a message to the RabbitMQ
+            client = RabbitMQClient()
+            client.set_queue("animal_shelter_queue", durable=True)
+            client.send_message(message)
+            client.close()
+        except Exception as e:
+            logging.error(f"Error to send message to RabbitMQ: {e}", exc_info=True)
 
         return jsonify({"data": message}), response.status_code
 

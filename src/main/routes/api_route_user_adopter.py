@@ -1,9 +1,14 @@
+import logging
 from flask import jsonify, request
 from src.main.routes.api_route import api_routes_bp
 from src.main.composer import register_user_adopter_composer, find_user_adopter_composer
 from src.main.adapter import flask_adapter
+from src.infra.config import RabbitMQClient
 
 # from src.infra.auth_jwt.token_verificator import token_verify
+
+
+logging.basicConfig(level=logging.DEBUG)
 
 
 @api_routes_bp.route("/api/user_adopters", methods=["POST"])
@@ -30,6 +35,15 @@ def register_user_adopter():
                 "pet_id": response.body.pet_id,
             },
         }
+
+        try:
+            # Sending a message to the RabbitMQ
+            client = RabbitMQClient()
+            client.set_queue("user_adopter_queue", durable=True)
+            client.send_message(message)
+            client.close()
+        except Exception as e:
+            logging.error(f"Error to send message to RabbitMQ: {e}", exc_info=True)
 
         return jsonify({"data": message}), response.status_code
 

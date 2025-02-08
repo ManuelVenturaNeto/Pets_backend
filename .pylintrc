@@ -5,6 +5,8 @@ disable =
       R0801, #simular lines in 2 files
       W0237, #Parameter has been renamed
       W0622, #Redefining built-in 'id'
+      W0718, #Catching too general exception Exception
+      W1203, #Use % formatting in logging functions and pass the % parameters as arguments
 
 # Analyse import fallback blocks. This can be used to support both Python 2 and
 # 3 compatible code, which means that the block might have code that exists
