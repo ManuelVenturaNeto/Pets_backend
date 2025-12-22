@@ -1,31 +1,31 @@
 version: '3.8'
 
-services: 
-  mysqldb:
-    image: mysql:latest
-    environment: 
-      - MYSQL_ROOT_PASSWORD=manuel
+services:
+  postgresdb:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+      POSTGRES_DB: ${DB_NAME}
     ports:
-      - "3307:3306"
-    volumes: 
+      - "5432:5432"
+    volumes:
+      - postgresVolume:/var/lib/postgresql/data
       - ./init:/docker-entrypoint-initdb.d
-      - mysqlVolume:/var/lib/mysql
-      - mysqlConfig:/etc/mysql
-    
+
   docker-python:
     build:
       context: .
     ports:
-      - 5000:5000
+      - "5000:5000"
     environment:
-      - DB_HOST=mysqldb
-      - DB_PORT=3306
-      - DB_USER=root
-      - DB_PASSWORD=manuel
-      - DB_NAME=pets_backend_db
-    depends_on: 
-      - mysqldb
+      DB_HOST: postgresdb
+      DB_PORT: 5432
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_NAME: ${DB_NAME}
+    depends_on:
+      - postgresdb
 
-volumes: 
-  mysqlVolume:
-  mysqlConfig:
+volumes:
+  postgresVolume:
