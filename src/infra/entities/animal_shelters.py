@@ -1,5 +1,6 @@
-from sqlalchemy import Column, String, Integer, ForeignKey
+from sqlalchemy import Column, String, Integer, ForeignKey, TIMESTAMP
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 from src.infra.config import Base
 
 
@@ -18,6 +19,9 @@ class AnimalShelters(Base):
     email = Column(String, nullable=False)
     phone_number = Column(String, nullable=False)
     address_id = Column(Integer, ForeignKey("addresses.id"), nullable=False)
+    created_at = Column(TIMESTAMP(timezone=False), nullable=False, server_default=func.now())
+    updated_at = Column(TIMESTAMP(timezone=False), nullable=False, server_default=func.now(), onupdate=func.now())
+    deleted_at = Column(TIMESTAMP(timezone=False), nullable=True)
     id_pet = relationship("Pets")
 
 

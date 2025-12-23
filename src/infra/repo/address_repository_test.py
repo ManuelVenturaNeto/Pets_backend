@@ -12,7 +12,7 @@ address_repository = AddressRepository()
 db_connection = DBConnectionHandler()
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_insert_address():
     """
     Should insert address in addresses table and return it
@@ -58,7 +58,7 @@ def test_insert_address():
 
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_select_address():
     """
     Should select address in addresses table and return it
@@ -131,7 +131,7 @@ def test_select_address():
 
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_delete_address():
     """
     Should delete address in addresses table and return bool
@@ -180,7 +180,7 @@ def test_delete_address():
 
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_update_address():
     """
     Should update address data in the addresses table and return the updated object

@@ -12,7 +12,7 @@ user_adopter_repository = UserAdopterRepository()
 db_connection = DBConnectionHandler()
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_insert_user_adopter():
     """
     Should insert user_adopter in user_adopter table and return it
@@ -52,7 +52,7 @@ def test_insert_user_adopter():
 
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_select_user_adopter():
     """
     Should select user_adopters in user_adopter table and return it
@@ -127,7 +127,7 @@ def test_select_user_adopter():
 
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_delete_user_adopter():
     """
     Should delete user_adopter in user_adopter table and return bool
@@ -174,7 +174,7 @@ def test_delete_user_adopter():
 
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_update_user_adopter():
     """
     Should update user_adopter data in the user_adopters table and return the updated object

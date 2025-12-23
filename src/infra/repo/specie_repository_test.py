@@ -12,7 +12,7 @@ specie_repository = SpecieRepository()
 db_connection = DBConnectionHandler()
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_insert_specie():
     """
     Should insert specie in specie table and return it
@@ -39,7 +39,7 @@ def test_insert_specie():
 
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_select_specie():
     """
     Should select specie in species table and return it
@@ -79,7 +79,7 @@ def test_select_specie():
 
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_delete_specie():
     """
     Should delete specie in species table and return bool
@@ -116,7 +116,7 @@ def test_delete_specie():
 
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_update_specie():
     """
     Should update specie data in the species table and return the updated object

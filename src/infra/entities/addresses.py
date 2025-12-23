@@ -1,5 +1,6 @@
-from sqlalchemy import Column, String, Integer
+from sqlalchemy import Column, String, Integer, TIMESTAMP
 from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 from src.infra.config import Base
 
 
@@ -18,6 +19,9 @@ class Addresses(Base):
     street = Column(String, nullable=False)
     complement = Column(String)
     number = Column(Integer, nullable=False)
+    created_at = Column(TIMESTAMP(timezone=False), nullable=False, server_default=func.now())
+    updated_at = Column(TIMESTAMP(timezone=False), nullable=False, server_default=func.now(), onupdate=func.now())
+    deleted_at = Column(TIMESTAMP(timezone=False), nullable=True)
     address_id = relationship("UserAdopters")
     address_id = relationship("AnimalShelters")
 

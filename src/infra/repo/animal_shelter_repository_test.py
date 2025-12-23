@@ -12,7 +12,7 @@ animal_shelter_repository = AnimalShelterRepository()
 db_connection = DBConnectionHandler()
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_insert_animal_shelter():
     """
     Should insert animal_shelter
@@ -99,7 +99,7 @@ def test_insert_animal_shelter():
 
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_select_animal_shelter():
     """
     Shoul select a animal_shelter in AnimalShelters table and compare it with
@@ -220,7 +220,7 @@ def test_select_animal_shelter():
 
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_delete_animal_shelter():
     """
     Should delete animal_shelter in animal_shelters table and return bool
@@ -272,7 +272,7 @@ def test_delete_animal_shelter():
 
 
 
-@pytest.mark.skip(reason="Sensive test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_update_animal_shelter():
     """
     Should update animal_shelter data in the sanimal_shelters table and return the updated object

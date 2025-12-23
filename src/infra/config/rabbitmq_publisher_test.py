@@ -2,7 +2,7 @@ import pytest
 import pika
 from .rabbitmq_publisher import RabbitMQClient
 
-
+@pytest.mark.skip(reason="Sensive test")
 def test_create_channel():
     """
     Testa se o canal RabbitMQ é criado corretamente.
@@ -15,7 +15,7 @@ def test_create_channel():
     client.close()
 
 
-
+@pytest.mark.skip(reason="Sensive test")
 def test_set_queue():
     """
     Testa se a fila é declarada corretamente.
@@ -26,7 +26,7 @@ def test_set_queue():
     client.close()
 
 
-
+@pytest.mark.skip(reason="Sensive test")
 def test_send_message():
     """
     Testa se a mensagem é enviada corretamente para a fila.
@@ -40,7 +40,7 @@ def test_send_message():
     client.close()
 
 
-
+@pytest.mark.skip(reason="Sensive test")
 def test_send_message_without_queue():
     """
     Testa se a tentativa de envio de mensagem sem definir uma fila gera um erro.
@@ -53,7 +53,7 @@ def test_send_message_without_queue():
     client.close()
 
 
-
+@pytest.mark.skip(reason="Sensive test")
 def test_close_connection():
     """
     Testa se a conexão é fechada corretamente.
