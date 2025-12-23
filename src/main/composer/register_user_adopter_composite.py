@@ -1,3 +1,4 @@
+import logging
 from src.main.interfaces import RouteInterface
 from src.presenters.controllers import RegisterUserAdopterController
 from src.data.register_user_adopter import RegisterUserAdopter

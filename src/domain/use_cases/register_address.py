@@ -8,10 +8,9 @@ class RegisterAddress(ABC):
     Interface to RegisterAddress use case
     """
 
-    @classmethod
     @abstractmethod
     def register_address(
-        cls,
+        self,
         cep: str,
         state: str,
         city: str,

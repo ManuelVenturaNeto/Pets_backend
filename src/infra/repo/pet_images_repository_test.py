@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 import pytest
 from werkzeug.datastructures import FileStorage
@@ -6,7 +7,7 @@ from src.infra.repo.pet_images_repository import PetImagesRepository
 images_repo = PetImagesRepository()
 
 
-@pytest.mark.skip(reason="Sensive test. Repository interaction test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test. Storage repository")
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_insert_file():
     """
@@ -26,7 +27,7 @@ def test_insert_file():
 
 
 
-@pytest.mark.skip(reason="Sensive test. Repository interaction test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test. Storage repository")
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_update_file():
     """
@@ -49,7 +50,7 @@ def test_update_file():
 
 
 
-@pytest.mark.skip(reason="Sensive test. Repository interaction test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test. Storage repository")
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_select_files():
     """
@@ -63,7 +64,7 @@ def test_select_files():
 
 
 
-@pytest.mark.skip(reason="Sensive test. Repository interaction test")
+@pytest.mark.skip(reason="Sensive test. Repository interaction test. Storage repository")
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_delete_file():
     """

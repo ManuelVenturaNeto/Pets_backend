@@ -8,9 +8,8 @@ class FindAnimalShelter(ABC):
     Interface to find animal_shelter
     """
 
-    @classmethod
     @abstractmethod
-    def by_id(cls, id: int) -> Dict[bool, List[AnimalShelters]]:
+    def by_id(self, id: int) -> Dict[bool, List[AnimalShelters]]:
         """
         Specific Case
         """
@@ -18,9 +17,8 @@ class FindAnimalShelter(ABC):
 
 
 
-    @classmethod
     @abstractmethod
-    def by_name(cls, name: str) -> Dict[bool, List[AnimalShelters]]:
+    def by_name(self, name: str) -> Dict[bool, List[AnimalShelters]]:
         """
         Specific Case
         """
@@ -28,9 +26,8 @@ class FindAnimalShelter(ABC):
 
 
 
-    @classmethod
     @abstractmethod
-    def by_id_and_name(cls, id: int, name: str) -> Dict[bool, List[AnimalShelters]]:
+    def by_id_and_name(self, id: int, name: str) -> Dict[bool, List[AnimalShelters]]:
         """
         Specific Case
         """
@@ -38,9 +35,8 @@ class FindAnimalShelter(ABC):
 
 
 
-    @classmethod
     @abstractmethod
-    def by_cpf(cls, cpf: str) -> Dict[bool, List[AnimalShelters]]:
+    def by_cpf(self, cpf: str) -> Dict[bool, List[AnimalShelters]]:
         """
         Specific Case
         """

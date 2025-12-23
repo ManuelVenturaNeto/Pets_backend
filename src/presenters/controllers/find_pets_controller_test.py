@@ -1,3 +1,4 @@
+import logging
 from faker import Faker
 from src.data.test import FindPetSpy
 from src.infra.test import PetRepositorySpy

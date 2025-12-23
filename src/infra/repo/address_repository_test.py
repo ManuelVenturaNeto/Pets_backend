@@ -1,3 +1,5 @@
+import logging
+import datetime
 import pytest
 from sqlalchemy import text
 from faker import Faker
@@ -12,11 +14,13 @@ address_repository = AddressRepository()
 db_connection = DBConnectionHandler()
 
 
-@pytest.mark.skip(reason="Sensive test. Repository interaction test")
+# @pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_insert_address():
     """
     Should insert address in addresses table and return it
     """
+    curr_timestamp = datetime.datetime.now(datetime.timezone.utc)
+
     cep = str(faker.random_number(digits=8))
     state = faker.state_abbr()
     city = faker.city()
@@ -58,11 +62,12 @@ def test_insert_address():
 
 
 
-@pytest.mark.skip(reason="Sensive test. Repository interaction test")
+# @pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_select_address():
     """
     Should select address in addresses table and return it
     """
+    curr_timestamp = datetime.datetime.now(datetime.timezone.utc)
 
     id = faker.random_number(digits=5)
     cep = str(faker.random_number(digits=8)).zfill(8)
@@ -72,6 +77,10 @@ def test_select_address():
     street = faker.name()
     complement = faker.street_name()
     number = faker.random_number(digits=2)
+    created_at = curr_timestamp
+    updated_at = curr_timestamp
+    deleted_at = curr_timestamp
+
 
     data = AddressesModel(
         id=id,
@@ -89,8 +98,8 @@ def test_select_address():
     with engine.connect() as connection:
         connection.execute(
             text(
-                "INSERT INTO addresses (id, cep, state, city, neighborhood, street, complement, number) \
-                    VALUES (:id, :cep, :state, :city, :neighborhood, :street, :complement, :number)"
+                "INSERT INTO addresses (id, cep, state, city, neighborhood, street, complement, number, created_at, updated_at, deleted_at) \
+                    VALUES (:id, :cep, :state, :city, :neighborhood, :street, :complement, :number, :created_at, :updated_at, :deleted_at)"
             ),
             {
                 "id": id,
@@ -101,6 +110,9 @@ def test_select_address():
                 "street": street,
                 "complement": complement,
                 "number": number,
+                "created_at": created_at,
+                "updated_at": updated_at,
+                "deleted_at": deleted_at
             },
         )
         connection.commit()
@@ -131,11 +143,13 @@ def test_select_address():
 
 
 
-@pytest.mark.skip(reason="Sensive test. Repository interaction test")
+# @pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_delete_address():
     """
     Should delete address in addresses table and return bool
     """
+    curr_timestamp = datetime.datetime.now(datetime.timezone.utc)
+
     id = faker.random_number(digits=5)
     cep = str(faker.random_number(digits=8)).zfill(8)
     state = faker.state_abbr()
@@ -144,14 +158,17 @@ def test_delete_address():
     street = faker.name()
     complement = faker.street_name()
     number = faker.random_number(digits=2)
+    created_at = curr_timestamp
+    updated_at = curr_timestamp
+    deleted_at = curr_timestamp
 
     engine = db_connection.get_engine()
 
     with engine.connect() as connection:
         connection.execute(
             text(
-                "INSERT INTO addresses (id, cep, state, city, neighborhood, street, complement, number) \
-                    VALUES (:id, :cep, :state, :city, :neighborhood, :street, :complement, :number)"
+                "INSERT INTO addresses (id, cep, state, city, neighborhood, street, complement, number, created_at, updated_at, deleted_at) \
+                    VALUES (:id, :cep, :state, :city, :neighborhood, :street, :complement, :number, :created_at, :updated_at, :deleted_at)"
             ),
             {
                 "id": id,
@@ -162,6 +179,9 @@ def test_delete_address():
                 "street": street,
                 "complement": complement,
                 "number": number,
+                "created_at": created_at,
+                "updated_at": updated_at,
+                "deleted_at": deleted_at
             },
         )
         connection.commit()
@@ -172,19 +192,27 @@ def test_delete_address():
 
     with engine.connect() as connection:
         result = connection.execute(
-            text("SELECT * FROM addresses WHERE id = :id"), {"id": id}
+            text("SELECT * FROM addresses WHERE id = :id and deleted_at is null"), {"id": id}
         ).fetchone()
         assert result is None
+
+        result = connection.execute(
+            text("SELECT * FROM addresses WHERE id = :id"), {"id": id}
+        ).fetchone()
+
+        db_connection.session.delete(result)
 
     reset_auto_increment("addresses")
 
 
 
-@pytest.mark.skip(reason="Sensive test. Repository interaction test")
+# @pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_update_address():
     """
     Should update address data in the addresses table and return the updated object
     """
+    curr_timestamp = datetime.datetime.now(datetime.timezone.utc)
+
     id = faker.random_number(digits=5)
     cep = str(faker.random_number(digits=8)).zfill(8)
     state = faker.state_abbr()
@@ -193,14 +221,18 @@ def test_update_address():
     street = faker.name()
     complement = faker.street_name()
     number = faker.random_number(digits=2)
+    created_at = curr_timestamp
+    updated_at = curr_timestamp
+    deleted_at = curr_timestamp
+
 
     engine = db_connection.get_engine()
 
     with engine.connect() as connection:
         connection.execute(
             text(
-                "INSERT INTO addresses (id, cep, state, city, neighborhood, street, complement, number) \
-                    VALUES (:id, :cep, :state, :city, :neighborhood, :street, :complement, :number)"
+                "INSERT INTO addresses (id, cep, state, city, neighborhood, street, complement, number, created_at, updated_at, deleted_at) \
+                    VALUES (:id, :cep, :state, :city, :neighborhood, :street, :complement, :number, :created_at, :updated_at, :deleted_at)"
             ),
             {
                 "id": id,
@@ -211,6 +243,9 @@ def test_update_address():
                 "street": street,
                 "complement": complement,
                 "number": number,
+                "created_at": created_at,
+                "updated_at": updated_at,
+                "deleted_at": deleted_at
             },
         )
         connection.commit()

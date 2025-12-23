@@ -1,9 +1,8 @@
+import logging
 from typing import BinaryIO
 import logging
 from botocore.exceptions import ClientError
 from src.infra.config import S3Handler
-
-logging.basicConfig(level=logging.INFO)
 
 
 class PetImagesRepository:
@@ -19,7 +18,12 @@ class PetImagesRepository:
         self.domain = self.s3_config.get_custom_domain()
         self.cache_control = self.s3_config.get_cache_control()
 
-
+        self.log = logging.getLogger(__name__)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler()],
+        )
 
     def insert_file(self, pet_id: int, file: BinaryIO) -> bool:
         """
@@ -40,7 +44,7 @@ class PetImagesRepository:
             extra_args = {"CacheControl": self.cache_control}
 
             self.s3_client.upload_fileobj(img_data, self.bucket_name, key, ExtraArgs=extra_args)
-            logging.info("File %s uploaded successfully to %s", filename, key)
+            logging.debug("File %s uploaded successfully to %s", filename, key)
             return True
 
         except ClientError as e:
@@ -71,7 +75,7 @@ class PetImagesRepository:
         key = f"{self.location}/{pet_id}/{filename}"
         try:
             self.s3_client.delete_object(Bucket=self.bucket_name, Key=key)
-            logging.info("File %s deleted successfully from %s", filename, key)
+            logging.debug("File %s deleted successfully from %s", filename, key)
             return True
 
         except ClientError as e:
@@ -95,7 +99,7 @@ class PetImagesRepository:
                 logging.error("Failed to upload new file for pet_id %d.", pet_id)
                 return False
 
-            logging.info("File %s updated successfully for pet_id %d.", old_filename, pet_id)
+            logging.debug("File %s updated successfully for pet_id %d.", old_filename, pet_id)
             return True
 
         except ClientError as e:

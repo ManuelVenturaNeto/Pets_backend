@@ -1,3 +1,4 @@
+import logging
 import pytest
 from sqlalchemy import text
 from faker import Faker
@@ -12,7 +13,7 @@ pet_repository = PetRepository()
 db_connection = DBConnectionHandler()
 
 
-@pytest.mark.skip(reason="Sensive test. Repository interaction test")
+# @pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_insert_pet():
     """
     Should insert pet in pet table and return it
@@ -45,7 +46,7 @@ def test_insert_pet():
 
 
 
-@pytest.mark.skip(reason="Sensive test. Repository interaction test")
+# @pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_select_pet():
     """
     Should select pets in pet table and return it
@@ -101,7 +102,7 @@ def test_select_pet():
 
 
 
-@pytest.mark.skip(reason="Sensive test. Repository interaction test")
+# @pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_delete_pet():
     """
     Should delete pet in pet table and return bool
@@ -146,7 +147,7 @@ def test_delete_pet():
 
 
 
-@pytest.mark.skip(reason="Sensive test. Repository interaction test")
+# @pytest.mark.skip(reason="Sensive test. Repository interaction test")
 def test_update_pets():
     """
     Should update pet data in the pets table and return the updated object

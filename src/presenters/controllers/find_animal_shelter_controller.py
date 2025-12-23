@@ -1,3 +1,4 @@
+import logging
 from typing import Type
 from src.main.interfaces import RouteInterface
 from src.domain.use_cases import FindAnimalShelter
@@ -12,6 +13,14 @@ class FindAnimalShelterController(RouteInterface):
 
     def __init__(self, find_animal_shelter_use_case: Type[FindAnimalShelter]):
         self.find_animal_shelter_use_case = find_animal_shelter_use_case
+
+        self.log = logging.getLogger(__name__)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler()],
+        )
+
 
     def route(self, http_request: Type[HttpRequest]) -> HttpResponse:
         """
@@ -31,28 +40,36 @@ class FindAnimalShelterController(RouteInterface):
                     id=animal_shelter_id, 
                     name=animal_shelter_name
                 )
+                self.log.info(f"Finding Animal Shelter by ID: {animal_shelter_id} and Name: {animal_shelter_name}")
 
             elif "animal_shelter_id" in query_string_params and "animal_shelter_name" not in query_string_params:
                 animal_shelter_id = http_request.query["animal_shelter_id"]
                 response = self.find_animal_shelter_use_case.by_id(
                     id=animal_shelter_id
                 )
+                self.log.info(f"Finding Animal Shelter by ID: {animal_shelter_id}")
+                
 
             elif "animal_shelter_id" not in query_string_params and "animal_shelter_name" in query_string_params:
                 animal_shelter_name = http_request.query["animal_shelter_name"]
                 response = self.find_animal_shelter_use_case.by_name(
                     name=animal_shelter_name
                 )
+                self.log.info(f"Finding Animal Shelter by Name: {animal_shelter_name}")
 
             else:
                 response = {"Success": False, "Data": None}
+                self.log.warning("Invalid query parameters for finding Animal Shelter")
 
             if response["Success"] is False:
                 http_error = HttpErrors.error_422()
+                self.log.error("Error occurred while finding Animal Shelter")
                 return HttpResponse(status_code=http_error["status_code"], body=http_error["body"])
 
+            self.log.info("Animal Shelter found successfully")
             return HttpResponse(status_code=200, body=response["Data"])
 
         # if no query in http_request
         http_error = HttpErrors.error_400()
+        self.log.error("Bad Request: No query parameters provided")
         return HttpResponse(status_code=http_error["status_code"], body=http_error["body"])

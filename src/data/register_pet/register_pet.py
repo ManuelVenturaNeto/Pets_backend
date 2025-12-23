@@ -1,3 +1,4 @@
+import logging
 from typing import Type, Dict, List
 from src.domain.models import Pets, AnimalShelters, Species
 from src.data.find_animal_shelter import FindAnimalShelter
@@ -21,6 +22,13 @@ class RegisterPet(RegisterPetInterface):
         self.find_animal_shelter = find_animal_shelter
         self.find_specie = find_specie
 
+        self.log = logging.getLogger(__name__)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler()],
+        )
+
 
 
     def register_pet(
@@ -42,10 +50,13 @@ class RegisterPet(RegisterPetInterface):
         response = None
 
         validate_entry = isinstance(name, str) and (isinstance(age, int) or isinstance(age, type(None)))
+        self.log.info(f"Register Pet called with name: {name}, specie_name: {specie_name}, animal_shelter_information: {animal_shelter_information}, adopted: {adopted}, age: {age}")
 
         animal_shelter = self.__find_animal_shelter_information(animal_shelter_information)
+        self.log.info(f"AnimalShelter lookup result: {animal_shelter}")
 
         specie = self.__find_specie_information(specie_name)
+        self.log.info(f"Specie lookup result: {specie}")
 
         checker = validate_entry and animal_shelter["Success"] and specie["Success"]
 
@@ -57,8 +68,12 @@ class RegisterPet(RegisterPetInterface):
                 animal_shelter_id=animal_shelter["Data"][0].id,
                 adopted=adopted,
             )
+            self.log.info(f"Pet registered successfully: {response}")
 
+        self.log.info(f"Register Pet called with name: {name}, specie_name: {specie_name}, animal_shelter_information: {animal_shelter_information}, adopted: {adopted}, age: {age}, Success: {checker}")
         return {"Success": checker, "Data": response}
+
+
 
     def __find_animal_shelter_information(self, animal_shelter_information: Dict[int, str]) -> Dict[bool, List[AnimalShelters]]:
         """
@@ -75,21 +90,28 @@ class RegisterPet(RegisterPetInterface):
                 animal_shelter_information["animal_shelter_id"],
                 animal_shelter_information["animal_shelter_name"],
             )
+            self.log.info(f"AnimalShelter found by ID and Name: {animal_shelter_founded}")
 
         elif ("animal_shelter_id" not in animal_shelter_params and "animal_shelter_name" in animal_shelter_params):
             animal_shelter_founded = self.find_animal_shelter.by_name(
                 animal_shelter_information["animal_shelter_name"]
             )
+            self.log.info(f"AnimalShelter found by Name: {animal_shelter_founded}")
 
         elif ("animal_shelter_id" in animal_shelter_params and "animal_shelter_name" not in animal_shelter_params ):
             animal_shelter_founded = self.find_animal_shelter.by_id(
                 animal_shelter_information["animal_shelter_id"]
             )
+            self.log.info(f"AnimalShelter found by ID: {animal_shelter_founded}")
 
         else:
+            self.log.error("No valid animal_shelter information provided.")
             return {"Success": False, "Data": None}
 
+        self.log.info(f"AnimalShelter lookup completed: {animal_shelter_founded}")
         return animal_shelter_founded
+
+
 
     def __find_specie_information(self, specie_name: str) -> Dict[bool, List[Species]]:
         """
@@ -102,8 +124,11 @@ class RegisterPet(RegisterPetInterface):
 
         if specie_name:
             specie_founded = self.find_specie.by_specie_name(specie_name)
+            self.log.info(f"Specie found by Name: {specie_founded}")
 
         else:
+            self.log.error("No valid specie_name provided.")
             return {"Success": False, "Data": None}
 
+        self.log.info(f"Specie lookup completed: {specie_founded}")
         return specie_founded

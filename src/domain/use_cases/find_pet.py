@@ -8,9 +8,8 @@ class FindPet(ABC):
     Interface to find Pet
     """
 
-    @classmethod
     @abstractmethod
-    def by_pet_id(cls, pet_id: int) -> Dict[bool, List[Pets]]:
+    def by_pet_id(self, pet_id: int) -> Dict[bool, List[Pets]]:
         """
         Specific Case
         """
@@ -18,9 +17,8 @@ class FindPet(ABC):
 
 
 
-    @classmethod
     @abstractmethod
-    def by_animal_shelter_id(cls, animal_shelter_id: int) -> Dict[bool, List[Pets]]:
+    def by_animal_shelter_id(self, animal_shelter_id: int) -> Dict[bool, List[Pets]]:
         """
         Specific Case
         """
@@ -28,9 +26,8 @@ class FindPet(ABC):
 
 
 
-    @classmethod
     @abstractmethod
-    def by_pet_id_and_animal_shelter_id(cls, pet_id: int, animal_shelter_id: int) -> Dict[bool, List[Pets]]:
+    def by_pet_id_and_animal_shelter_id(self, pet_id: int, animal_shelter_id: int) -> Dict[bool, List[Pets]]:
         """
         Specific Case
         """

@@ -1,3 +1,4 @@
+import logging
 from typing import Type, Dict, List
 from src.domain.models import UserAdopters
 from src.domain.use_cases import FindUserAdopter as FindUserAdopterInterface
@@ -13,6 +14,13 @@ class FindUserAdopter(FindUserAdopterInterface):
 
         self.user_adopter_repository = user_adopter_repository
 
+        self.log = logging.getLogger(__name__)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler()],
+        )
+
 
 
     def by_user_adopter_id(self, user_adopter_id: int) -> Dict[bool, List[UserAdopters]]:
@@ -23,10 +31,13 @@ class FindUserAdopter(FindUserAdopterInterface):
         """
         response = None
         validate_entry = isinstance(user_adopter_id, int)
+        self.log.info(f"Find UserAdopter by user_adopter_id called with user_adopter_id: {user_adopter_id}")
 
         if validate_entry:
             response = self.user_adopter_repository.select_user_adopter(id=user_adopter_id)
+            self.log.info(f"UserAdopter found for user_adopter_id {user_adopter_id}: {response}")
 
+        self.log.info(f"Find UserAdopter by user_adopter_id called with user_adopter_id: {user_adopter_id}, Success: {validate_entry}")
         return {"Success": validate_entry, "Data": response}
 
 
@@ -39,10 +50,13 @@ class FindUserAdopter(FindUserAdopterInterface):
         """
         response = None
         validate_entry = isinstance(pet_id, int)
+        self.log.info(f"Find UserAdopter by pet_id called with pet_id: {pet_id}")
 
         if validate_entry:
             response = self.user_adopter_repository.select_user_adopter(pet_id=pet_id)
+            self.log.info(f"UserAdopter found for pet_id {pet_id}: {response}")
 
+        self.log.info(f"Find UserAdopter by pet_id called with pet_id: {pet_id}, Success: {validate_entry}")
         return {"Success": validate_entry, "Data": response}
 
 
@@ -74,6 +88,7 @@ class FindUserAdopter(FindUserAdopterInterface):
             or isinstance(email, str)
             or isinstance(phone_number, str)
         )
+        self.log.info(f"Find UserAdopter by user information called with name: {name}, cpf: {cpf}, email: {email}, phone_number: {phone_number}")
 
         if validate_entry:
             response = self.user_adopter_repository.select_user_adopter(
@@ -82,5 +97,7 @@ class FindUserAdopter(FindUserAdopterInterface):
                 email=email, 
                 phone_number=phone_number
             )
+            self.log.info(f"UserAdopter found for provided information: {response}")
 
+        self.log.info(f"Find UserAdopter by user information called with name: {name}, cpf: {cpf}, email: {email}, phone_number: {phone_number}, Success: {validate_entry}")
         return {"Success": validate_entry, "Data": response}

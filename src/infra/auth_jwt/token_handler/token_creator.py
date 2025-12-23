@@ -1,3 +1,4 @@
+import logging
 import time
 from datetime import datetime, timedelta, timezone
 import jwt
@@ -13,7 +14,12 @@ class TokenCreator:
         self.__EXP_TIME_MIN = exp_time_min
         self.__REFRESH_TIME_MIN = refresh_time
 
-
+        self.log = logging.getLogger(__name__)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler()],
+        )
 
     def create(self, uid: int) -> str:
         """
@@ -21,7 +27,7 @@ class TokenCreator:
         :param  - uid: animal_shelter identify
         :return - string with token
         """
-
+        self.log.info(f"Creating token for UID: {uid}")
         return self.__encode_token(uid=uid)
 
 
@@ -40,8 +46,10 @@ class TokenCreator:
         if ((exp_time - time.time()) / 60) < self.__REFRESH_TIME_MIN:
             # If token refreshed in more than 15 minutes, new refresh
 
+            self.log.info(f"Refreshing token for UID: {uid}")
             return self.__encode_token(uid=uid)
 
+        self.log.info(f"Token for UID: {uid} does not require refresh.")
         return token
 
 
@@ -56,6 +64,7 @@ class TokenCreator:
         validate_entry = isinstance(uid, int)
 
         if validate_entry:
+            self.log.info(f"Encoding token for UID: {uid}")
             return jwt.encode(
                 {
                     "uid": uid,
@@ -65,5 +74,5 @@ class TokenCreator:
                 key=self.__TOKEN_KEY,
                 algorithm="HS256",
             )
-
+        self.log.error("UID must be an integer to encode token.")
         return None

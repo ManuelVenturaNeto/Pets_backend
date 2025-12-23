@@ -8,10 +8,9 @@ class RegisterPet(ABC):
     Interface to FindPet use case
     """
 
-    @classmethod
     @abstractmethod
     def register_pet(
-        cls,
+        self,
         name: str,
         specie_name: str,
         animal_shelter_informations: Dict[int, str],

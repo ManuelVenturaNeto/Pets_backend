@@ -1,3 +1,4 @@
+import logging
 from typing import Type
 from src.main.interfaces import RouteInterface
 from src.domain.use_cases import RegisterUserAdopter
@@ -12,6 +13,13 @@ class RegisterUserAdopterController(RouteInterface):
 
     def __init__(self, register_user_adopter_use_case: Type[RegisterUserAdopter]):
         self.register_user_adopter_use_case = register_user_adopter_use_case
+
+        self.log = logging.getLogger(__name__)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler()],
+        )
 
 
 
@@ -56,19 +64,22 @@ class RegisterUserAdopterController(RouteInterface):
                 )
 
                 response = self.register_user_adopter_use_case.register_user_adopter(**body_data)
+                self.log.info("Registering User Adopter with provided information")
 
             else:
                 response = {"Success": False, "Data": None}
+                self.log.warning("Invalid body parameters for registering User Adopter")
 
             if response["Success"] is False:
 
                 http_error = HttpErrors.error_422()
-
+                self.log.error("Error occurred while registering User Adopter")
                 return HttpResponse(status_code=http_error["status_code"], body=http_error["body"])
 
+            self.log.info("User Adopter registered successfully")
             return HttpResponse(status_code=200, body=response["Data"])
 
         # If no body in http_request
         http_error = HttpErrors.error_400()
-
+        self.log.error("Bad Request: No body provided")
         return HttpResponse(status_code=http_error["status_code"], body=http_error["body"])

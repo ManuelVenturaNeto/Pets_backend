@@ -1,3 +1,4 @@
+import logging
 from src.data.find_specie import FindSpecie
 from src.infra.repo.specie_repository import SpecieRepository
 from src.presenters.controllers import FindSpecieController

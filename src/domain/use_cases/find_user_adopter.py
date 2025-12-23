@@ -8,9 +8,8 @@ class FindUserAdopter(ABC):
     Interface to find user_adopter
     """
 
-    @classmethod
     @abstractmethod
-    def by_user_adopter_id(cls, user_adopter_id: int) -> Dict[bool, List[UserAdopters]]:
+    def by_user_adopter_id(self, user_adopter_id: int) -> Dict[bool, List[UserAdopters]]:
         """
         Specific Case
         """
@@ -18,9 +17,8 @@ class FindUserAdopter(ABC):
 
 
 
-    @classmethod
     @abstractmethod
-    def by_pet_id(cls, pet_id: int) -> Dict[bool, List[UserAdopters]]:
+    def by_pet_id(self, pet_id: int) -> Dict[bool, List[UserAdopters]]:
         """
         Specific Case
         """
@@ -28,10 +26,9 @@ class FindUserAdopter(ABC):
 
 
 
-    @classmethod
     @abstractmethod
     def by_user_information(
-        cls, name: str, cpf: str, email: str, phone_number: str
+        self, name: str, cpf: str, email: str, phone_number: str
     ) -> Dict[bool, List[UserAdopters]]:
         """
         Specific Case

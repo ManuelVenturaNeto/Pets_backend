@@ -1,3 +1,4 @@
+import logging
 from src.data.find_user_adopter import FindUserAdopter
 from src.infra.repo.user_adopter_repository import UserAdopterRepository
 from src.presenters.controllers import FindUserAdopterController

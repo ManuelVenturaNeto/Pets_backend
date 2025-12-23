@@ -1,3 +1,6 @@
+import logging
+
+
 class HttpErrors:
     """
     Class to define errors in http

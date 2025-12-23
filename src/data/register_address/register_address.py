@@ -1,3 +1,4 @@
+import logging
 from typing import Dict
 from src.domain.use_cases import RegisterAddress as RegisterAddressInterface
 from src.data.interfaces import AddressRepositoryInterface as AddressRepository
@@ -12,6 +13,12 @@ class RegisterAddress(RegisterAddressInterface):
     def __init__(self, address_repository: type[AddressRepository]):
         self.address_repository = address_repository
 
+        self.log = logging.getLogger(__name__)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler()],
+        )
 
 
     def register_address(
@@ -47,6 +54,7 @@ class RegisterAddress(RegisterAddressInterface):
             and isinstance(number, int)
             and (isinstance(complement, (str, type(None))))
         )
+        self.log.info(f"Register Address called with cep: {cep}, state: {state}, city: {city}, neighborhood: {neighborhood}, street: {street}, number: {number}, complement: {complement}")
 
         if validate_entry:
             response = self.address_repository.insert_address(
@@ -58,5 +66,7 @@ class RegisterAddress(RegisterAddressInterface):
                 number=number,
                 complement=complement,
             )
+            self.log.info(f"Address registered successfully: {response}")
 
+        self.log.info(f"Register Address called with cep: {cep}, state: {state}, city: {city}, neighborhood: {neighborhood}, street: {street}, number: {number}, complement: {complement}, Success: {validate_entry}")
         return {"Success": validate_entry, "Data": response}

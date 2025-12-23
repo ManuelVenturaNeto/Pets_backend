@@ -1,3 +1,4 @@
+import logging
 from src.main.interfaces import RouteInterface
 from src.presenters.controllers import RegisterSpecieController
 from src.data.register_specie import RegisterSpecie

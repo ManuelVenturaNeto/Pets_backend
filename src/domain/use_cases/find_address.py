@@ -8,9 +8,8 @@ class FindAddress(ABC):
     Interface to find animal_shelter
     """
 
-    @classmethod
     @abstractmethod
-    def by_id(cls, id: int) -> Dict[bool, List[Addresses]]:
+    def by_id(self, id: int) -> Dict[bool, List[Addresses]]:
         """
         Specific Case
         """
@@ -18,10 +17,9 @@ class FindAddress(ABC):
 
 
 
-    @classmethod
     @abstractmethod
     def by_complete_discription(
-        cls,
+        self,
         cep: str,
         state: str,
         city: str,
@@ -36,10 +34,9 @@ class FindAddress(ABC):
 
 
 
-    @classmethod
     @abstractmethod
     def by_cep_or_state_or_city_or_neighbohood(
-        cls,
+        self,
         cep: str = None,
         state: str = None,
         city: str = None,

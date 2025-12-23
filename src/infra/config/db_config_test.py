@@ -1,3 +1,4 @@
+import logging
 import pytest
 from .db_config import DBConnectionHandler
 

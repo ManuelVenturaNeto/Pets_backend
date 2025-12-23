@@ -1,3 +1,4 @@
+import logging
 from typing import Type
 from src.main.interfaces import RouteInterface
 from src.domain.use_cases import RegisterAnimalShelter
@@ -12,6 +13,13 @@ class RegisterAnimalShelterController(RouteInterface):
 
     def __init__(self, register_animal_shelter_use_case: Type[RegisterAnimalShelter]):
         self.register_animal_shelter_use_case = register_animal_shelter_use_case
+
+        self.log = logging.getLogger(__name__)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler()],
+        )
 
 
 
@@ -61,18 +69,21 @@ class RegisterAnimalShelterController(RouteInterface):
                         **body_data
                     )
                 )
+                self.log.info("Registering Animal Shelter with provided information")
 
             else:
                 response = {"Success": False, "Data": None}
+                self.log.warning("Invalid body parameters for registering Animal Shelter")
 
             if response["Success"] is False:
                 http_error = HttpErrors.error_422()
-                return HttpResponse(
-                    status_code=http_error["status_code"], body=http_error["body"]
-                )
+                self.log.error("Error occurred while registering Animal Shelter")
+                return HttpResponse(status_code=http_error["status_code"], body=http_error["body"])
 
+            self.log.info("Animal Shelter registered successfully")
             return HttpResponse(status_code=200, body=response["Data"])
 
         # If no body in http_request
         http_error = HttpErrors.error_400()
+        self.log.error("Bad Request: No body provided")
         return HttpResponse(status_code=http_error["status_code"], body=http_error["body"])

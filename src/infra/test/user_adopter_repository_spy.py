@@ -1,3 +1,4 @@
+import logging
 from typing import List
 from src.domain.models import UserAdopters
 from src.domain.test import mock_user_adopter

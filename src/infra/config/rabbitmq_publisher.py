@@ -1,3 +1,4 @@
+import logging
 from typing import Dict
 import json
 import pika

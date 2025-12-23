@@ -8,9 +8,8 @@ class FindSpecie(ABC):
     Interface to find specie
     """
 
-    @classmethod
     @abstractmethod
-    def by_id(cls, id: int) -> Dict[bool, List[Species]]:
+    def by_id(self, id: int) -> Dict[bool, List[Species]]:
         """
         Specific Case
         """
@@ -18,9 +17,8 @@ class FindSpecie(ABC):
 
 
 
-    @classmethod
     @abstractmethod
-    def by_specie_name(cls, specie_name: str) -> Dict[bool, List[Species]]:
+    def by_specie_name(self, specie_name: str) -> Dict[bool, List[Species]]:
         """
         Specific Case
         """
@@ -28,9 +26,8 @@ class FindSpecie(ABC):
 
 
 
-    @classmethod
     @abstractmethod
-    def by_id_and_specie_name(cls, id: int, specie_name: str) -> Dict[bool, List[Species]]:
+    def by_id_and_specie_name(self, id: int, specie_name: str) -> Dict[bool, List[Species]]:
         """
         Specific Case
         """

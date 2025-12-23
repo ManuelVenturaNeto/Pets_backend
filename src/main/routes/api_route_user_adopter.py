@@ -8,7 +8,12 @@ from src.infra.config import RabbitMQClient
 # from src.infra.auth_jwt.token_verificator import token_verify
 
 
-logging.basicConfig(level=logging.DEBUG)
+log = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[logging.StreamHandler()],
+)
 
 
 @api_routes_bp.route("/api/user_adopters", methods=["POST"])
@@ -18,9 +23,8 @@ def register_user_adopter():
     """
 
     message = {}
-    response = flask_adapter(
-        request=request, api_route=register_user_adopter_composer()
-    )
+    response = flask_adapter(request=request, api_route=register_user_adopter_composer())
+    log.info(f"Register User Adopter response status: {response.status_code}")
 
     if response.status_code < 300:
         message = {
@@ -36,18 +40,11 @@ def register_user_adopter():
             },
         }
 
-        try:
-            # Sending a message to the RabbitMQ
-            client = RabbitMQClient()
-            client.set_queue("user_adopter_queue", durable=True)
-            client.send_message(message)
-            client.close()
-        except Exception as e:
-            logging.error(f"Error to send message to RabbitMQ: {e}", exc_info=True)
-
+        log.info(f"User Adopter registered successfully: {message}")
         return jsonify({"data": message}), response.status_code
 
     # Handling errors
+    log.error(f"Error registering User Adopter: {response.body['error']}")
     return jsonify({"error": {"status": response.status_code, "title": response.body["error"]}}), response.status_code
 
 
@@ -60,6 +57,7 @@ def finder_user_adopters():
 
     message = {}
     response = flask_adapter(request=request, api_route=find_user_adopter_composer())
+    log.info(f"Finding User Adopters response status: {response.status_code}")
 
     if response.status_code < 300:
         message = []
@@ -73,7 +71,9 @@ def finder_user_adopters():
                 }
             )
 
+        log.info(f"User Adopters found successfully: {message}")
         return jsonify({"data": message}), response.status_code
 
     # Handling Errors
+    log.error(f"Error finding User Adopters: {response.body['error']}")
     return jsonify({"error": {"status": response.status_code, "title": response.body["error"]}}), response.status_code

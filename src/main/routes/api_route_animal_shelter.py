@@ -11,7 +11,12 @@ from src.infra.config import RabbitMQClient
 # from src.infra.auth_jwt.token_verificator import token_verify
 
 
-logging.basicConfig(level=logging.DEBUG)
+log = logging.getLogger(__name__)
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[logging.StreamHandler()],
+)
 
 
 @api_routes_bp.route("/api/animal_shelters", methods=["POST"])
@@ -21,9 +26,8 @@ def register_animal_shelter():
     """
 
     message = {}
-    response = flask_adapter(
-        request=request, api_route=register_animal_shelter_composer()
-    )
+    response = flask_adapter(request=request, api_route=register_animal_shelter_composer())
+    log.info(f"Register Animal Shelter response status: {response.status_code}")
 
     if response.status_code < 300:
         message = {
@@ -39,18 +43,11 @@ def register_animal_shelter():
             },
         }
 
-        try:
-            # Sending a message to the RabbitMQ
-            client = RabbitMQClient()
-            client.set_queue("animal_shelter_queue", durable=True)
-            client.send_message(message)
-            client.close()
-        except Exception as e:
-            logging.error(f"Error to send message to RabbitMQ: {e}", exc_info=True)
-
+        log.info(f"Animal Shelter registered successfully: {message}")
         return jsonify({"data": message}), response.status_code
 
     # Handling errors
+    log.error(f"Error registering Animal Shelter: {response.body['error']}")
     return jsonify({"error": {"status": response.status_code, "title": response.body["error"]}}), response.status_code
 
 
@@ -63,6 +60,7 @@ def finder_animal_shelters():
 
     message = {}
     response = flask_adapter(request=request, api_route=find_animal_shelter_composer())
+    log.info(f"Find Animal Shelters response status: {response.status_code}")
 
     if response.status_code < 300:
         message = []
@@ -76,7 +74,9 @@ def finder_animal_shelters():
                 }
             )
 
+        log.info(f"Animal Shelters found successfully: {message}")
         return jsonify({"data": message}), response.status_code
 
     # Handling Errors
+    log.error(f"Error finding Animal Shelters: {response.body['error']}")
     return jsonify({"error": {"status": response.status_code, "title": response.body["error"]}}), response.status_code

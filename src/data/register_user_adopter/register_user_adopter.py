@@ -1,3 +1,4 @@
+import logging
 from typing import Type, Dict, List
 from src.domain.models import UserAdopters, Pets
 from src.domain.use_cases import RegisterUserAdopter as RegisterUserAdopterInterface
@@ -21,6 +22,13 @@ class RegisterUserAdopter(RegisterUserAdopterInterface):
         self.user_adopter_repository = user_adopter_repository
         self.find_pet = find_pet
         self.register_address_service = register_address_service
+
+        self.log = logging.getLogger(__name__)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler()],
+        )
 
 
 
@@ -58,8 +66,10 @@ class RegisterUserAdopter(RegisterUserAdopterInterface):
         response = None
 
         validate_entry = validator(name, cpf, email, phone_number, pet_id)
+        self.log.info(f"Validation result for user adopter registration: {validate_entry}")
 
         find_pet = self.__find_by_pet_id(pet_id)
+        self.log.info(f"Find pet result for pet ID {pet_id}: {find_pet}")
 
         if validate_entry and find_pet["Success"]:
             address_response = self.register_address_service.register_address(
@@ -71,6 +81,7 @@ class RegisterUserAdopter(RegisterUserAdopterInterface):
                 number=number,
                 complement=complement,
             )
+            self.log.info(f"Address registration result for user adopter: {address_response}")
 
             if address_response["Success"]:
                 address_id = address_response["Data"].id
@@ -82,10 +93,13 @@ class RegisterUserAdopter(RegisterUserAdopterInterface):
                     address_id=address_id,
                     pet_id=pet_id,
                 )
+                self.log.info(f"User adopter registered successfully with ID: {response.id}")
 
             else:
                 validate_entry = False
+                self.log.error("Failed to register address for user adopter.")
 
+        self.log.info(f"User adopter registration process completed with success status: {validate_entry}")
         return {"Success": validate_entry, "Data": response}
 
 
@@ -101,8 +115,11 @@ class RegisterUserAdopter(RegisterUserAdopterInterface):
 
         if isinstance(pet_id, int):
             pet_founded = self.find_pet.by_pet_id(pet_id)
+            self.log.info(f"Pet found with ID {pet_id}: {pet_founded}")
 
         else:
+            self.log.error("Pet ID must be an integer.")
             return {"Success": False, "Data": None}
 
+        self.log.info(f"Find by pet ID process completed with success status: {pet_founded['Success']}")
         return pet_founded

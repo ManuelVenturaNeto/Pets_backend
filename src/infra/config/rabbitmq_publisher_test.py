@@ -1,3 +1,4 @@
+import logging
 import pytest
 import pika
 from .rabbitmq_publisher import RabbitMQClient

@@ -8,10 +8,9 @@ class RegisterAnimalShelter(ABC):
     Interface to RegisterAnimalShelter use case
     """
 
-    @classmethod
     @abstractmethod
     def register_animal_shelter(
-        cls,
+        self,
         name: str,
         password: str,
         cpf: str,

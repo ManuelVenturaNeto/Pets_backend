@@ -1,3 +1,4 @@
+import logging
 from src.data.find_animal_shelter import FindAnimalShelter
 from src.infra.repo.animal_shelter_repository import AnimalShelterRepository
 from src.presenters.controllers import FindAnimalShelterController

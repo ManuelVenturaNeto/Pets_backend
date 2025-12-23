@@ -1,3 +1,4 @@
+import logging
 from faker import Faker
 from src.data.test import RegisterUserAdopterSpy
 from src.presenters.helpers import HttpRequest

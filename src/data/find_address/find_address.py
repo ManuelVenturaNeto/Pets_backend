@@ -1,3 +1,4 @@
+import logging
 from typing import Type, Dict, List
 from src.domain.models import Addresses
 from src.domain.use_cases import FindAddress as FindAddressInterface
@@ -13,6 +14,15 @@ class FindAddress(FindAddressInterface):
 
         self.address_repository = address_repository
 
+        self.log = logging.getLogger(__name__)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler()],
+        )
+
+
+
     def by_id(self, id: int) -> Dict[bool, List[Addresses]]:
         """
         Select Address by id
@@ -22,10 +32,13 @@ class FindAddress(FindAddressInterface):
 
         response = None
         validate_entry = isinstance(id, int)
+        self.log.info(f"Find Address by id called with id: {id}")
 
         if validate_entry:
             response = self.address_repository.select_address(id=id)
+            self.log.info(f"Address found for id {id}: {response}")
 
+        self.log.info(f"Find Address by id called with id: {id}, Success: {validate_entry}")
         return {"Success": validate_entry, "Data": response}
 
 
@@ -69,7 +82,9 @@ class FindAddress(FindAddressInterface):
                 street=street,
                 number=number,
             )
+            self.log.info(f"Address found for complete description - cep: {cep}, state: {state}, city: {city}, neighborhood: {neighborhood}, street: {street}, number: {number}: {response}")
 
+        self.log.info(f"Find Address by complete description called with cep: {cep}, state: {state}, city: {city}, neighborhood: {neighborhood}, street: {street}, number: {number}, Success: {validate_entry}")
         return {"Success": validate_entry, "Data": response}
 
 
@@ -101,8 +116,11 @@ class FindAddress(FindAddressInterface):
                 and isinstance(city, (str, type(None)))
                 and isinstance(neighborhood, (str, type(None)))
             )
+            self.log.info(f"Validation result for find address by cep/state/city/neighborhood: {validate_entry}")
         
         if validate_entry:
             response = self.address_repository.select_address(cep=cep, state=state, city=city, neighborhood=neighborhood)
+            self.log.info(f"Address found with provided filters - cep: {cep}, state: {state}, city: {city}, neighborhood: {neighborhood}: {response}")
 
+        self.log.info(f"Find Address by cep/state/city/neighborhood called with cep: {cep}, state: {state}, city: {city}, neighborhood: {neighborhood}, Success: {validate_entry}")
         return {"Success": validate_entry, "Data": response}

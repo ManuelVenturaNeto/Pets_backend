@@ -1,8 +1,9 @@
+import logging
 import os
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
+from google.cloud.sql.connector import Connector
 from .db_base import Base
-
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -12,26 +13,41 @@ class DBConnectionHandler:
     Class to manage database connections using SQLAlchemy.
     """
     def __init__(self):
-        db_host = str(os.getenv("DB_HOST"))
-        db_port = str(os.getenv("DB_PORT"))
-        db_user = str(os.getenv("DB_USER"))
-        db_password = str(os.getenv("DB_PASSWORD"))
-        db_name = str(os.getenv("DB_NAME"))
+        self.db_instance = str(os.getenv("DB_INSTANCE_NAME"))
+        self.db_user = str(os.getenv("DB_USER"))
+        self.db_password = str(os.getenv("DB_PASSWORD"))
+        self.db_name = str(os.getenv("DB_NAME"))
 
-        self.__connection_string = (
-            f"postgresql+psycopg2://{db_user}:{db_password}@{db_host}:{db_port}/{db_name}"
+        self.__connector = Connector()
+
+        self.__engine = create_engine(
+            "postgresql+pg8000://",
+            creator=self.get_connection
         )
-        self.__engine = self.__create_database_engine()
+
         self.session = None
 
+        self.log = logging.getLogger(__name__)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler()],
+        )
 
 
-    def __create_database_engine(self):
+    def get_connection(self):
         """
         Create and return a SQLAlchemy engine.
         """
-        engine = create_engine(self.__connection_string)
-        return engine
+        conn = self.__connector.connect(
+            instance_connection_string=self.db_instance,
+            driver="pg8000",
+            user=self.db_user,
+            password=self.db_password,
+            db=self.db_name
+        )
+        self.log.info("Database connection established.")
+        return conn
 
 
 
@@ -39,6 +55,7 @@ class DBConnectionHandler:
         """
         Return the SQLAlchemy engine instance.
         """
+        self.log.info("Retrieving database engine.")
         return self.__engine
 
 
@@ -49,6 +66,7 @@ class DBConnectionHandler:
         """
         session_make = sessionmaker(bind=self.__engine)
         self.session = session_make()
+        self.log.info("Database session opened.")
         return self
 
 
@@ -57,6 +75,7 @@ class DBConnectionHandler:
         """
         Close the database session.
         """
+        self.log.info("Closing database session.")
         self.session.close()
 
 
@@ -66,3 +85,4 @@ class DBConnectionHandler:
         Create all tables in the database.
         """
         Base.metadata.create_all(bind=self.__engine)
+        self.log.info("Database tables created.")

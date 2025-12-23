@@ -1,3 +1,4 @@
+import logging
 from src.main.interfaces import RouteInterface
 from src.presenters.controllers import RegisterAnimalShelterController
 from src.data.register_animal_shelter import RegisterAnimalShelter

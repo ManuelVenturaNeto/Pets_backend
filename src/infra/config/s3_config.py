@@ -1,3 +1,4 @@
+import logging
 import os
 import boto3
 from dotenv import load_dotenv
@@ -26,6 +27,13 @@ class S3Handler:
         self.headers = {
             "Access-Control-Allow-Origin": "*",
         }
+
+        self.log = logging.getLogger(__name__)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler()],
+        )
 
     def get_client(self):
         """

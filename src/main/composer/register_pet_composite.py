@@ -1,3 +1,4 @@
+import logging
 from src.infra.repo.pet_repository import PetRepository
 from src.infra.repo.animal_shelter_repository import AnimalShelterRepository
 from src.infra.repo.specie_repository import SpecieRepository

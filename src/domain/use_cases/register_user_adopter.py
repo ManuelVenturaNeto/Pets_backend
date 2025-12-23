@@ -8,10 +8,9 @@ class RegisterUserAdopter(ABC):
     Interface to RegisterUserAdopter use case
     """
 
-    @classmethod
     @abstractmethod
     def register_user_adopter(
-        cls,
+        self,
         name: str,
         cpf: str,
         pet_id: int,

@@ -1,3 +1,4 @@
+import logging
 from typing import Type, Dict, List
 from src.domain.models import Pets
 from src.domain.use_cases import FindPet as FindPetInterface
@@ -13,6 +14,12 @@ class FindPet(FindPetInterface):
 
         self.pet_repository = pet_repository
 
+        self.log = logging.getLogger(__name__)
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format="%(asctime)s - %(levelname)s - %(message)s",
+            handlers=[logging.StreamHandler()],
+        )
 
 
     def by_pet_id(self, pet_id) -> Dict[bool, List[Pets]]:
@@ -23,10 +30,13 @@ class FindPet(FindPetInterface):
         """
         response = None
         validate_entry = isinstance(pet_id, int)
+        self.log.info(f"Find Pet by pet_id called with pet_id: {pet_id}")
 
         if validate_entry:
             response = self.pet_repository.select_pet(pet_id=pet_id)
+            self.log.info(f"Pet found for pet_id {pet_id}: {response}")
 
+        self.log.info(f"Find Pet by pet_id called with pet_id: {pet_id}, Success: {validate_entry}")
         return {"Success": validate_entry, "Data": response}
 
 
@@ -41,12 +51,13 @@ class FindPet(FindPetInterface):
         response = None
 
         validate_entry = isinstance(animal_shelter_id, int)
+        self.log.info(f"Find Pet by animal_shelter_id called with animal_shelter_id: {animal_shelter_id}")
 
         if validate_entry:
-            response = self.pet_repository.select_pet(
-                animal_shelter_id=animal_shelter_id
-            )
+            response = self.pet_repository.select_pet(animal_shelter_id=animal_shelter_id)
+            self.log.info(f"Pet found for animal_shelter_id {animal_shelter_id}: {response}")
 
+        self.log.info(f"Find Pet by animal_shelter_id called with animal_shelter_id: {animal_shelter_id}, Success: {validate_entry}")
         return {"Success": validate_entry, "Data": response}
 
 
@@ -62,8 +73,11 @@ class FindPet(FindPetInterface):
         response = None
 
         validate_entry = isinstance(pet_id, int) and isinstance(animal_shelter_id, int)
+        self.log.info(f"Find Pet by pet_id and animal_shelter_id called with pet_id: {pet_id}, animal_shelter_id: {animal_shelter_id}")
 
         if validate_entry:
             response = self.pet_repository.select_pet(pet_id=pet_id, animal_shelter_id=animal_shelter_id)
+            self.log.info(f"Pet found for pet_id {pet_id} and animal_shelter_id {animal_shelter_id}: {response}")
 
+        self.log.info(f"Find Pet by pet_id and animal_shelter_id called with pet_id: {pet_id}, animal_shelter_id: {animal_shelter_id}, Success: {validate_entry}")
         return {"Success": validate_entry, "Data": response}
