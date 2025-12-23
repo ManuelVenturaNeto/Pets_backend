@@ -4,12 +4,16 @@ from src.domain.test import mock_animal_shelter
 
 
 class RegisterAnimalShelterSpy:
-    """Class to define usecase: Register AnimalShelter"""
+    """
+    Class to define usecase: Register AnimalShelter
+    """
 
     def __init__(self, animal_shelter_repository: any, register_address_service: any):
         self.animal_shelter_repository = animal_shelter_repository
         self.register_address_service = register_address_service
         self.register_param = {}
+
+
 
     def register_animal_shelter(
         self,
@@ -27,7 +31,9 @@ class RegisterAnimalShelterSpy:
         number: int,
         complement: str = None,
     ) -> Dict[bool, AnimalShelters]:
-        """Register animal_shelter"""
+        """
+        Register animal_shelter
+        """
 
         self.register_param["name"] = name
         self.register_param["password"] = password

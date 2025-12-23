@@ -1,6 +1,3 @@
-# pylint: disable=arguments-differ
-# pylint: disable=R0801
-
 from typing import List
 from sqlalchemy.exc import NoResultFound
 from src.data.interfaces import AnimalShelterRepositoryInterface
@@ -15,16 +12,7 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
     """
 
     @classmethod
-    def insert_animal_shelter(
-        cls,
-        name: str,
-        password: str,
-        cpf: str,
-        responsible_name: str,
-        email: str,
-        phone_number: str,
-        address_id: int,
-    ) -> AnimalShelters:
+    def insert_animal_shelter(cls, name: str, password: str, cpf: str, responsible_name: str, email: str, phone_number: str, address_id: int) -> AnimalShelters:
         """
         insert data in animal_shelter entity
         :param  - name: person name
@@ -72,10 +60,10 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
 
         return None
 
+
+
     @classmethod
-    def select_animal_shelter(
-        cls, id: int = None, name: str = None, cpf: str = None, address_id: int = None
-    ) -> List[AnimalShelters]:
+    def select_animal_shelter(cls, id: int = None, name: str = None, cpf: str = None, address_id: int = None) -> List[AnimalShelters]:
         """
         Select dada in animal_shelter entity by id and/or name
         :param  - id: id of the register
@@ -89,51 +77,31 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
             if id and not name:
 
                 with DBConnectionHandler() as db_connection:
-                    data = (
-                        db_connection.session.query(AnimalSheltersModel)
-                        .filter_by(id=id)
-                        .one()
-                    )
+                    data = db_connection.session.query(AnimalSheltersModel).filter_by(id=id).one()
                     query_data = [data]
 
             elif not id and name:
 
                 with DBConnectionHandler() as db_connection:
-                    data = (
-                        db_connection.session.query(AnimalSheltersModel)
-                        .filter_by(name=name)
-                        .one()
-                    )
+                    data = db_connection.session.query(AnimalSheltersModel).filter_by(name=name).one()
                     query_data = [data]
 
             elif id and name:
 
                 with DBConnectionHandler() as db_connection:
-                    data = (
-                        db_connection.session.query(AnimalSheltersModel)
-                        .filter_by(id=id, name=name)
-                        .one()
-                    )
+                    data = db_connection.session.query(AnimalSheltersModel).filter_by(id=id, name=name).one()
                     query_data = [data]
 
             elif cpf:
 
                 with DBConnectionHandler() as db_connection:
-                    data = (
-                        db_connection.session.query(AnimalSheltersModel)
-                        .filter_by(cpf=cpf)
-                        .one()
-                    )
+                    data = db_connection.session.query(AnimalSheltersModel).filter_by(cpf=cpf).one()
                     query_data = [data]
 
             elif address_id:
 
                 with DBConnectionHandler() as db_connection:
-                    data = (
-                        db_connection.session.query(AnimalSheltersModel)
-                        .filter_by(address_id=address_id)
-                        .one()
-                    )
+                    data = db_connection.session.query(AnimalSheltersModel).filter_by(address_id=address_id).one()
                     query_data = [data]
 
             return query_data
@@ -149,6 +117,8 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
             with DBConnectionHandler() as db_connection:
                 db_connection.session.close()
 
+
+
     @classmethod
     def delete_animal_shelter(cls, id: int) -> bool:
         """
@@ -158,23 +128,24 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
         """
         with DBConnectionHandler() as db_connection:
             try:
-                animal_shelter_to_delete = (
-                    db_connection.session.query(AnimalSheltersModel)
-                    .filter_by(id=id)
-                    .one_or_none()
-                )
+                animal_shelter_to_delete = db_connection.session.query(AnimalSheltersModel).filter_by(id=id).one_or_none()
+
                 if animal_shelter_to_delete:
                     db_connection.session.delete(animal_shelter_to_delete)
                     db_connection.session.commit()
                     return True
                 return False
+
             except:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.rollback()
                 raise
+
             finally:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.close()
+
+
 
     @classmethod
     def update_animal_shelter(cls, id: int, **kwargs: any) -> AnimalShelters:
@@ -186,11 +157,8 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
         """
         with DBConnectionHandler() as db_connection:
             try:
-                animal_shelter_to_update = (
-                    db_connection.session.query(AnimalSheltersModel)
-                    .filter_by(id=id)
-                    .one_or_none()
-                )
+                animal_shelter_to_update = db_connection.session.query(AnimalSheltersModel).filter_by(id=id).one_or_none()
+
                 if animal_shelter_to_update:
                     # Update params based into kwargs
                     for key, value in kwargs.items():
@@ -210,10 +178,12 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
                         address_id=animal_shelter_to_update.address_id,
                     )
                 return None
+
             except:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.rollback()
                 raise
+
             finally:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.close()

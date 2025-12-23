@@ -24,18 +24,13 @@ def test_route():
 
     http_response = find_specie_route.route(http_request)
     # Testing input
-    assert (
-        find_specie_specie_case.by_id_and_specie_name_param["specie_name"]
-        == attributes["specie_name"]
-    )
-    assert (
-        find_specie_specie_case.by_id_and_specie_name_param["specie_name"]
-        == attributes["specie_name"]
-    )
+    assert find_specie_specie_case.by_id_and_specie_name_param["specie_name"] == attributes["specie_name"]
+    assert find_specie_specie_case.by_id_and_specie_name_param["specie_name"] == attributes["specie_name"]
 
     # Testing output
     assert http_response.status_code == 200
     assert "error" not in http_response.body
+
 
 
 def test_route_error_400():
@@ -58,6 +53,7 @@ def test_route_error_400():
     # Testing output
     assert http_response.status_code == 400
     assert "error" in http_response.body
+
 
 
 def test_route_error_422():

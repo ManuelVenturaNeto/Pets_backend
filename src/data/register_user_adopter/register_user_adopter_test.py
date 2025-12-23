@@ -59,9 +59,7 @@ def test_register_user_adopter():
     assert address_repo.insert_address_params["cep"] == attributes["cep"]
     assert address_repo.insert_address_params["state"] == attributes["state"]
     assert address_repo.insert_address_params["city"] == attributes["city"]
-    assert (
-        address_repo.insert_address_params["neighborhood"] == attributes["neighborhood"]
-    )
+    assert address_repo.insert_address_params["neighborhood"] == attributes["neighborhood"]
     assert address_repo.insert_address_params["street"] == attributes["street"]
     assert address_repo.insert_address_params["number"] == attributes["number"]
     assert address_repo.insert_address_params["complement"] == attributes["complement"]
@@ -73,15 +71,13 @@ def test_register_user_adopter():
     assert user_adopter_repo.insert_user_adopter_params["name"] == attributes["name"]
     assert user_adopter_repo.insert_user_adopter_params["cpf"] == attributes["cpf"]
     assert user_adopter_repo.insert_user_adopter_params["email"] == attributes["email"]
-    assert (
-        user_adopter_repo.insert_user_adopter_params["phone_number"]
-        == attributes["phone_number"]
-    )
+    assert user_adopter_repo.insert_user_adopter_params["phone_number"] == attributes["phone_number"]
     # assert user_adopter_repo.insert_user_adopter_params["address_id"] == address_repo.insert_address_params["id"]
 
     # Testing outputs
     assert response["Success"] is True
     assert response["Data"]
+
 
 
 def test_register_user_adopter_fail():
@@ -134,6 +130,7 @@ def test_register_user_adopter_fail():
     assert response["Data"] is None
 
 
+
 def test_register_user_adopter_fail_address():
     """
     Testing register method
@@ -182,6 +179,7 @@ def test_register_user_adopter_fail_address():
     # Testing outputs
     assert response["Success"] is False
     assert response["Data"] is None
+
 
 
 def test_register_user_adopter_fail_pet_id():

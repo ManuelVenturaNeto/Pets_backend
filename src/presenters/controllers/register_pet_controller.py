@@ -1,5 +1,3 @@
-# pylint: disable=W0221, R0801
-
 from typing import Type
 from src.main.interfaces import RouteInterface
 from src.domain.use_cases import RegisterPet
@@ -15,6 +13,8 @@ class RegisterPetController(RouteInterface):
     def __init__(self, register_pet_use_case: Type[RegisterPet]):
         self.register_pet_use_case = register_pet_use_case
 
+
+
     def route(self, http_request: Type[HttpRequest]) -> HttpResponse:
         """
         Method to call use case
@@ -27,18 +27,11 @@ class RegisterPetController(RouteInterface):
 
             body_params = http_request.body.keys()
 
-            if (
-                "name" in body_params
-                and "specie_name" in body_params
-                and "animal_shelter_information" in body_params
-            ):
+            if "name" in body_params and "specie_name" in body_params and "animal_shelter_information" in body_params:
                 # if body param contain correct items
 
                 animal_shelter_information_params = http_request.body["animal_shelter_information"].keys()
-                if (
-                    "animal_shelter_id" in animal_shelter_information_params
-                    or "animal_shelter_name" in animal_shelter_information_params
-                ):
+                if "animal_shelter_id" in animal_shelter_information_params or "animal_shelter_name" in animal_shelter_information_params:
                     # if animal_shelter_information contain correct items
 
                     name = http_request.body["name"]
@@ -68,14 +61,10 @@ class RegisterPetController(RouteInterface):
 
             if response["Success"] is False:
                 http_error = HttpErrors.error_422()
-                return HttpResponse(
-                    status_code=http_error["status_code"], body=http_error["body"]
-                )
+                return HttpResponse(status_code=http_error["status_code"], body=http_error["body"])
 
             return HttpResponse(status_code=200, body=response["Data"])
 
         # If no body in http_request
         http_error = HttpErrors.error_400()
-        return HttpResponse(
-            status_code=http_error["status_code"], body=http_error["body"]
-        )
+        return HttpResponse(status_code=http_error["status_code"], body=http_error["body"])

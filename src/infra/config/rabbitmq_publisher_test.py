@@ -1,5 +1,3 @@
-# pylint: disable=W0212
-
 import pytest
 import pika
 from .rabbitmq_publisher import RabbitMQClient
@@ -17,6 +15,7 @@ def test_create_channel():
     client.close()
 
 
+
 def test_set_queue():
     """
     Testa se a fila é declarada corretamente.
@@ -25,6 +24,7 @@ def test_set_queue():
     client.set_queue("test_queue")
     assert client._RabbitMQClient__queue_name == "test_queue"
     client.close()
+
 
 
 def test_send_message():
@@ -40,6 +40,7 @@ def test_send_message():
     client.close()
 
 
+
 def test_send_message_without_queue():
     """
     Testa se a tentativa de envio de mensagem sem definir uma fila gera um erro.
@@ -50,6 +51,7 @@ def test_send_message_without_queue():
         client.send_message({"key": "value"})
 
     client.close()
+
 
 
 def test_close_connection():

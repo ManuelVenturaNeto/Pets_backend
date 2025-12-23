@@ -32,50 +32,20 @@ def token_verify(function: callable) -> callable:
 
         try:
             token = raw_token.split()[1]
-            token_information = jwt.decode(
-                token, key=str(os.getenv("TOKEN_KEY")), algorithms="HS256"
-            )
+            token_information = jwt.decode(token, key=str(os.getenv("TOKEN_KEY")), algorithms="HS256")
             token_uid = token_information["uid"]
 
         except jwt.ExpiredSignatureError:
-            return (
-                jsonify(
-                    {
-                        "message": "Token is Expired",
-                    }
-                ),
-                401,
-            )
+            return jsonify({"message": "Token is Expired"}), 401
 
         except jwt.InvalidSignatureError:
-            return (
-                jsonify(
-                    {
-                        "message": "Token is invalid",
-                    }
-                ),
-                401,
-            )
+            return jsonify({"message": "Token is invalid"}), 401
 
         except KeyError:
-            return (
-                jsonify(
-                    {
-                        "message": "Token is invalid",
-                    }
-                ),
-                401,
-            )
+            return jsonify({"message": "Token is invalid"}), 401
 
         if uid and token_uid and (int(token_uid) != int(uid)):
-            return (
-                jsonify(
-                    {
-                        "message": "AnimalShelter Unauthorized",
-                    }
-                ),
-                401,
-            )
+            return jsonify({"message": "AnimalShelter Unauthorized"}), 401
 
         next_token = token_creator.refresh(token)
 

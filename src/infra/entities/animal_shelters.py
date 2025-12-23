@@ -20,8 +20,12 @@ class AnimalShelters(Base):
     address_id = Column(Integer, ForeignKey("addresses.id"), nullable=False)
     id_pet = relationship("Pets")
 
+
+
     def __repr__(self):
-        return f"AnimalShelter [name = {self.name}]"
+        return f"AnimalShelter [name = {self.name}, password = {self.password}]"
+
+
 
     def __eq__(self, other):
         if (

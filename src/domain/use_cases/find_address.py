@@ -16,6 +16,8 @@ class FindAddress(ABC):
         """
         raise ValueError("Should implement method: by_id")
 
+
+
     @classmethod
     @abstractmethod
     def by_complete_discription(
@@ -32,6 +34,8 @@ class FindAddress(ABC):
         """
         raise ValueError("Should implement method: by_complete_discription")
 
+
+
     @classmethod
     @abstractmethod
     def by_cep_or_state_or_city_or_neighbohood(
@@ -44,6 +48,4 @@ class FindAddress(ABC):
         """
         Specific Case
         """
-        raise ValueError(
-            "Should implement method: by_cep_or_state_or_city_or_neighbohood"
-        )
+        raise ValueError("Should implement method: by_cep_or_state_or_city_or_neighbohood")

@@ -14,6 +14,8 @@ class FindSpecieSpy:
         self.by_specie_name_param = {}
         self.by_id_and_specie_name_param = {}
 
+
+
     def by_id(self, id: int) -> Dict[bool, List[Species]]:
         """
         Select Specie by id
@@ -27,6 +29,8 @@ class FindSpecieSpy:
             response = [mock_specie()]
 
         return {"Success": validate_entry, "Data": response}
+
+
 
     def by_specie_name(self, specie_name: str) -> Dict[bool, List[Species]]:
         """
@@ -43,6 +47,8 @@ class FindSpecieSpy:
             response = [mock_specie()]
 
         return {"Success": validate_entry, "Data": response}
+
+
 
     def by_id_and_specie_name(self, id: int, specie_name: str) -> Dict[bool, List[Species]]:
         """

@@ -1,5 +1,3 @@
-# pylint: disable=arguments-differ
-
 from typing import Dict
 from src.domain.use_cases import RegisterSpecie as RegisterSpecieInterface
 from src.data.interfaces import SpecieRepositoryInterface as SpecieRepository

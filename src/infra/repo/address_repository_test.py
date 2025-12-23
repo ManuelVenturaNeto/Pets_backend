@@ -57,6 +57,7 @@ def test_insert_address():
     reset_auto_increment("addresses")
 
 
+
 @pytest.mark.skip(reason="Sensive test")
 def test_select_address():
     """
@@ -129,6 +130,7 @@ def test_select_address():
     reset_auto_increment("addresses")
 
 
+
 @pytest.mark.skip(reason="Sensive test")
 def test_delete_address():
     """
@@ -175,6 +177,7 @@ def test_delete_address():
         assert result is None
 
     reset_auto_increment("addresses")
+
 
 
 @pytest.mark.skip(reason="Sensive test")

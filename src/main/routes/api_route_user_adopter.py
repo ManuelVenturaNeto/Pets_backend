@@ -48,12 +48,8 @@ def register_user_adopter():
         return jsonify({"data": message}), response.status_code
 
     # Handling errors
-    return (
-        jsonify(
-            {"error": {"status": response.status_code, "title": response.body["error"]}}
-        ),
-        response.status_code,
-    )
+    return jsonify({"error": {"status": response.status_code, "title": response.body["error"]}}), response.status_code
+
 
 
 @api_routes_bp.route("/api/user_adopters", methods=["GET"])
@@ -80,9 +76,4 @@ def finder_user_adopters():
         return jsonify({"data": message}), response.status_code
 
     # Handling Errors
-    return (
-        jsonify(
-            {"error": {"status": response.status_code, "title": response.body["error"]}}
-        ),
-        response.status_code,
-    )
+    return jsonify({"error": {"status": response.status_code, "title": response.body["error"]}}), response.status_code

@@ -28,12 +28,8 @@ def register_specie():
         return jsonify({"data": message}), response.status_code
 
     # Handling errors
-    return (
-        jsonify(
-            {"error": {"status": response.status_code, "title": response.body["error"]}}
-        ),
-        response.status_code,
-    )
+    return jsonify({"error": {"status": response.status_code, "title": response.body["error"]}}), response.status_code
+
 
 
 @api_routes_bp.route("/api/species", methods=["GET"])
@@ -60,9 +56,4 @@ def finder_species():
         return jsonify({"data": message}), response.status_code
 
     # Handling Errors
-    return (
-        jsonify(
-            {"error": {"status": response.status_code, "title": response.body["error"]}}
-        ),
-        response.status_code,
-    )
+    return jsonify({"error": {"status": response.status_code, "title": response.body["error"]}}), response.status_code

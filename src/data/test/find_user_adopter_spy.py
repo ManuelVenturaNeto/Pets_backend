@@ -14,6 +14,8 @@ class FindUserAdopterSpy:
         self.by_pet_id_param = {}
         self.by_user_information_param = {}
 
+
+
     def by_user_adopter_id(
         self, user_adopter_id: int
     ) -> Dict[bool, List[UserAdopters]]:
@@ -30,6 +32,8 @@ class FindUserAdopterSpy:
 
         return {"Success": validate_entry, "Data": response}
 
+
+
     def by_pet_id(self, pet_id: int) -> Dict[bool, List[UserAdopters]]:
         """
         Select UserAdopter by pet_id
@@ -43,6 +47,8 @@ class FindUserAdopterSpy:
             response = [mock_user_adopter()]
 
         return {"Success": validate_entry, "Data": response}
+
+
 
     def by_user_information(
         self,

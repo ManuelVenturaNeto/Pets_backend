@@ -1,5 +1,3 @@
-# pylint: disable=C0115, C0103
-
 import time
 from datetime import datetime, timedelta, timezone
 import jwt
@@ -15,6 +13,8 @@ class TokenCreator:
         self.__EXP_TIME_MIN = exp_time_min
         self.__REFRESH_TIME_MIN = refresh_time
 
+
+
     def create(self, uid: int) -> str:
         """
         Return JWT
@@ -23,6 +23,8 @@ class TokenCreator:
         """
 
         return self.__encode_token(uid=uid)
+
+
 
     def refresh(self, token: str) -> str:
         """
@@ -41,6 +43,8 @@ class TokenCreator:
             return self.__encode_token(uid=uid)
 
         return token
+
+
 
     def __encode_token(self, uid: int):
         """

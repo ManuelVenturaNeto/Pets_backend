@@ -1,5 +1,3 @@
-# pylint: disable=W0221, W0237
-
 from typing import Type, Dict, List
 from src.domain.models import UserAdopters
 from src.domain.use_cases import FindUserAdopter as FindUserAdopterInterface
@@ -15,9 +13,9 @@ class FindUserAdopter(FindUserAdopterInterface):
 
         self.user_adopter_repository = user_adopter_repository
 
-    def by_user_adopter_id(
-        self, user_adopter_id: int
-    ) -> Dict[bool, List[UserAdopters]]:
+
+
+    def by_user_adopter_id(self, user_adopter_id: int) -> Dict[bool, List[UserAdopters]]:
         """
         Select UserAdopter for User Adopter id
         :param  - user_adopter_id: id of user adopter
@@ -27,11 +25,11 @@ class FindUserAdopter(FindUserAdopterInterface):
         validate_entry = isinstance(user_adopter_id, int)
 
         if validate_entry:
-            response = self.user_adopter_repository.select_user_adopter(
-                id=user_adopter_id
-            )
+            response = self.user_adopter_repository.select_user_adopter(id=user_adopter_id)
 
         return {"Success": validate_entry, "Data": response}
+
+
 
     def by_pet_id(self, pet_id: int) -> Dict[bool, List[UserAdopters]]:
         """
@@ -46,6 +44,8 @@ class FindUserAdopter(FindUserAdopterInterface):
             response = self.user_adopter_repository.select_user_adopter(pet_id=pet_id)
 
         return {"Success": validate_entry, "Data": response}
+
+
 
     def by_user_information(
         self,
@@ -77,7 +77,10 @@ class FindUserAdopter(FindUserAdopterInterface):
 
         if validate_entry:
             response = self.user_adopter_repository.select_user_adopter(
-                name=name, cpf=cpf, email=email, phone_number=phone_number
+                name=name, 
+                cpf=cpf, 
+                email=email, 
+                phone_number=phone_number
             )
 
         return {"Success": validate_entry, "Data": response}

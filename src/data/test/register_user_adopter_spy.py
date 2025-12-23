@@ -4,12 +4,16 @@ from src.domain.test import mock_user_adopter
 
 
 class RegisterUserAdopterSpy:
-    """Class to define usecase: Register UserAdopter"""
+    """
+    Class to define usecase: Register UserAdopter
+    """
 
     def __init__(self, user_adopter_repository: any, register_address_service: any):
         self.user_adopter_repository = user_adopter_repository
         self.register_address_service = register_address_service
         self.register_param = {}
+
+
 
     def register_user_adopter(
         self,
@@ -26,7 +30,9 @@ class RegisterUserAdopterSpy:
         number: int,
         complement: str = None,
     ) -> Dict[bool, UserAdopters]:
-        """Register user_adopter"""
+        """
+        Register user_adopter
+        """
 
         self.register_param["name"] = name
         self.register_param["cpf"] = cpf

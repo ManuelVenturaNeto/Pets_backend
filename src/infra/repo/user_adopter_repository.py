@@ -1,6 +1,3 @@
-# pylint: disable=arguments-differ
-# pylint: disable=R0801
-
 from typing import List
 from sqlalchemy.exc import NoResultFound
 from src.data.interfaces import UserAdopterRepositoryInterface
@@ -55,14 +52,18 @@ class UserAdopterRepository(UserAdopterRepositoryInterface):
                     address_id=new_user_adopter.address_id,
                     pet_id=new_user_adopter.pet_id,
                 )
+
             except:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.rollback()
                 raise
+
             finally:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.close()
         return None
+
+
 
     @classmethod
     def select_user_adopter(
@@ -87,29 +88,17 @@ class UserAdopterRepository(UserAdopterRepositoryInterface):
 
             if id:
                 with DBConnectionHandler() as db_connection:
-                    query = (
-                        db_connection.session.query(UserAdoptersModel)
-                        .filter_by(id=id)
-                        .one()
-                    )
+                    query = db_connection.session.query(UserAdoptersModel).filter_by(id=id).one()
                     data_query = [query]
 
             elif pet_id:
                 with DBConnectionHandler() as db_connection:
-                    query = (
-                        db_connection.session.query(UserAdoptersModel)
-                        .filter_by(pet_id=pet_id)
-                        .all()
-                    )
+                    query = db_connection.session.query(UserAdoptersModel).filter_by(pet_id=pet_id).all()
                     data_query = query
 
             elif address_id:
                 with DBConnectionHandler() as db_connection:
-                    query = (
-                        db_connection.session.query(UserAdoptersModel)
-                        .filter_by(address_id=address_id)
-                        .one()
-                    )
+                    query = db_connection.session.query(UserAdoptersModel).filter_by(address_id=address_id).one()
                     data_query = [query]
 
             elif name or cpf or email or phone_number:
@@ -124,24 +113,24 @@ class UserAdopterRepository(UserAdopterRepositoryInterface):
                     if phone_number:
                         filters["phone_number"] = phone_number
 
-                    query = (
-                        db_connection.session.query(UserAdoptersModel)
-                        .filter_by(**filters)
-                        .all()
-                    )
+                    query = db_connection.session.query(UserAdoptersModel).filter_by(**filters).all()
                     data_query = query
 
             return data_query
 
         except NoResultFound:
             return []
+
         except:
             with DBConnectionHandler() as db_connection:
                 db_connection.session.rollback()
             raise
+
         finally:
             with DBConnectionHandler() as db_connection:
                 db_connection.session.close()
+
+
 
     @classmethod
     def delete_user_adopter(cls, id: int) -> bool:
@@ -152,23 +141,25 @@ class UserAdopterRepository(UserAdopterRepositoryInterface):
         """
         with DBConnectionHandler() as db_connection:
             try:
-                user_adopter_to_delete = (
-                    db_connection.session.query(UserAdoptersModel)
-                    .filter_by(id=id)
-                    .one_or_none()
-                )
+                user_adopter_to_delete = db_connection.session.query(UserAdoptersModel).filter_by(id=id).one_or_none()
+
                 if user_adopter_to_delete:
                     db_connection.session.delete(user_adopter_to_delete)
                     db_connection.session.commit()
                     return True
+
                 return False
+
             except:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.rollback()
                 raise
+
             finally:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.close()
+
+
 
     @classmethod
     def update_user_adopter(cls, id: int, **kwargs: any) -> UserAdopters:
@@ -180,11 +171,8 @@ class UserAdopterRepository(UserAdopterRepositoryInterface):
         """
         with DBConnectionHandler() as db_connection:
             try:
-                user_adopter_to_update = (
-                    db_connection.session.query(UserAdoptersModel)
-                    .filter_by(id=id)
-                    .one_or_none()
-                )
+                user_adopter_to_update = db_connection.session.query(UserAdoptersModel).filter_by(id=id).one_or_none()
+
                 if user_adopter_to_update:
                     # Update the params based into kwargs
                     for key, value in kwargs.items():
@@ -202,11 +190,14 @@ class UserAdopterRepository(UserAdopterRepositoryInterface):
                         address_id=user_adopter_to_update.address_id,
                         pet_id=user_adopter_to_update.pet_id,
                     )
+
                 return None
+
             except:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.rollback()
                 raise
+
             finally:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.close()

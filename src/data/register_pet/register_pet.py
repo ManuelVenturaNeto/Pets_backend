@@ -1,5 +1,3 @@
-# pylint: disable=W0237, R1701
-
 from typing import Type, Dict, List
 from src.domain.models import Pets, AnimalShelters, Species
 from src.data.find_animal_shelter import FindAnimalShelter
@@ -23,6 +21,8 @@ class RegisterPet(RegisterPetInterface):
         self.find_animal_shelter = find_animal_shelter
         self.find_specie = find_specie
 
+
+
     def register_pet(
         self,
         name: str,
@@ -41,13 +41,10 @@ class RegisterPet(RegisterPetInterface):
         """
         response = None
 
-        validate_entry = isinstance(name, str) and (
-            isinstance(age, int) or isinstance(age, type(None))
-        )
+        validate_entry = isinstance(name, str) and (isinstance(age, int) or isinstance(age, type(None)))
 
-        animal_shelter = self.__find_animal_shelter_information(
-            animal_shelter_information
-        )
+        animal_shelter = self.__find_animal_shelter_information(animal_shelter_information)
+
         specie = self.__find_specie_information(specie_name)
 
         checker = validate_entry and animal_shelter["Success"] and specie["Success"]
@@ -63,9 +60,7 @@ class RegisterPet(RegisterPetInterface):
 
         return {"Success": checker, "Data": response}
 
-    def __find_animal_shelter_information(
-        self, animal_shelter_information: Dict[int, str]
-    ) -> Dict[bool, List[AnimalShelters]]:
+    def __find_animal_shelter_information(self, animal_shelter_information: Dict[int, str]) -> Dict[bool, List[AnimalShelters]]:
         """
         Check animal_shelter informations and select animal_shelter
         :param  - animal_shelter_information: Dictionary with animal_shelter_id and or animal_shelter_name
@@ -75,27 +70,18 @@ class RegisterPet(RegisterPetInterface):
         animal_shelter_founded = None
         animal_shelter_params = animal_shelter_information.keys()
 
-        if (
-            "animal_shelter_id" in animal_shelter_params
-            and "animal_shelter_name" in animal_shelter_params
-        ):
+        if ("animal_shelter_id" in animal_shelter_params and "animal_shelter_name" in animal_shelter_params):
             animal_shelter_founded = self.find_animal_shelter.by_id_and_name(
                 animal_shelter_information["animal_shelter_id"],
                 animal_shelter_information["animal_shelter_name"],
             )
 
-        elif (
-            "animal_shelter_id" not in animal_shelter_params
-            and "animal_shelter_name" in animal_shelter_params
-        ):
+        elif ("animal_shelter_id" not in animal_shelter_params and "animal_shelter_name" in animal_shelter_params):
             animal_shelter_founded = self.find_animal_shelter.by_name(
                 animal_shelter_information["animal_shelter_name"]
             )
 
-        elif (
-            "animal_shelter_id" in animal_shelter_params
-            and "animal_shelter_name" not in animal_shelter_params
-        ):
+        elif ("animal_shelter_id" in animal_shelter_params and "animal_shelter_name" not in animal_shelter_params ):
             animal_shelter_founded = self.find_animal_shelter.by_id(
                 animal_shelter_information["animal_shelter_id"]
             )

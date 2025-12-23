@@ -14,6 +14,8 @@ class FindPetSpy:
         self.by_animal_shelter_id_param = {}
         self.by_pet_id_and_animal_shelter_id_param = {}
 
+
+
     def by_pet_id(self, pet_id: int) -> Dict[bool, List[Pets]]:
         """
         Select Pet by id of pet
@@ -27,6 +29,8 @@ class FindPetSpy:
             response = [mock_pet()]
 
         return {"Success": validate_entry, "Data": response}
+
+
 
     def by_animal_shelter_id(self, animal_shelter_id: str) -> Dict[bool, List[Pets]]:
         """
@@ -42,17 +46,15 @@ class FindPetSpy:
 
         return {"Success": validate_entry, "Data": response}
 
-    def by_pet_id_and_animal_shelter_id(
-        self, pet_id: int, animal_shelter_id: int
-    ) -> Dict[bool, List[Pets]]:
+
+
+    def by_pet_id_and_animal_shelter_id(self, pet_id: int, animal_shelter_id: int) -> Dict[bool, List[Pets]]:
         """
         Select AnimalShelter by pet_id and pet_id
         """
 
         self.by_pet_id_and_animal_shelter_id_param["pet_id"] = pet_id
-        self.by_pet_id_and_animal_shelter_id_param["animal_shelter_id"] = (
-            animal_shelter_id
-        )
+        self.by_pet_id_and_animal_shelter_id_param["animal_shelter_id"] = animal_shelter_id
         response = None
         validate_entry = isinstance(pet_id, int) and isinstance(animal_shelter_id, int)
 

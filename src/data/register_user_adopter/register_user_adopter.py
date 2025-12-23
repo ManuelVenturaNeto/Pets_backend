@@ -22,6 +22,8 @@ class RegisterUserAdopter(RegisterUserAdopterInterface):
         self.find_pet = find_pet
         self.register_address_service = register_address_service
 
+
+
     def register_user_adopter(
         self,
         name: str,
@@ -85,6 +87,8 @@ class RegisterUserAdopter(RegisterUserAdopterInterface):
                 validate_entry = False
 
         return {"Success": validate_entry, "Data": response}
+
+
 
     def __find_by_pet_id(self, pet_id: int) -> Dict[bool, List[Pets]]:
         """

@@ -39,9 +39,7 @@ def test_register_specie_fail():
         "specie_name": faker.random_number(digits=2),
     }
 
-    response = register_specie.register_specie(
-        specie_name=attributes["specie_name"],
-    )
+    response = register_specie.register_specie(specie_name=attributes["specie_name"])
 
     # Testing inputs
     assert not specie_repo.insert_specie_params

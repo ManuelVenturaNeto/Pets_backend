@@ -19,14 +19,12 @@ def test_route():
     response = register_specie_router.route(HttpRequest(body=attributes))
 
     # Testing input
-    assert (
-        register_specie_use_case.register_param["specie_name"]
-        == attributes["specie_name"]
-    )
+    assert register_specie_use_case.register_param["specie_name"] == attributes["specie_name"]
 
     # Testing output
     assert response.status_code == 200
     assert "error" not in response.body
+
 
 
 def test_route_error_400():
@@ -45,6 +43,7 @@ def test_route_error_400():
     # Testing output
     assert response.status_code == 400
     assert "error" in response.body
+
 
 
 def test_route_error_422():

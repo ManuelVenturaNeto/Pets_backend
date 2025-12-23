@@ -26,7 +26,10 @@ class AnimalShelterRepositoryInterface(ABC):
 
     @abstractmethod
     def select_animal_shelter(
-        self, id: int = None, name: str = None, cpf: str = None
+        self, 
+        id: int = None, 
+        name: str = None, 
+        cpf: str = None
     ) -> List[AnimalShelters]:
         """
         Abstractmethod

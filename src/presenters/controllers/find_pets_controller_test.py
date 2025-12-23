@@ -24,20 +24,13 @@ def test_route():
 
     http_response = find_pet_route.route(http_request)
     # Testing input
-    assert (
-        find_pet_animal_shelter_case.by_pet_id_and_animal_shelter_id_param["pet_id"]
-        == attributes["pet_id"]
-    )
-    assert (
-        find_pet_animal_shelter_case.by_pet_id_and_animal_shelter_id_param[
-            "animal_shelter_id"
-        ]
-        == attributes["animal_shelter_id"]
-    )
+    assert find_pet_animal_shelter_case.by_pet_id_and_animal_shelter_id_param["pet_id"] == attributes["pet_id"]
+    assert find_pet_animal_shelter_case.by_pet_id_and_animal_shelter_id_param["animal_shelter_id"] == attributes["animal_shelter_id"]
 
     # Testing output
     assert http_response.status_code == 200
     assert "error" not in http_response.body
+
 
 
 def test_route_error_400():
@@ -59,6 +52,7 @@ def test_route_error_400():
     # Testing output
     assert http_response.status_code == 400
     assert "error" in http_response.body
+
 
 
 def test_route_error_422():

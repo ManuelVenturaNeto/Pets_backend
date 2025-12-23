@@ -1,5 +1,3 @@
-# pylint: disable=R0914
-
 import pytest
 from sqlalchemy import text
 from faker import Faker
@@ -98,6 +96,7 @@ def test_insert_animal_shelter():
 
     reset_auto_increment("addresses")
     reset_auto_increment("animal_shelters")
+
 
 
 @pytest.mark.skip(reason="Sensive test")
@@ -220,6 +219,7 @@ def test_select_animal_shelter():
     reset_auto_increment("animal_shelters")
 
 
+
 @pytest.mark.skip(reason="Sensive test")
 def test_delete_animal_shelter():
     """
@@ -271,6 +271,7 @@ def test_delete_animal_shelter():
     reset_auto_increment("animal_shelters")
 
 
+
 @pytest.mark.skip(reason="Sensive test")
 def test_update_animal_shelter():
     """
@@ -315,9 +316,7 @@ def test_update_animal_shelter():
         "email": new_email,
     }
 
-    updated_animal_shelter = animal_shelter_repository.update_animal_shelter(
-        id=id, **update_data
-    )
+    updated_animal_shelter = animal_shelter_repository.update_animal_shelter(id=id, **update_data)
 
     assert updated_animal_shelter is not None
     assert updated_animal_shelter.name == new_name

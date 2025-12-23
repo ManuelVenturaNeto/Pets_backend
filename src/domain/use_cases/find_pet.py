@@ -16,6 +16,8 @@ class FindPet(ABC):
         """
         raise ValueError("Should implement method: by_pet_id")
 
+
+
     @classmethod
     @abstractmethod
     def by_animal_shelter_id(cls, animal_shelter_id: int) -> Dict[bool, List[Pets]]:
@@ -23,6 +25,8 @@ class FindPet(ABC):
         Specific Case
         """
         raise ValueError("Should implement method: animal_shelter_id")
+
+
 
     @classmethod
     @abstractmethod

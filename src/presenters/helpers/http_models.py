@@ -13,9 +13,7 @@ class HttpRequest:
         self.query = query
 
     def __repr__(self):
-        return (
-            f"HttpRequest (header={self.header}, body={self.body}, query={self.query})"
-        )
+        return f"HttpRequest (header={self.header}, body={self.body}, query={self.query})"
 
 
 class HttpResponse:

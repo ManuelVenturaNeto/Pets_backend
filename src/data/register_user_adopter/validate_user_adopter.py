@@ -24,6 +24,7 @@ def validator(name: str, cpf: str, email: str, phone_number: str, pet_id: int) -
     return False
 
 
+
 def validator_cpf(cpf: str) -> bool:
     """
     Check if that cpf is valid
@@ -33,6 +34,7 @@ def validator_cpf(cpf: str) -> bool:
     cpf_validator = CPF().validate(cpf_str)
 
     return cpf_validator
+
 
 
 def validator_phone_number(phone_number: str) -> bool:

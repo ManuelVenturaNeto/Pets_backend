@@ -1,11 +1,7 @@
-# pylint: disable=arguments-differ
-
 from typing import Dict
 import bcrypt
 from src.domain.use_cases import RegisterAnimalShelter as RegisterAnimalShelterInterface
-from src.data.interfaces import (
-    AnimalShelterRepositoryInterface as AnimalShelterRepository,
-)
+from src.data.interfaces import AnimalShelterRepositoryInterface as AnimalShelterRepository
 from src.domain.models import AnimalShelters
 from src.data.register_address import RegisterAddress
 from .validate_animal_shelter import validator
@@ -23,6 +19,7 @@ class RegisterAnimalShelter(RegisterAnimalShelterInterface):
     ):
         self.animal_shelter_repository = animal_shelter_repository
         self.register_address_service = register_address_service
+
 
     def register_animal_shelter(
         self,
@@ -60,9 +57,7 @@ class RegisterAnimalShelter(RegisterAnimalShelterInterface):
 
         response = None
 
-        validate_entry = validator(
-            name, password, cpf, responsible_name, email, phone_number
-        )
+        validate_entry = validator(name, password, cpf, responsible_name, email, phone_number)
 
         if validate_entry:
 

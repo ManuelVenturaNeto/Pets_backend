@@ -28,6 +28,7 @@ def test_by_id():
     assert response["Data"]
 
 
+
 def test_by_id_fail():
     """
     Testing by_id method
@@ -48,6 +49,7 @@ def test_by_id_fail():
     # Testing outputs
     assert response["Success"] is False
     assert response["Data"] is None
+
 
 
 def test_by_specie_name():
@@ -72,6 +74,7 @@ def test_by_specie_name():
     assert response["Data"]
 
 
+
 def test_by_specie_name_fail():
     """
     Testing by_specie_name method
@@ -94,6 +97,7 @@ def test_by_specie_name_fail():
     assert response["Data"] is None
 
 
+
 def test_by_id_and_specie_name():
     """
     Testing by_id_and_specie_name method
@@ -107,9 +111,7 @@ def test_by_id_and_specie_name():
         "specie_name": faker.name(),
     }
 
-    response = find_specie.by_id_and_specie_name(
-        id=attibutes["id"], specie_name=attibutes["specie_name"]
-    )
+    response = find_specie.by_id_and_specie_name(id=attibutes["id"], specie_name=attibutes["specie_name"])
 
     # Testing inputs
     assert specie_repo.select_specie_params["id"] == attibutes["id"]
@@ -118,6 +120,7 @@ def test_by_id_and_specie_name():
     # Testing outputs
     assert response["Success"] is True
     assert response["Data"]
+
 
 
 def test_by_id_and_specie_name_fail():
@@ -133,9 +136,7 @@ def test_by_id_and_specie_name_fail():
         "specie_name": faker.random_number(digits=5),
     }
 
-    response = find_specie.by_id_and_specie_name(
-        id=attibutes["id"], specie_name=attibutes["specie_name"]
-    )
+    response = find_specie.by_id_and_specie_name(id=attibutes["id"], specie_name=attibutes["specie_name"])
 
     # Testing inputs
     assert not specie_repo.select_specie_params

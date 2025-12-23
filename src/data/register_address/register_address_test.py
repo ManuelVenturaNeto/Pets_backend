@@ -36,9 +36,7 @@ def test_register_address():
     assert address_repo.insert_address_params["cep"] == attributes["cep"]
     assert address_repo.insert_address_params["state"] == attributes["state"]
     assert address_repo.insert_address_params["city"] == attributes["city"]
-    assert (
-        address_repo.insert_address_params["neighborhood"] == attributes["neighborhood"]
-    )
+    assert address_repo.insert_address_params["neighborhood"] == attributes["neighborhood"]
     assert address_repo.insert_address_params["street"] == attributes["street"]
     assert address_repo.insert_address_params["number"] == attributes["number"]
     assert address_repo.insert_address_params["complement"] == attributes["complement"]
@@ -46,6 +44,7 @@ def test_register_address():
     # Testing outputs
     assert response["Success"] is True
     assert response["Data"]
+
 
 
 def test_register_address_fail():

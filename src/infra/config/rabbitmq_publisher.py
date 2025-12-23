@@ -16,6 +16,8 @@ class RabbitMQClient:
         self.__channel = self.__create_channel()
         self.__queue_name = None
 
+
+
     def __create_channel(self) -> pika.adapters.blocking_connection.BlockingChannel:
         """
         Creates and returns a RabbitMQ channel.
@@ -28,6 +30,8 @@ class RabbitMQClient:
         )
         return connection.channel()
 
+
+
     def set_queue(self, queue_name: str, durable: bool = True) -> None:
         """
         Sets the queue to be used by this client.
@@ -37,6 +41,8 @@ class RabbitMQClient:
         """
         self.__queue_name = queue_name
         self.__channel.queue_declare(queue=self.__queue_name, durable=durable)
+
+
 
     def send_message(self, body: Dict) -> bool:
         """
@@ -58,6 +64,8 @@ class RabbitMQClient:
             properties=pika.BasicProperties(delivery_mode=2),  # Persistent messages
         )
         return True
+
+
 
     def close(self) -> None:
         """

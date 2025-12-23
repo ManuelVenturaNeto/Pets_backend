@@ -16,6 +16,8 @@ class FindAnimalShelter(ABC):
         """
         raise ValueError("Should implement method: by_id")
 
+
+
     @classmethod
     @abstractmethod
     def by_name(cls, name: str) -> Dict[bool, List[AnimalShelters]]:
@@ -24,6 +26,8 @@ class FindAnimalShelter(ABC):
         """
         raise ValueError("Should implement method: by_name")
 
+
+
     @classmethod
     @abstractmethod
     def by_id_and_name(cls, id: int, name: str) -> Dict[bool, List[AnimalShelters]]:
@@ -31,6 +35,8 @@ class FindAnimalShelter(ABC):
         Specific Case
         """
         raise ValueError("Should implement method: by_id and name")
+
+
 
     @classmethod
     @abstractmethod

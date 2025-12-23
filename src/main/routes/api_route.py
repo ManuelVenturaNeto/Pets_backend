@@ -1,5 +1,3 @@
-# pylint: disable=W0613
-
 import bcrypt
 from flask import Blueprint, jsonify, request
 from src.infra.auth_jwt.token_handler import token_creator
@@ -30,12 +28,12 @@ def authorization_route():
 
     animal_shelter = animal_shelter_response["Data"][0]
     animal_shelter_name = animal_shelter.name
-    hash_password = animal_shelter.password
+    hash_password = bytes.fromhex(animal_shelter.password[2:])
 
     input_password = bcrypt.checkpw(password.encode("utf-8"), hash_password)
 
     if not input_password:
-        return jsonify({"error": "Invalid password"}), 401
+        return jsonify({"error": "AnimalShelter not found"}), 404
 
     if (animal_shelter_name == name) and input_password:
         token = token_creator.create(uid=int(animal_shelter.id))

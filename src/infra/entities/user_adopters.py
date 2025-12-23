@@ -17,8 +17,12 @@ class UserAdopters(Base):
     address_id = Column(Integer, ForeignKey("addresses.id"), nullable=False)
     pet_id = Column(Integer, ForeignKey("pets.id"), nullable=False)
 
+
+
     def __repr__(self):
         return f"User_Adopter [name={self.name}]"
+
+
 
     def __eq__(self, other):
         if (

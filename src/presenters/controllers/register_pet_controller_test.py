@@ -16,10 +16,9 @@ def test_route():
     Testing route method in RegisterAnimalShelterroute
     """
 
-    register_pet_use_case = RegisterPetSpy(
-        PetRepositorySpy(), AnimalShelterRepositorySpy(), SpecieRepositorySpy()
-    )
+    register_pet_use_case = RegisterPetSpy(PetRepositorySpy(), AnimalShelterRepositorySpy(), SpecieRepositorySpy())
     register_pet_router = RegisterPetController(register_pet_use_case)
+
     attributes = {
         "name": faker.name(),
         "specie_name": "Dog",
@@ -35,19 +34,14 @@ def test_route():
 
     # Testing input
     assert register_pet_use_case.register_pet_param["name"] == attributes["name"]
-    assert (
-        register_pet_use_case.register_pet_param["specie_name"]
-        == attributes["specie_name"]
-    )
+    assert register_pet_use_case.register_pet_param["specie_name"] == attributes["specie_name"]
     assert register_pet_use_case.register_pet_param["age"] == attributes["age"]
-    assert (
-        register_pet_use_case.register_pet_param["animal_shelter_information"]
-        == attributes["animal_shelter_information"]
-    )
+    assert register_pet_use_case.register_pet_param["animal_shelter_information"] == attributes["animal_shelter_information"]
 
     # Testing output
     assert response.status_code == 200
     assert "error" not in response.body
+
 
 
 def test_route_without_age():
@@ -55,10 +49,9 @@ def test_route_without_age():
     Testing route method in RegisterAnimalShelterrouter
     """
 
-    register_pet_use_case = RegisterPetSpy(
-        PetRepositorySpy(), AnimalShelterRepositorySpy(), SpecieRepositorySpy()
-    )
+    register_pet_use_case = RegisterPetSpy(PetRepositorySpy(), AnimalShelterRepositorySpy(), SpecieRepositorySpy())
     register_pet_router = RegisterPetController(register_pet_use_case)
+
     attributes = {
         "name": faker.name(),
         "specie_name": "Dog",
@@ -73,19 +66,14 @@ def test_route_without_age():
 
     # Testing input
     assert register_pet_use_case.register_pet_param["name"] == attributes["name"]
-    assert (
-        register_pet_use_case.register_pet_param["specie_name"]
-        == attributes["specie_name"]
-    )
+    assert register_pet_use_case.register_pet_param["specie_name"] == attributes["specie_name"]
     assert register_pet_use_case.register_pet_param["age"] is None
-    assert (
-        register_pet_use_case.register_pet_param["animal_shelter_information"]
-        == attributes["animal_shelter_information"]
-    )
+    assert register_pet_use_case.register_pet_param["animal_shelter_information"] == attributes["animal_shelter_information"]
 
     # Testing output
     assert response.status_code == 200
     assert "error" not in response.body
+
 
 
 def test_route_animal_shelter_id_in_animal_shelter_information():
@@ -93,9 +81,7 @@ def test_route_animal_shelter_id_in_animal_shelter_information():
     Testing route method in RegisterAnimalShelterrouter
     """
 
-    register_pet_use_case = RegisterPetSpy(
-        PetRepositorySpy(), AnimalShelterRepositorySpy(), SpecieRepositorySpy()
-    )
+    register_pet_use_case = RegisterPetSpy(PetRepositorySpy(), AnimalShelterRepositorySpy(), SpecieRepositorySpy())
     register_pet_router = RegisterPetController(register_pet_use_case)
 
     attributes = {
@@ -109,19 +95,14 @@ def test_route_animal_shelter_id_in_animal_shelter_information():
 
     # Testing input
     assert register_pet_use_case.register_pet_param["name"] == attributes["name"]
-    assert (
-        register_pet_use_case.register_pet_param["specie_name"]
-        == attributes["specie_name"]
-    )
+    assert register_pet_use_case.register_pet_param["specie_name"] == attributes["specie_name"]
     assert register_pet_use_case.register_pet_param["age"] is None
-    assert (
-        register_pet_use_case.register_pet_param["animal_shelter_information"]
-        == attributes["animal_shelter_information"]
-    )
+    assert register_pet_use_case.register_pet_param["animal_shelter_information"] == attributes["animal_shelter_information"]
 
     # Testing output
     assert response.status_code == 200
     assert "error" not in response.body
+
 
 
 def test_route_error_400():
@@ -129,9 +110,7 @@ def test_route_error_400():
     Testing route method in RegisterAnimalShelterrouter
     """
 
-    register_pet_use_case = RegisterPetSpy(
-        PetRepositorySpy(), AnimalShelterRepositorySpy(), SpecieRepositorySpy()
-    )
+    register_pet_use_case = RegisterPetSpy(PetRepositorySpy(), AnimalShelterRepositorySpy(), SpecieRepositorySpy())
     register_pet_router = RegisterPetController(register_pet_use_case)
 
     response = register_pet_router.route(HttpRequest())
@@ -144,14 +123,13 @@ def test_route_error_400():
     assert "error" in response.body
 
 
+
 def test_route_error_422_wrong_body():
     """
     Testing route method in RegisterAnimalShelterrouter
     """
 
-    register_pet_use_case = RegisterPetSpy(
-        PetRepositorySpy(), AnimalShelterRepositorySpy(), SpecieRepositorySpy()
-    )
+    register_pet_use_case = RegisterPetSpy(PetRepositorySpy(), AnimalShelterRepositorySpy(), SpecieRepositorySpy())
     register_pet_router = RegisterPetController(register_pet_use_case)
 
     attributes = {
@@ -173,14 +151,13 @@ def test_route_error_422_wrong_body():
     assert "error" in response.body
 
 
+
 def test_route_error_422_wrong_animal_shelter_information():
     """
     Testing route method in RegisterAnimalShelterrouter
     """
 
-    register_pet_use_case = RegisterPetSpy(
-        PetRepositorySpy(), AnimalShelterRepositorySpy(), SpecieRepositorySpy()
-    )
+    register_pet_use_case = RegisterPetSpy(PetRepositorySpy(), AnimalShelterRepositorySpy(), SpecieRepositorySpy())
     register_pet_router = RegisterPetController(register_pet_use_case)
 
     attributes = {

@@ -12,12 +12,9 @@ def test_route():
     Testing route method in RegisterUserAdopterController
     """
 
-    register_user_adopter_use_case = RegisterUserAdopterSpy(
-        UserAdopterRepositorySpy(), AddressRepositorySpy()
-    )
-    register_user_adopter_router = RegisterUserAdopterController(
-        register_user_adopter_use_case
-    )
+    register_user_adopter_use_case = RegisterUserAdopterSpy(UserAdopterRepositorySpy(), AddressRepositorySpy())
+    register_user_adopter_router = RegisterUserAdopterController(register_user_adopter_use_case)
+
     attributes = {
         "name": faker.name(),
         "cpf": faker.cpf().replace(".", "").replace("-", ""),
@@ -39,34 +36,20 @@ def test_route():
     assert register_user_adopter_use_case.register_param["name"] == attributes["name"]
     assert register_user_adopter_use_case.register_param["cpf"] == attributes["cpf"]
     assert register_user_adopter_use_case.register_param["email"] == attributes["email"]
-    assert (
-        register_user_adopter_use_case.register_param["phone_number"]
-        == attributes["phone_number"]
-    )
-    assert (
-        register_user_adopter_use_case.register_param["pet_id"] == attributes["pet_id"]
-    )
+    assert register_user_adopter_use_case.register_param["phone_number"] == attributes["phone_number"]
+    assert register_user_adopter_use_case.register_param["pet_id"] == attributes["pet_id"]
     assert register_user_adopter_use_case.register_param["cep"] == attributes["cep"]
     assert register_user_adopter_use_case.register_param["state"] == attributes["state"]
     assert register_user_adopter_use_case.register_param["city"] == attributes["city"]
-    assert (
-        register_user_adopter_use_case.register_param["neighborhood"]
-        == attributes["neighborhood"]
-    )
-    assert (
-        register_user_adopter_use_case.register_param["street"] == attributes["street"]
-    )
-    assert (
-        register_user_adopter_use_case.register_param["number"] == attributes["number"]
-    )
-    assert (
-        register_user_adopter_use_case.register_param["complement"]
-        == attributes["complement"]
-    )
+    assert register_user_adopter_use_case.register_param["neighborhood"] == attributes["neighborhood"]
+    assert register_user_adopter_use_case.register_param["street"] == attributes["street"]
+    assert register_user_adopter_use_case.register_param["number"] == attributes["number"]
+    assert register_user_adopter_use_case.register_param["complement"] == attributes["complement"]
 
     # Testing output
     assert response.status_code == 200
     assert "error" not in response.body
+
 
 
 def test_route_error_400():
@@ -74,12 +57,8 @@ def test_route_error_400():
     Testing route method in RegisterUserAdopterController
     """
 
-    register_user_adopter_use_case = RegisterUserAdopterSpy(
-        UserAdopterRepositorySpy(), AddressRepositorySpy()
-    )
-    register_user_adopter_router = RegisterUserAdopterController(
-        register_user_adopter_use_case
-    )
+    register_user_adopter_use_case = RegisterUserAdopterSpy(UserAdopterRepositorySpy(), AddressRepositorySpy())
+    register_user_adopter_router = RegisterUserAdopterController(register_user_adopter_use_case)
 
     response = register_user_adopter_router.route(HttpRequest())
 
@@ -91,17 +70,14 @@ def test_route_error_400():
     assert "error" in response.body
 
 
+
 def test_route_error_422():
     """
     Testing route method in RegisterUserAdopterController
     """
 
-    register_user_adopter_use_case = RegisterUserAdopterSpy(
-        UserAdopterRepositorySpy(), AddressRepositorySpy()
-    )
-    register_user_adopter_router = RegisterUserAdopterController(
-        register_user_adopter_use_case
-    )
+    register_user_adopter_use_case = RegisterUserAdopterSpy(UserAdopterRepositorySpy(), AddressRepositorySpy())
+    register_user_adopter_router = RegisterUserAdopterController(register_user_adopter_use_case)
     attributes = {"name": faker.name()}
 
     response = register_user_adopter_router.route(HttpRequest(body=attributes))

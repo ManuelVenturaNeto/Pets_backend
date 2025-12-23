@@ -28,6 +28,7 @@ def test_by_id():
     assert response["Data"]
 
 
+
 def test_by_id_fail():
     """
     Testing by_id method
@@ -48,6 +49,7 @@ def test_by_id_fail():
     # Testing outputs
     assert response["Success"] is False
     assert response["Data"] is None
+
 
 
 def test_by_name():
@@ -94,6 +96,7 @@ def test_by_name_fail():
     assert response["Data"] is None
 
 
+
 def test_by_id_and_name():
     """
     Testing by_id_and_name method
@@ -120,6 +123,7 @@ def test_by_id_and_name():
     assert response["Data"]
 
 
+
 def test_by_id_and_name_fail():
     """
     Testing by_id_and_name method
@@ -133,9 +137,7 @@ def test_by_id_and_name_fail():
         "name": faker.random_number(digits=5),
     }
 
-    response = find_animal_shelter.by_id_and_name(
-        id=attibutes["id"], name=attibutes["name"]
-    )
+    response = find_animal_shelter.by_id_and_name(id=attibutes["id"], name=attibutes["name"])
 
     # Testing inputs
     assert not animal_shelter_repo.select_animal_shelter_params

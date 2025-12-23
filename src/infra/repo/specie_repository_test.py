@@ -38,6 +38,7 @@ def test_insert_specie():
     reset_auto_increment("pets")
 
 
+
 @pytest.mark.skip(reason="Sensive test")
 def test_select_specie():
     """
@@ -77,6 +78,7 @@ def test_select_specie():
     reset_auto_increment("pets")
 
 
+
 @pytest.mark.skip(reason="Sensive test")
 def test_delete_specie():
     """
@@ -111,6 +113,7 @@ def test_delete_specie():
         assert result is None
 
     reset_auto_increment("pets")
+
 
 
 @pytest.mark.skip(reason="Sensive test")

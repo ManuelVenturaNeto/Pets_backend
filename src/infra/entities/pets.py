@@ -14,14 +14,16 @@ class Pets(Base):
     name = Column(String, nullable=False)
     specie = Column(Integer, ForeignKey("species.id"), nullable=False)
     age = Column(Integer)
-    animal_shelter_id = Column(
-        Integer, ForeignKey("animal_shelters.id"), nullable=False
-    )
+    animal_shelter_id = Column(Integer, ForeignKey("animal_shelters.id"), nullable=False)
     adopted = Column(Boolean, default=False)
     user_adopters = relationship("UserAdopters")
 
+
+
     def __repr__(self):
         return f"Pet [name = {self.name}, specie = {self.specie}, animal_shelter_id = {self.animal_shelter_id}]"
+
+
 
     def __eq__(self, other):
         if (

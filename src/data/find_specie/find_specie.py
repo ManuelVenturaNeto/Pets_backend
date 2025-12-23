@@ -1,5 +1,3 @@
-# pylint: disable=arguments-differ
-
 from typing import Type, Dict, List
 from src.domain.models import Species
 from src.domain.use_cases import FindSpecie as FindSpecieInterface
@@ -14,6 +12,8 @@ class FindSpecie(FindSpecieInterface):
     def __init__(self, specie_repository: Type[SpecieRepository]):
 
         self.specie_repository = specie_repository
+
+
 
     def by_id(self, id: int) -> Dict[bool, List[Species]]:
         """
@@ -30,6 +30,8 @@ class FindSpecie(FindSpecieInterface):
 
         return {"Success": validate_entry, "Data": response}
 
+
+
     def by_specie_name(self, specie_name: str) -> Dict[bool, List[Species]]:
         """
         Select Specie by id
@@ -44,6 +46,8 @@ class FindSpecie(FindSpecieInterface):
             response = self.specie_repository.select_specie(specie_name=specie_name)
 
         return {"Success": validate_entry, "Data": response}
+
+
 
     def by_id_and_specie_name(self, id: int, specie_name: str) -> Dict[bool, List[Species]]:
         """

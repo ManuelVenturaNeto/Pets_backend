@@ -1,5 +1,3 @@
-# pylint: disable=arguments-differ, W0221, W0237
-
 from typing import Dict
 from src.domain.use_cases import RegisterAddress as RegisterAddressInterface
 from src.data.interfaces import AddressRepositoryInterface as AddressRepository
@@ -13,6 +11,8 @@ class RegisterAddress(RegisterAddressInterface):
 
     def __init__(self, address_repository: type[AddressRepository]):
         self.address_repository = address_repository
+
+
 
     def register_address(
         self,

@@ -26,6 +26,7 @@ def test_by_pet_id():
     assert response["Data"]
 
 
+
 def test_by_pet_id_fail():
     """
     Testing by_pet_id method
@@ -46,6 +47,7 @@ def test_by_pet_id_fail():
     assert response["Data"] is None
 
 
+
 def test_by_animal_shelter_id():
     """
     Testing by_animal_shelter_id method
@@ -61,14 +63,12 @@ def test_by_animal_shelter_id():
     )
 
     # testing input
-    assert (
-        pet_repo.select_pet_param["animal_shelter_id"]
-        == attributes["animal_shelter_id"]
-    )
+    assert pet_repo.select_pet_param["animal_shelter_id"] == attributes["animal_shelter_id"]
 
     # testing output
     assert response["Success"] is True
     assert response["Data"]
+
 
 
 def test_by_animal_shelter_id__fail():
@@ -93,6 +93,7 @@ def test_by_animal_shelter_id__fail():
     assert response["Data"] is None
 
 
+
 def test_by_pet_id_and_animal_shelter_id():
     """
     Testing by_pet_id_and_animal_shelter_id method
@@ -106,20 +107,16 @@ def test_by_pet_id_and_animal_shelter_id():
         "animal_shelter_id": faker.random_number(digits=5),
     }
 
-    response = find_pet.by_pet_id_and_animal_shelter_id(
-        pet_id=attributes["pet_id"], animal_shelter_id=attributes["animal_shelter_id"]
-    )
+    response = find_pet.by_pet_id_and_animal_shelter_id(pet_id=attributes["pet_id"], animal_shelter_id=attributes["animal_shelter_id"])
 
     # testing input
     assert pet_repo.select_pet_param["pet_id"] == attributes["pet_id"]
-    assert (
-        pet_repo.select_pet_param["animal_shelter_id"]
-        == attributes["animal_shelter_id"]
-    )
+    assert pet_repo.select_pet_param["animal_shelter_id"] == attributes["animal_shelter_id"]
 
     # testing output
     assert response["Success"] is True
     assert response["Data"]
+
 
 
 def test_by_pet_id_and_animal_shelter_id_fail():
@@ -135,9 +132,7 @@ def test_by_pet_id_and_animal_shelter_id_fail():
         "animal_shelter_id": faker.name(),
     }
 
-    response = find_pet.by_pet_id_and_animal_shelter_id(
-        pet_id=attributes["pet_id"], animal_shelter_id=attributes["animal_shelter_id"]
-    )
+    response = find_pet.by_pet_id_and_animal_shelter_id(pet_id=attributes["pet_id"], animal_shelter_id=attributes["animal_shelter_id"])
 
     # testing input
     assert not pet_repo.select_pet_param

@@ -1,5 +1,3 @@
-# pylint: disable=W0702, W0012, W0718
-
 from typing import Type
 from sqlalchemy.exc import IntegrityError
 from src.main.interfaces import RouteInterface as Route

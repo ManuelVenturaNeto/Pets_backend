@@ -51,6 +51,7 @@ def test_insert_user_adopter():
     reset_auto_increment("user_adopters")
 
 
+
 @pytest.mark.skip(reason="Sensive test")
 def test_select_user_adopter():
     """
@@ -125,6 +126,7 @@ def test_select_user_adopter():
     reset_auto_increment("user_adopters")
 
 
+
 @pytest.mark.skip(reason="Sensive test")
 def test_delete_user_adopter():
     """
@@ -169,6 +171,7 @@ def test_delete_user_adopter():
         assert result is None
 
     reset_auto_increment("user_adopters")
+
 
 
 @pytest.mark.skip(reason="Sensive test")

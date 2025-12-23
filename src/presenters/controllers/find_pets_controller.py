@@ -1,5 +1,3 @@
-# pylint: disable=W0221
-
 from typing import Type
 from src.main.interfaces import RouteInterface
 from src.domain.use_cases import FindPet

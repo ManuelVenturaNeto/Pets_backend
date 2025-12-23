@@ -44,6 +44,7 @@ def test_insert_pet():
     reset_auto_increment("pets")
 
 
+
 @pytest.mark.skip(reason="Sensive test")
 def test_select_pet():
     """
@@ -87,9 +88,7 @@ def test_select_pet():
 
         query_pet1 = pet_repository.select_pet(pet_id=data.id)
         # query_pet2 = pet_repository.select_pet(animal_shelter_id=data.animal_shelter_id)
-        query_pet3 = pet_repository.select_pet(
-            pet_id=data.id, animal_shelter_id=data.animal_shelter_id
-        )
+        query_pet3 = pet_repository.select_pet(pet_id=data.id, animal_shelter_id=data.animal_shelter_id)
 
         connection.execute(text("DELETE FROM pets WHERE id=:id"), {"id": data.id})
         connection.commit()
@@ -99,6 +98,7 @@ def test_select_pet():
     assert data in query_pet3
 
     reset_auto_increment("pets")
+
 
 
 @pytest.mark.skip(reason="Sensive test")
@@ -143,6 +143,7 @@ def test_delete_pet():
         assert result is None
 
     reset_auto_increment("pets")
+
 
 
 @pytest.mark.skip(reason="Sensive test")

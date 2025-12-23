@@ -33,11 +33,13 @@ class S3Handler:
         """
         return self.s3_client
 
+
     def get_bucket_name(self):
         """
         Retorna o nome do bucket S3.
         """
         return self.bucket_name
+
 
     def get_location_file(self):
         """
@@ -45,11 +47,13 @@ class S3Handler:
         """
         return self.location
 
+
     def get_custom_domain(self):
         """
         Return the custom domain of image
         """
         return self.custom_domain
+
 
     def get_cache_control(self):
         """

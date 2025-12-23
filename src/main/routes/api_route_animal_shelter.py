@@ -51,12 +51,8 @@ def register_animal_shelter():
         return jsonify({"data": message}), response.status_code
 
     # Handling errors
-    return (
-        jsonify(
-            {"error": {"status": response.status_code, "title": response.body["error"]}}
-        ),
-        response.status_code,
-    )
+    return jsonify({"error": {"status": response.status_code, "title": response.body["error"]}}), response.status_code
+
 
 
 @api_routes_bp.route("/api/animal_shelters", methods=["GET"])
@@ -83,9 +79,4 @@ def finder_animal_shelters():
         return jsonify({"data": message}), response.status_code
 
     # Handling Errors
-    return (
-        jsonify(
-            {"error": {"status": response.status_code, "title": response.body["error"]}}
-        ),
-        response.status_code,
-    )
+    return jsonify({"error": {"status": response.status_code, "title": response.body["error"]}}), response.status_code

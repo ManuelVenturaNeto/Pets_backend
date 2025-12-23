@@ -14,6 +14,8 @@ class FindAnimalShelterSpy:
         self.by_name_param = {}
         self.by_id_and_name_param = {}
 
+
+
     def by_id(self, id: int) -> Dict[bool, List[AnimalShelters]]:
         """
         Select AnimalShelter by id
@@ -27,6 +29,8 @@ class FindAnimalShelterSpy:
             response = [mock_animal_shelter()]
 
         return {"Success": validate_entry, "Data": response}
+
+
 
     def by_name(self, name: str) -> Dict[bool, List[AnimalShelters]]:
         """
@@ -43,6 +47,8 @@ class FindAnimalShelterSpy:
             response = [mock_animal_shelter()]
 
         return {"Success": validate_entry, "Data": response}
+
+
 
     def by_id_and_name(self, id: int, name: str) -> Dict[bool, List[AnimalShelters]]:
         """

@@ -16,6 +16,8 @@ class FindSpecie(ABC):
         """
         raise ValueError("Should implement method: by_id")
 
+
+
     @classmethod
     @abstractmethod
     def by_specie_name(cls, specie_name: str) -> Dict[bool, List[Species]]:
@@ -23,6 +25,8 @@ class FindSpecie(ABC):
         Specific Case
         """
         raise ValueError("Should implement method: by_specie_name")
+
+
 
     @classmethod
     @abstractmethod

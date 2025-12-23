@@ -1,5 +1,3 @@
-# pylint: disable=arguments-differ
-
 from typing import Type, Dict, List
 from src.domain.models import Addresses
 from src.domain.use_cases import FindAddress as FindAddressInterface
@@ -29,6 +27,8 @@ class FindAddress(FindAddressInterface):
             response = self.address_repository.select_address(id=id)
 
         return {"Success": validate_entry, "Data": response}
+
+
 
     def by_complete_discription(
         self,
@@ -72,6 +72,8 @@ class FindAddress(FindAddressInterface):
 
         return {"Success": validate_entry, "Data": response}
 
+
+
     def by_cep_or_state_or_city_or_neighbohood(
         self,
         cep: str = None,
@@ -89,7 +91,9 @@ class FindAddress(FindAddressInterface):
         """
 
         response = None
+        
         validate_entry = False
+        
         if cep or state or city or neighborhood:
             validate_entry = (
                 isinstance(cep, (str, type(None)))
@@ -97,9 +101,8 @@ class FindAddress(FindAddressInterface):
                 and isinstance(city, (str, type(None)))
                 and isinstance(neighborhood, (str, type(None)))
             )
+        
         if validate_entry:
-            response = self.address_repository.select_address(
-                cep=cep, state=state, city=city, neighborhood=neighborhood
-            )
+            response = self.address_repository.select_address(cep=cep, state=state, city=city, neighborhood=neighborhood)
 
         return {"Success": validate_entry, "Data": response}

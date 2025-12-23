@@ -1,6 +1,3 @@
-# pylint: disable=arguments-differ
-# pylint: disable=R0801
-
 from typing import List
 from sqlalchemy.exc import NoResultFound
 from src.data.interfaces import AddressRepositoryInterface
@@ -70,6 +67,8 @@ class AddressRepository(AddressRepositoryInterface):
                     db_connection.session.close()
         return None
 
+
+
     @classmethod
     def select_address(
         cls,
@@ -97,11 +96,7 @@ class AddressRepository(AddressRepositoryInterface):
 
             if address_id:
                 with DBConnectionHandler() as db_connection:
-                    data = (
-                        db_connection.session.query(AddressesModel)
-                        .filter_by(id=address_id)
-                        .one()
-                    )
+                    data = db_connection.session.query(AddressesModel).filter_by(id=address_id).one()
 
                     data_query = [data]
 
@@ -135,22 +130,24 @@ class AddressRepository(AddressRepositoryInterface):
                     if neighborhood:
                         filters["neighborhood"] = neighborhood
 
-                    query = db_connection.session.query(AddressesModel).filter_by(
-                        **filters
-                    )
+                    query = db_connection.session.query(AddressesModel).filter_by(**filters)
                     data_query = query.all()
 
             return data_query
 
         except NoResultFound:
             return []
+
         except:
             with DBConnectionHandler() as db_connection:
                 db_connection.session.rollback()
             raise
+
         finally:
             with DBConnectionHandler() as db_connection:
                 db_connection.session.close()
+
+
 
     @classmethod
     def delete_address(cls, id: int) -> bool:
@@ -161,23 +158,24 @@ class AddressRepository(AddressRepositoryInterface):
         """
         with DBConnectionHandler() as db_connection:
             try:
-                address_to_delete = (
-                    db_connection.session.query(AddressesModel)
-                    .filter_by(id=id)
-                    .one_or_none()
-                )
+                address_to_delete = db_connection.session.query(AddressesModel).filter_by(id=id).one_or_none()
+
                 if address_to_delete:
                     db_connection.session.delete(address_to_delete)
                     db_connection.session.commit()
                     return True
                 return False
+
             except:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.rollback()
                 raise
+
             finally:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.close()
+
+
 
     @classmethod
     def update_address(cls, id: int, **kwargs: any) -> Addresses:
@@ -213,10 +211,12 @@ class AddressRepository(AddressRepositoryInterface):
                         complement=address_to_update.complement,
                     )
                 return None
+
             except:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.rollback()
                 raise
+
             finally:
                 with DBConnectionHandler() as db_connection:
                     db_connection.session.close()

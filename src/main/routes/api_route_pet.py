@@ -39,12 +39,8 @@ def register_pet():
         return jsonify({"data": message}), response.status_code
 
     # Handling errors
-    return (
-        jsonify(
-            {"error": {"status": response.status_code, "title": response.body["error"]}}
-        ),
-        response.status_code,
-    )
+    return jsonify({"error": {"status": response.status_code, "title": response.body["error"]}}), response.status_code
+
 
 
 @api_routes_bp.route("/api/pets", methods=["GET"])
@@ -81,9 +77,4 @@ def finder_pets():
         return jsonify({"data": message}), response.status_code
 
     # Handling Errors
-    return (
-        jsonify(
-            {"error": {"status": response.status_code, "title": response.body["error"]}}
-        ),
-        response.status_code,
-    )
+    return jsonify({"error": {"status": response.status_code, "title": response.body["error"]}}), response.status_code

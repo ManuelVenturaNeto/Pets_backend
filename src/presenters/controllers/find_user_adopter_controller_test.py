@@ -25,16 +25,12 @@ def test_route_by_user_adopter_id():
 
     http_response = find_user_adopter_route.route(http_request)
     # Testing input
-    assert (
-        find_user_adopter_animal_shelter_case.by_user_adopter_id_param[
-            "user_adopter_id"
-        ]
-        == attributes["user_adopter_id"]
-    )
+    assert find_user_adopter_animal_shelter_case.by_user_adopter_id_param["user_adopter_id"] == attributes["user_adopter_id"]
 
     # Testing output
     assert http_response.status_code == 200
     assert "error" not in http_response.body
+
 
 
 def test_route_by_pet_id():
@@ -42,12 +38,8 @@ def test_route_by_pet_id():
     testing find user_adopter use case
     """
 
-    find_user_adopter_animal_shelter_case = FindUserAdopterSpy(
-        UserAdopterRepositorySpy()
-    )
-    find_user_adopter_route = FindUserAdopterController(
-        find_user_adopter_animal_shelter_case
-    )
+    find_user_adopter_animal_shelter_case = FindUserAdopterSpy(UserAdopterRepositorySpy())
+    find_user_adopter_route = FindUserAdopterController(find_user_adopter_animal_shelter_case)
 
     attributes = {"pet_id": faker.random_number(digits=15)}
 
@@ -56,14 +48,12 @@ def test_route_by_pet_id():
     http_response = find_user_adopter_route.route(http_request)
 
     # Testing input
-    assert (
-        find_user_adopter_animal_shelter_case.by_pet_id_param["pet_id"]
-        == attributes["pet_id"]
-    )
+    assert find_user_adopter_animal_shelter_case.by_pet_id_param["pet_id"] == attributes["pet_id"]
 
     # Testing output
     assert http_response.status_code == 200
     assert "error" not in http_response.body
+
 
 
 def test_route_by_user_adopter_informations():
@@ -71,12 +61,8 @@ def test_route_by_user_adopter_informations():
     testing find user_adopter use case
     """
 
-    find_user_adopter_animal_shelter_case = FindUserAdopterSpy(
-        UserAdopterRepositorySpy()
-    )
-    find_user_adopter_route = FindUserAdopterController(
-        find_user_adopter_animal_shelter_case
-    )
+    find_user_adopter_animal_shelter_case = FindUserAdopterSpy(UserAdopterRepositorySpy())
+    find_user_adopter_route = FindUserAdopterController(find_user_adopter_animal_shelter_case)
 
     attributes = {"name": faker.name()}
 
@@ -84,14 +70,12 @@ def test_route_by_user_adopter_informations():
 
     http_response = find_user_adopter_route.route(http_request)
     # Testing input
-    assert (
-        find_user_adopter_animal_shelter_case.by_user_information_param["name"]
-        == attributes["name"]
-    )
+    assert find_user_adopter_animal_shelter_case.by_user_information_param["name"] == attributes["name"]
 
     # Testing output
     assert http_response.status_code == 200
     assert "error" not in http_response.body
+
 
 
 def test_route_error_400():
@@ -99,12 +83,8 @@ def test_route_error_400():
     testing find user_adopter use case
     """
 
-    find_user_adopter_animal_shelter_case = FindUserAdopterSpy(
-        UserAdopterRepositorySpy()
-    )
-    find_user_adopter_route = FindUserAdopterController(
-        find_user_adopter_animal_shelter_case
-    )
+    find_user_adopter_animal_shelter_case = FindUserAdopterSpy(UserAdopterRepositorySpy())
+    find_user_adopter_route = FindUserAdopterController(find_user_adopter_animal_shelter_case)
 
     attributes = {}
 
@@ -121,17 +101,14 @@ def test_route_error_400():
     assert "error" in http_response.body
 
 
+
 def test_route_error_422():
     """
     testing find user_adopter use case
     """
 
-    find_user_adopter_animal_shelter_case = FindUserAdopterSpy(
-        UserAdopterRepositorySpy()
-    )
-    find_user_adopter_route = FindUserAdopterController(
-        find_user_adopter_animal_shelter_case
-    )
+    find_user_adopter_animal_shelter_case = FindUserAdopterSpy(UserAdopterRepositorySpy())
+    find_user_adopter_route = FindUserAdopterController(find_user_adopter_animal_shelter_case)
 
     attributes = {
         "id": faker.random_number(digits=5),

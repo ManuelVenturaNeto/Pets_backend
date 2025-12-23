@@ -25,6 +25,7 @@ def test_insert_file():
     assert result
 
 
+
 @pytest.mark.skip(reason="Sensive test")
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_update_file():
@@ -47,6 +48,7 @@ def test_update_file():
     assert response
 
 
+
 @pytest.mark.skip(reason="Sensive test")
 @pytest.mark.filterwarnings("ignore::DeprecationWarning")
 def test_select_files():
@@ -58,6 +60,7 @@ def test_select_files():
 
     assert isinstance(files, list)
     assert len(files) > 0
+
 
 
 @pytest.mark.skip(reason="Sensive test")

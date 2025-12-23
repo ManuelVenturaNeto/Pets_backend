@@ -19,6 +19,8 @@ class PetImagesRepository:
         self.domain = self.s3_config.get_custom_domain()
         self.cache_control = self.s3_config.get_cache_control()
 
+
+
     def insert_file(self, pet_id: int, file: BinaryIO) -> bool:
         """
         Insert the image into bucket S3 and return true or false
@@ -31,17 +33,13 @@ class PetImagesRepository:
         try:
             # Checking if the file is a valid image
             if not filename.lower().endswith((".png", ".jpg", ".jpeg", ".gif")):
-                logging.error(
-                    "Invalid file type for %s. Only image files are accepted.", filename
-                )
+                logging.error("Invalid file type for %s. Only image files are accepted.", filename)
                 return False
 
             # add cache control
             extra_args = {"CacheControl": self.cache_control}
 
-            self.s3_client.upload_fileobj(
-                img_data, self.bucket_name, key, ExtraArgs=extra_args
-            )
+            self.s3_client.upload_fileobj(img_data, self.bucket_name, key, ExtraArgs=extra_args)
             logging.info("File %s uploaded successfully to %s", filename, key)
             return True
 
@@ -54,19 +52,17 @@ class PetImagesRepository:
         List the images by one pet_id into S3
         """
         try:
-            response = self.s3_client.list_objects_v2(
-                Bucket=self.bucket_name, Prefix=f"{self.location}/{pet_id}/"
-            )
+            response = self.s3_client.list_objects_v2(Bucket=self.bucket_name, Prefix=f"{self.location}/{pet_id}/")
+
             if "Contents" in response:
-                return [
-                    f'{self.s3_config.get_custom_domain()}/{item["Key"]}'
-                    for item in response["Contents"]
-                ]
+                return [f'{self.s3_config.get_custom_domain()}/{item["Key"]}' for item in response["Contents"]]
+
             return []
 
         except ClientError as e:
             logging.error("Error listing files for pet_id %d: %s", pet_id, e)
             return []
+
 
     def delete_file(self, pet_id: int, filename: str) -> bool:
         """
@@ -81,6 +77,8 @@ class PetImagesRepository:
         except ClientError as e:
             logging.error("Error deleting file %s: %s", filename, e)
             return False
+
+
 
     def update_file(self, pet_id: int, old_filename: str, new_file: BinaryIO) -> bool:
         """
@@ -97,13 +95,9 @@ class PetImagesRepository:
                 logging.error("Failed to upload new file for pet_id %d.", pet_id)
                 return False
 
-            logging.info(
-                "File %s updated successfully for pet_id %d.", old_filename, pet_id
-            )
+            logging.info("File %s updated successfully for pet_id %d.", old_filename, pet_id)
             return True
 
         except ClientError as e:
-            logging.error(
-                "Error updating file %s for pet_id %d: %s", old_filename, pet_id, e
-            )
+            logging.error("Error updating file %s for pet_id %d: %s", old_filename, pet_id, e)
             return False

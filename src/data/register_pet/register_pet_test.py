@@ -45,18 +45,13 @@ def test_register_pet():
     assert pet_repo.insert_pet_param["age"] == attributes["age"]
 
     # testing FindAnimalShelter inputs
-    assert (
-        find_animal_shelter.by_id_and_name_param["animal_shelter_id"]
-        == attributes["animal_shelter_information"]["animal_shelter_id"]
-    )
-    assert (
-        find_animal_shelter.by_id_and_name_param["name"]
-        == attributes["animal_shelter_information"]["animal_shelter_name"]
-    )
+    assert find_animal_shelter.by_id_and_name_param["animal_shelter_id"] == attributes["animal_shelter_information"]["animal_shelter_id"]
+    assert find_animal_shelter.by_id_and_name_param["name"] == attributes["animal_shelter_information"]["animal_shelter_name"]
 
     # testing outputs
     assert response["Success"] is True
     assert response["Data"]
+
 
 
 def test_register_pet_fail():

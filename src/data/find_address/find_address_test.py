@@ -28,6 +28,7 @@ def test_by_id():
     assert response["Data"]
 
 
+
 def test_by_id_fail():
     """
     Testing by_id method
@@ -48,6 +49,7 @@ def test_by_id_fail():
     # Testing outputs
     assert response["Success"] is False
     assert response["Data"] is None
+
 
 
 def test_by_complete_discription():
@@ -80,15 +82,14 @@ def test_by_complete_discription():
     assert address_repo.select_address_params["cep"] == attibutes["cep"]
     assert address_repo.select_address_params["state"] == attibutes["state"]
     assert address_repo.select_address_params["city"] == attibutes["city"]
-    assert (
-        address_repo.select_address_params["neighborhood"] == attibutes["neighborhood"]
-    )
+    assert address_repo.select_address_params["neighborhood"] == attibutes["neighborhood"]
     assert address_repo.select_address_params["street"] == attibutes["street"]
     assert address_repo.select_address_params["number"] == attibutes["number"]
 
     # Testing outputs
     assert response["Success"] is True
     assert response["Data"]
+
 
 
 def test_by_complete_discription_fail():
@@ -125,6 +126,7 @@ def test_by_complete_discription_fail():
     assert response["Data"] is None
 
 
+
 def test_by_cep_or_state_or_city_or_neighbohood():
     """
     Testing by_cep_or_state_or_city_or_neighbohood method
@@ -151,13 +153,12 @@ def test_by_cep_or_state_or_city_or_neighbohood():
     assert address_repo.select_address_params["cep"] == attibutes["cep"]
     assert address_repo.select_address_params["state"] == attibutes["state"]
     assert address_repo.select_address_params["city"] == attibutes["city"]
-    assert (
-        address_repo.select_address_params["neighborhood"] == attibutes["neighborhood"]
-    )
+    assert address_repo.select_address_params["neighborhood"] == attibutes["neighborhood"]
 
     # Testing outputs
     assert response["Success"] is True
     assert response["Data"]
+
 
 
 def test_by_cep_or_state_or_city_or_neighbohood_fail():

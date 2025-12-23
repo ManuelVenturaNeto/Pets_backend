@@ -21,8 +21,12 @@ class Addresses(Base):
     address_id = relationship("UserAdopters")
     address_id = relationship("AnimalShelters")
 
+
+
     def __repr__(self):
         return f"Address [cep={self.cep}, number = {self.number}]"
+
+
 
     def __eq__(self, other):
         if (

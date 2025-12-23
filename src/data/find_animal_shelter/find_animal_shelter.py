@@ -1,11 +1,7 @@
-# pylint: disable=arguments-differ
-
 from typing import Type, Dict, List
 from src.domain.models import AnimalShelters
 from src.domain.use_cases import FindAnimalShelter as FindAnimalShelterInterface
-from src.data.interfaces import (
-    AnimalShelterRepositoryInterface as AnimalShelterRepository,
-)
+from src.data.interfaces import AnimalShelterRepositoryInterface as AnimalShelterRepository
 
 
 class FindAnimalShelter(FindAnimalShelterInterface):
@@ -16,6 +12,8 @@ class FindAnimalShelter(FindAnimalShelterInterface):
     def __init__(self, animal_shelter_repository: Type[AnimalShelterRepository]):
 
         self.animal_shelter_repository = animal_shelter_repository
+
+
 
     def by_id(self, id: int) -> Dict[bool, List[AnimalShelters]]:
         """
@@ -32,6 +30,8 @@ class FindAnimalShelter(FindAnimalShelterInterface):
 
         return {"Success": validate_entry, "Data": response}
 
+
+
     def by_name(self, name: str) -> Dict[bool, List[AnimalShelters]]:
         """
         Select AnimalShelter by id
@@ -47,6 +47,8 @@ class FindAnimalShelter(FindAnimalShelterInterface):
 
         return {"Success": validate_entry, "Data": response}
 
+
+
     def by_id_and_name(self, id: int, name: str) -> Dict[bool, List[AnimalShelters]]:
         """
         Select AnimalShelter by id and name
@@ -59,11 +61,11 @@ class FindAnimalShelter(FindAnimalShelterInterface):
         validate_entry = isinstance(id, int) and isinstance(name, str)
 
         if validate_entry:
-            response = self.animal_shelter_repository.select_animal_shelter(
-                id=id, name=name
-            )
+            response = self.animal_shelter_repository.select_animal_shelter(id=id, name=name)
 
         return {"Success": validate_entry, "Data": response}
+
+
 
     def by_cpf(self, cpf: str) -> Dict[bool, List[AnimalShelters]]:
         """
