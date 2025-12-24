@@ -29,12 +29,12 @@ class FindSpecieController(RouteInterface):
 
         response = None
 
-        if http_request.query:
-            query_string_params = http_request.query.keys()
+        if http_request.query_params:
+            query_string_params = http_request.query_params.keys()
 
             if "id" in query_string_params and "specie_name" in query_string_params:
-                id = http_request.query["id"]
-                specie_name = http_request.query["specie_name"]
+                id = http_request.query_params["id"]
+                specie_name = http_request.query_params["specie_name"]
                 response = self.find_specie_use_case.by_id_and_specie_name(id=id, specie_name=specie_name)
                 self.log.info(f"Finding Specie by ID: {id} and Specie Name: {specie_name}")
 
@@ -42,7 +42,7 @@ class FindSpecieController(RouteInterface):
                 "id" in query_string_params
                 and "specie_name" not in query_string_params
             ):
-                id = http_request.query["id"]
+                id = http_request.query_params["id"]
                 response = self.find_specie_use_case.by_id(id=id)
                 self.log.info(f"Finding Specie by ID: {id}")
 
@@ -50,7 +50,7 @@ class FindSpecieController(RouteInterface):
                 "id" not in query_string_params
                 and "specie_name" in query_string_params
             ):
-                specie_name = http_request.query["specie_name"]
+                specie_name = http_request.query_params["specie_name"]
                 response = self.find_specie_use_case.by_specie_name(specie_name=specie_name)
                 self.log.info(f"Finding Specie by Specie Name: {specie_name}")
 

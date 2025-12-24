@@ -29,13 +29,13 @@ class FindPetController(RouteInterface):
 
         response = None
 
-        if http_request.query:
-            query_string_params = http_request.query.keys()
+        if http_request.query_params:
+            query_string_params = http_request.query_params.keys()
 
             if "pet_id" in query_string_params and "animal_shelter_id" in query_string_params:
-                pet_id = http_request.query["pet_id"]
+                pet_id = http_request.query_params["pet_id"]
 
-                animal_shelter_id = http_request.query["animal_shelter_id"]
+                animal_shelter_id = http_request.query_params["animal_shelter_id"]
                 response = self.find_pet_use_case.by_pet_id_and_animal_shelter_id(
                     pet_id=pet_id, animal_shelter_id=animal_shelter_id
                 )
@@ -44,14 +44,14 @@ class FindPetController(RouteInterface):
             elif (
                 "pet_id" in query_string_params and "animal_shelter_id" not in query_string_params
             ):
-                pet_id = http_request.query["pet_id"]
+                pet_id = http_request.query_params["pet_id"]
                 response = self.find_pet_use_case.by_pet_id(pet_id=pet_id)
                 self.log.info(f"Finding Pet by ID: {pet_id}")
 
             elif (
                 "pet_id" not in query_string_params and "animal_shelter_id" in query_string_params
             ):
-                animal_shelter_id = http_request.query["animal_shelter_id"]
+                animal_shelter_id = http_request.query_params["animal_shelter_id"]
                 response = self.find_pet_use_case.by_animal_shelter_id(animal_shelter_id=animal_shelter_id)
                 self.log.info(f"Finding Pet by Animal Shelter ID: {animal_shelter_id}")
 

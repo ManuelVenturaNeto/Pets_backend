@@ -1,20 +1,27 @@
-import logging
-from typing import Dict
-
-
 class HttpRequest:
     """
     Class to http_request representation
     """
 
-    def __init__(self, header: Dict = None, body: Dict = None, query: Dict = None):
+    def __init__(
+            self,
+            headers = None,
+            body = None,
+            query_params = None,
+            path_params = None,
+            url = None,
+            ipv4 = None
+    ):
 
-        self.header = header
+        self.headers = headers
         self.body = body
-        self.query = query
+        self.query_params = query_params
+        self.path_params = path_params
+        self.url = url
+        self.ipv4 = ipv4
 
     def __repr__(self):
-        return f"HttpRequest (header={self.header}, body={self.body}, query={self.query})"
+        return f"HttpRequest (headers={self.headers}, body={self.body}, query_params={self.query_params}, path_params={self.path_params}, url={self.url}, ipv4={self.ipv4})"
 
 
 class HttpResponse:

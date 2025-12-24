@@ -103,7 +103,12 @@ class AnimalShelterRepository(AnimalShelterRepositoryInterface):
             elif not id and name:
 
                 with DBConnectionHandler() as db_connection:
-                    data = db_connection.session.query(AnimalSheltersModel).filter_by(name=name).filter_by(deleted_at=None).one()
+                    data = (
+                        db_connection.session
+                        .query(AnimalSheltersModel)
+                        .filter(AnimalSheltersModel.name == name)
+                        .one()
+                    )
                     query_data = [data]
                     self.log.info(f"Selected animal shelter with name {name}.")
 

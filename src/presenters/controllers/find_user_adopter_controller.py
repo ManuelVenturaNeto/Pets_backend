@@ -29,28 +29,28 @@ class FindUserAdopterController(RouteInterface):
 
         response = None
 
-        if http_request.query:
+        if http_request.query_params:
 
-            query_string_params = http_request.query.keys()
+            query_string_params = http_request.query_params.keys()
 
             if "user_adopter_id" in query_string_params:
 
-                user_adopter_id = int(http_request.query["user_adopter_id"])
+                user_adopter_id = int(http_request.query_params["user_adopter_id"])
                 response = self.find_user_adopter_use_case.by_user_adopter_id(user_adopter_id=user_adopter_id)
                 self.log.info(f"Finding User Adopter by ID: {user_adopter_id}")
 
             elif "pet_id" in query_string_params:
 
-                pet_id = int(http_request.query["pet_id"])
+                pet_id = int(http_request.query_params["pet_id"])
                 response = self.find_user_adopter_use_case.by_pet_id(pet_id=pet_id)
                 self.log.info(f"Finding User Adopter by Pet ID: {pet_id}")
 
             elif any(key in query_string_params for key in ["name", "cpf", "email", "phone_number"]):
 
-                name = http_request.query.get("name", None)
-                cpf = http_request.query.get("cpf", None)
-                email = http_request.query.get("email", None)
-                phone_number = http_request.query.get("phone_number", None)
+                name = http_request.query_params.get("name", None)
+                cpf = http_request.query_params.get("cpf", None)
+                email = http_request.query_params.get("email", None)
+                phone_number = http_request.query_params.get("phone_number", None)
                 
                 response = self.find_user_adopter_use_case.by_user_information(name=name, cpf=cpf, email=email, phone_number=phone_number)
                 self.log.info("Finding User Adopter by provided user information")

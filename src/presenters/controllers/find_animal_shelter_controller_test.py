@@ -27,8 +27,8 @@ def test_route():
     response = find_animal_shelter_controller.route(http_request)
 
     # testing inputs
-    assert find_animal_shelter_use_case.by_id_and_name_param["animal_shelter_id"] == http_request.query["animal_shelter_id"]
-    assert find_animal_shelter_use_case.by_id_and_name_param["name"] == http_request.query["animal_shelter_name"]
+    assert find_animal_shelter_use_case.by_id_and_name_param["animal_shelter_id"] == http_request.query_params["animal_shelter_id"]
+    assert find_animal_shelter_use_case.by_id_and_name_param["name"] == http_request.query_params["animal_shelter_name"]
 
     # testing outputs
     assert response.status_code == 200
