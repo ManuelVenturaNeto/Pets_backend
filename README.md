@@ -1,4 +1,4 @@
-# API PETS Backend
+# Distributed-Systems-Python-Backend
 
 ## Description
 
